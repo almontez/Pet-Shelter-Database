@@ -13,7 +13,9 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
     //Re-renders by updating Adopters to a new 
     // filtered list of Adopters that excludes the deleted Adopter
     const onDelete = async (_id) => {
-        console.log(`Clicked: ${_id}`)
+        console.log(`Clicked Delete for adopter_id: ${_id}`)
+        alert(`Clicked Delete for adopter_id: ${_id}`);
+
         /*// TO BE IMPLEMENTED: Makes DELETE method to server
         const response = await fetch(`/browse-adopters/${_id}`, { method: 'DELETE' });
         console.log(response.status);
