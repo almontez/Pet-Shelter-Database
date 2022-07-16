@@ -11,6 +11,7 @@ function Adopter({ adopter, onDelete }) { //Removed OnEdit (Use for UPDATE): , o
     */
     return (
         <tr>
+            <td>{adopter.id}</td>
             <td>{adopter.first_name}</td>
             <td>{adopter.last_name}</td>
             <td>{adopter.address}</td>

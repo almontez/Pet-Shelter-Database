@@ -14,6 +14,7 @@ function AdopterList({ adopters, onDelete }) { //Removed onEdit (use for UPDATE)
         <table id="adopters">
             <thead>
                 <tr>
+                    <th>Adopter ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Address</th>
