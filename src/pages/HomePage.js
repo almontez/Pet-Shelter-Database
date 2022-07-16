@@ -30,6 +30,9 @@ function BrowseAdoptersPage({ setExerciseToEdit }) {
             <Link className="App-link" to="/browse-adoption-requests">
               Browse AdoptionRequests
             </Link>
+            <Link className="App-link" to="/manage-category-tables">
+              Manage Category Tables (Goes to Category Tables landing page)
+            </Link>
             </div>
           </div>
         </>
