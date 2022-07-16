@@ -22,6 +22,8 @@ function App() {
 </Route> 
 */
 
+  console.log("Hello World");
+
   return (
     <div className="App">
       <header>
