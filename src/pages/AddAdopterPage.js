@@ -21,6 +21,13 @@ export const AddAdopterPage = () => {
     const addAdopter = async (event) => {
         event.preventDefault();
         const newAdopter = { first_name, last_name, address, phone_number, email, birth_date };
+
+        //DEBUG MESSAGE
+        console.log(`Added a new adopter: ${JSON.stringify(newAdopter)}`)
+        alert(`Added a new adopter: ${JSON.stringify(newAdopter)}`);
+
+        // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET
+        /*
         const response = await fetch('/adopters', {
             method: 'POST',
             body: JSON.stringify(newAdopter),
@@ -33,7 +40,8 @@ export const AddAdopterPage = () => {
         } else {
             alert(`Failed to add adopter, status code = ${response.status}`);
         }
-        history.push("/");
+        */
+        history.push("/browse-adopters");
     };
 
     return (
@@ -42,7 +50,7 @@ export const AddAdopterPage = () => {
             <fieldset className="add-adopter">
                 <legend>Enter values for new adopter:</legend>
                 <div className="add-adopter">
-                    <label htmlFor="first_name">Name:</label>
+                    <label htmlFor="first_name">First Name:</label>
                     <input
                         id="first_name_input"
                         type="text"
@@ -52,7 +60,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-adopter">
-                    <label htmlFor="last_name">Name:</label>
+                    <label htmlFor="last_name">Last Name:</label>
                     <input
                         id="last_name_input"
                         type="text"
@@ -62,7 +70,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-adopter">
-                    <label htmlFor="address_input">Name:</label>
+                    <label htmlFor="address_input">Address:</label>
                     <input
                         id="address_input"
                         type="text"
@@ -72,7 +80,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-adopter">
-                    <label htmlFor="phone_number_input">Name:</label>
+                    <label htmlFor="phone_number_input">Phone Number:</label>
                     <input
                         id="phone_number_input"
                         type="text"
@@ -82,7 +90,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-adopter">
-                    <label htmlFor="email_input">Name:</label>
+                    <label htmlFor="email_input">Email:</label>
                     <input
                         id="email_input"
                         type="text"
@@ -92,7 +100,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-adopter">
-                    <label htmlFor="birth_date_input">Name:</label>
+                    <label htmlFor="birth_date_input">Birth Date:</label>
                     <input
                         id="birth_date_input"
                         type="text"

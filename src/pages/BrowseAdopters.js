@@ -13,6 +13,8 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
     //Re-renders by updating Adopters to a new 
     // filtered list of Adopters that excludes the deleted Adopter
     const onDelete = async (_id) => {
+
+        //DEBUG MESSAGE
         console.log(`Clicked Delete for adopter_id: ${_id}`)
         alert(`Clicked Delete for adopter_id: ${_id}`);
 
@@ -64,7 +66,7 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
     return (
         <>
             <h2>List of Recorded Adopters</h2>
-            
+            <Link className="navigation-link" to="/add-adopter">Add New Adopter</Link>
             <AdopterList 
                 adopters={adopters} 
                 onDelete={onDelete}>
