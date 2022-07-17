@@ -11,7 +11,7 @@ function Adopter({ adopter, onDelete }) { //Removed OnEdit (Use for UPDATE): , o
     */
     return (
         <tr>
-            <td>{adopter.id}</td>
+            <td>{adopter.adopter_id}</td>
             <td>{adopter.first_name}</td>
             <td>{adopter.last_name}</td>
             <td>{adopter.address}</td>
@@ -19,7 +19,7 @@ function Adopter({ adopter, onDelete }) { //Removed OnEdit (Use for UPDATE): , o
             <td>{adopter.email}</td>
             <td>{adopter.birth_date}</td>
 
-            <td>< MdDeleteForever onClick={() => onDelete(adopter.id)}/></td>
+            <td>< MdDeleteForever onClick={() => onDelete(adopter.adopter_id)}/></td>
         </tr>
     );
 }

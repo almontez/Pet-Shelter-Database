@@ -50,7 +50,7 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
         //const response = await fetch('/browse-adopters');
         //const data = await response.json();
 
-        const data = adopters;
+        const data = adopters; // Fetches sample data. Remove this later after implemented server code.
         console.log(`data: ${data}`);
         setAdopters(data);
     };

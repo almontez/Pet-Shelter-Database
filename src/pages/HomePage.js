@@ -36,6 +36,11 @@ function BrowseAdoptersPage({ setExerciseToEdit }) {
                 Manage Category Tables (Goes to Category Tables landing page)
               </Link>
             </div>
+            <div>
+                <Link className="App-link" to="/browse-adoption-fee-codes">
+                  Browse AdoptionFeeCodes
+                </Link>
+            </div>
           </div>
         </>
     );

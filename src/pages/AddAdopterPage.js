@@ -45,11 +45,11 @@ export const AddAdopterPage = () => {
     };
 
     return (
-        <form className="add-adopter" onSubmit={addAdopter}>
+        <form className="add-row" onSubmit={addAdopter}>
             <h1>Add New Adopter</h1>
-            <fieldset className="add-adopter">
+            <fieldset className="add-row">
                 <legend>Enter values for new adopter:</legend>
-                <div className="add-adopter">
+                <div className="add-row">
                     <label htmlFor="first_name">First Name:</label>
                     <input
                         id="first_name_input"
@@ -59,7 +59,7 @@ export const AddAdopterPage = () => {
                         onChange={e => setFirstName(e.target.value)}
                         required />
                 </div>
-                <div className="add-adopter">
+                <div className="add-row">
                     <label htmlFor="last_name">Last Name:</label>
                     <input
                         id="last_name_input"
@@ -69,7 +69,7 @@ export const AddAdopterPage = () => {
                         onChange={e => setLastName(e.target.value)}
                         required />
                 </div>
-                <div className="add-adopter">
+                <div className="add-row">
                     <label htmlFor="address_input">Address:</label>
                     <input
                         id="address_input"
@@ -79,7 +79,7 @@ export const AddAdopterPage = () => {
                         onChange={e => setAddress(e.target.value)}
                         required />
                 </div>
-                <div className="add-adopter">
+                <div className="add-row">
                     <label htmlFor="phone_number_input">Phone Number:</label>
                     <input
                         id="phone_number_input"
@@ -89,7 +89,7 @@ export const AddAdopterPage = () => {
                         onChange={e => setPhoneNumber(e.target.value)}
                         required />
                 </div>
-                <div className="add-adopter">
+                <div className="add-row">
                     <label htmlFor="email_input">Email:</label>
                     <input
                         id="email_input"
@@ -99,7 +99,7 @@ export const AddAdopterPage = () => {
                         onChange={e => setEmail(e.target.value)}
                         required />
                 </div>
-                <div className="add-adopter">
+                <div className="add-row">
                     <label htmlFor="birth_date_input">Birth Date:</label>
                     <input
                         id="birth_date_input"

@@ -2,8 +2,15 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+
+// Adopters
 import BrowseAdoptersPage from './pages/BrowseAdopters';
 import AddAdopterPage from './pages/AddAdopterPage';
+
+// AdoptionFeeCodes
+import BrowseAdoptionFeeCodesPage from './pages/BrowseAdoptionFeeCodes';
+import AddAdoptionFeeCodePage from './pages/AddAdoptionFeeCodePage';
+
 //import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
 import Navigation from './components/Navigation';
 import { useState } from 'react';
@@ -41,6 +48,13 @@ function App() {
           </Route>
           <Route path="/add-adopter">
             <AddAdopterPage />
+          </Route>
+
+          <Route path="/browse-adoption-fee-codes">
+            <BrowseAdoptionFeeCodesPage />
+          </Route>
+          <Route path="/add-adoption-fee-code">
+            <AddAdoptionFeeCodePage />
           </Route>
         </div>
       </Router>
