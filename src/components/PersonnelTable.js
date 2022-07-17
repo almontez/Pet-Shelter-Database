@@ -15,6 +15,7 @@ function PersonnelTable( { personnel, onDelete }) {
                     <th>Phone Number</th>
                     <th>Email</th>
                     <th>Birthday</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>

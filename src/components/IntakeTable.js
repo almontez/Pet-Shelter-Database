@@ -12,6 +12,7 @@ function IntakeTable( { intakes, onDelete }) {
                     <th>Processor</th>
                     <th>Drop Off Type</th>
                     <th>Intake Details</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
