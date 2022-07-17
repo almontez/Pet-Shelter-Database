@@ -21,6 +21,15 @@ import BrowsePersonnelCodesPage from './pages/BrowsePersonnelTypeCodes';
 import BrowseIntakesPage from './pages/BrowseIntakes';
 import AddIntakePage from './pages/AddIntake';
 
+// AdoptionFeeCodes
+import BrowseAdoptionFeeCodesPage from './pages/BrowseAdoptionFeeCodes';
+import AddAdoptionFeeCodePage from './pages/AddAdoptionFeeCodePage';
+
+// AdoptionRequestStatusCodes
+import BrowseAdoptionRequestStatusCodesPage from './pages/BrowseAdoptionRequestStatusCodes';
+import AddAdoptionRequestStatusCodePage from './pages/AddAdoptionRequestStatusCodePage';
+
+
 // Adopters_Pets and AdoptionRequests
 import BrowseAdoptionRequestsPage from './pages/BrowseAdoptionRequests';
 import AddAdoptionRequestPage from './pages/AddAdoptionRequestPage';
@@ -79,6 +88,18 @@ function App() {
           </Route>
           <Route path="/browse-pet-statuses">
             <BrowsePetStatusesPage />
+          </Route>
+          <Route path="/browse-adoption-fee-codes">
+            <BrowseAdoptionFeeCodesPage />
+          </Route>
+          <Route path="/add-adoption-fee-code">
+            <AddAdoptionFeeCodePage />
+          </Route>
+		      <Route path="/browse-adoption-request-status-codes">
+            <BrowseAdoptionRequestStatusCodesPage />
+          </Route>
+          <Route path="/add-adoption-request-status-code">
+            <AddAdoptionRequestStatusCodePage />
           </Route>
           <Route path="/add-adoption-request">
             <AddAdoptionRequestPage />
