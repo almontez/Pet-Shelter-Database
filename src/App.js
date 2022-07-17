@@ -24,17 +24,15 @@ import AddIntakePage from './pages/AddIntake';
 // Adopters_Pets and AdoptionRequests
 import BrowseAdoptionRequestsPage from './pages/BrowseAdoptionRequests';
 import AddAdoptionRequestPage from './pages/AddAdoptionRequestPage';
+import EditAdoptionRequestPage from './pages/EditAdoptionRequestPage';
 
-//import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
+//import EditEntityPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
 
 function App() {
-// This could either go in App.js or BrowseEntity page for a particular entity. I'm still figuring this part out to see which is best.
-/*
-  const [exerciseToEdit, setExerciseToEdit] = useState();
-*/
+  // FOR UPDATE (applies to Pets and AdoptionRequests)
+  const [adoptionRequestToEdit, setAdoptionRequestToEdit] = useState();
 
-
-// Add a route like this for any page that requires UPDATE functionality (Pets, AdoptionRequests)
+// Add a route like this for any page that requires UPDATE functionality (applies to Pets and AdoptionRequests)
 /* 
 <Route path="/edit-exercise">
   <EditEntityPage  />
@@ -74,7 +72,7 @@ function App() {
             <AddIntakePage  />
           </Route>
           <Route path="/browse-adoption-requests">
-            <BrowseAdoptionRequestsPage />
+            <BrowseAdoptionRequestsPage setAdoptionRequestToEdit={setAdoptionRequestToEdit} />
           </Route>
           <Route path="/browse-personnel-codes">
             <BrowsePersonnelCodesPage />
@@ -85,6 +83,9 @@ function App() {
           <Route path="/add-adoption-request">
             <AddAdoptionRequestPage />
           </Route>
+          <Route path="/edit-adoption-request">
+            <EditAdoptionRequestPage  adoptionRequestToEdit={adoptionRequestToEdit} />
+          </Route> 
         </div>
       </Router>
       <footer>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import adoption_requests_sample_data from '../data/adoption_requests'; // SAMPLE DATA
 
-function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
+function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
     
     const [adoption_requests, setAdoptionRequests] = useState([]);
     const history = useHistory();
@@ -32,9 +32,14 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
     }
 
     // Used for UPDATE
-    const onEdit = async adoptionRequestStatusCodeToEdit => {
-        setAdoptionRequestStatusCodeToEdit(adoptionRequestStatusCodeToEdit);
-        history.push("/edit-adoption-request-status-code");
+    const onEdit = async adoptionRequestToEdit => {
+        //DEBUG MESSAGE
+        // const debug_message = `BrowseAdoptionRequests: Editing an Adoption Request: ${JSON.stringify(adoptionRequestToEdit)}`;
+        // console.log(debug_message);
+        // alert(debug_message);
+
+        setAdoptionRequestToEdit(adoptionRequestToEdit);
+        history.push("/edit-adoption-request");
     }
 
 /*
