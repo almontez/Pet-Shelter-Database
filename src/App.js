@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import BrowseAdoptersPage from './pages/BrowseAdopters';
 import AddAdopterPage from './pages/AddAdopterPage';
+import BrowsePetsPage from './pages/BrowsePets';
+import AddIntakePage from './pages/AddIntake';
 //import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
 import Navigation from './components/Navigation';
 import { useState } from 'react';
@@ -25,8 +27,8 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Pel Shelter Database UI</h1>
-        <p>Full Stack MERN app for managing the pet shelter database</p>
+        <h1>Pet Shelter Database</h1>
+        <p>Description</p>
       </header>
       <Router>
         <Navigation/>
@@ -39,6 +41,12 @@ function App() {
           </Route>
           <Route path="/add-adopter">
             <AddAdopterPage />
+          </Route>
+          <Route path="/browse-pets" exact>
+            <BrowsePetsPage  />
+          </Route>
+          <Route path="/add-intake" exact>
+            <AddIntakePage  />
           </Route>
         </div>
       </Router>

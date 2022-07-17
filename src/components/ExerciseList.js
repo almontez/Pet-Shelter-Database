@@ -3,7 +3,7 @@ import Exercise from './Exercise';
 
 function ExerciseList({ exercises, onDelete, onEdit }) {
     return (
-        <table id="exercises">
+        <table id="exer">
             <thead>
                 <tr>
                     <th>Name</th>
