@@ -12,14 +12,17 @@ import AddAdopterPage from './pages/AddAdopterPage';
 // Pets
 import BrowsePetsPage from './pages/BrowsePets';
 import BrowsePetStatusesPage from './pages/BrowsePetStatuses'
+import AddPetStatusesPage from './pages/AddPetStatuses';
 
 // Personnel
 import BrowsePersonnelPage from './pages/BrowsePersonnel';
 import BrowsePersonnelCodesPage from './pages/BrowsePersonnelTypeCodes';
+import AddPersonnelPage from './pages/AddPersonnel';
+import AddPersonnelCodesPage from './pages/AddPersonnelCodes';
 
 // Intakes
 import BrowseIntakesPage from './pages/BrowseIntakes';
-import AddIntakePage from './pages/AddIntake';
+import AddIntakesPage from './pages/AddIntake';
 
 // AdoptionFeeCodes
 import BrowseAdoptionFeeCodesPage from './pages/BrowseAdoptionFeeCodes';
@@ -71,23 +74,38 @@ function App() {
           <Route path="/browse-pets" exact>
             <BrowsePetsPage  />
           </Route>
-          <Route path="/browse-personnel" exact>
-            <BrowsePersonnelPage  />
-          </Route>
           <Route path="/browse-intakes" exact>
             <BrowseIntakesPage  />
           </Route>
           <Route path="/add-intake" exact>
-            <AddIntakePage  />
+            <AddIntakesPage  />
+          </Route>
+          <Route path="/browse-personnel" exact>
+            <BrowsePersonnelPage  />
+          </Route>
+          <Route path="/add-personnel" exact>
+            <AddPersonnelPage />
           </Route>
           <Route path="/browse-adoption-requests">
             <BrowseAdoptionRequestsPage setAdoptionRequestToEdit={setAdoptionRequestToEdit} />
           </Route>
+          <Route path="/add-adoption-request">
+            <AddAdoptionRequestPage />
+          </Route>
+          <Route path="/edit-adoption-request">
+            <EditAdoptionRequestPage  adoptionRequestToEdit={adoptionRequestToEdit} />
+          </Route> 
           <Route path="/browse-personnel-codes">
             <BrowsePersonnelCodesPage />
           </Route>
+          <Route path="/add-personnel-codes">
+            <AddPersonnelCodesPage />
+          </Route>
           <Route path="/browse-pet-statuses">
             <BrowsePetStatusesPage />
+          </Route>
+          <Route path="/add-pet-status">
+            <AddPetStatusesPage />
           </Route>
           <Route path="/browse-adoption-fee-codes">
             <BrowseAdoptionFeeCodesPage />
@@ -101,12 +119,6 @@ function App() {
           <Route path="/add-adoption-request-status-code">
             <AddAdoptionRequestStatusCodePage />
           </Route>
-          <Route path="/add-adoption-request">
-            <AddAdoptionRequestPage />
-          </Route>
-          <Route path="/edit-adoption-request">
-            <EditAdoptionRequestPage  adoptionRequestToEdit={adoptionRequestToEdit} />
-          </Route> 
         </div>
       </Router>
       <footer>

@@ -12,6 +12,8 @@ function Navigation() {
             <Link className="navigation-link" to="/browse-adoption-requests">Browse AdoptionRequests</Link>&nbsp;|&nbsp;
             <Link className="navigation-link" to="/browse-adoption-fee-codes">Browse AdoptionFeeCodes</Link>&nbsp;|&nbsp;
             <Link className="navigation-link" to="/browse-adoption-request-status-codes">Browse AdoptionRequestStatusCodes</Link>&nbsp;|&nbsp;
+            <Link className="navigation-link" to="/browse-personnel-codes">Browse Personnel Codes</Link>&nbsp;|&nbsp;
+            <Link className="navigation-link" to="/browse-pet-statuses">Browse Pet Statuses</Link>&nbsp;|&nbsp;
         </nav>
     );
 }
