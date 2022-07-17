@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import AdoptionRequestList from '../components/AdoptionRequestList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import adoption_requests from '../data/adoption_requests'; // SAMPLE DATA
+import adoption_requests_sample_data from '../data/adoption_requests'; // SAMPLE DATA
 
 function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
     
-    const [AdoptionRequests, setAdoptionRequests] = useState([]);
+    const [adoption_requests, setAdoptionRequests] = useState([]);
     const history = useHistory();
 
     //Re-renders by updating AdoptionRequests to a new 
@@ -20,10 +20,10 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
         alert(debugMessage);
 
         /*// TO BE IMPLEMENTED: Makes DELETE method to server
-        const response = await fetch(`/browse-adoption-requestss/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`/adoption-requests/${_id}`, { method: 'DELETE' });
         console.log(response.status);
         if (response.status === 204) {
-            const newAdoptionRequests = AdoptionRequests.filter(m => m._id !== _id);
+            const newAdoptionRequests = adoption_requests.filter(m => m._id !== _id);
             setAdoptionRequests(newAdoptionRequests);
         } else {
             console.error(`Failed to delete AdoptionRequestStatusCode with id = ${_id}, status code = ${response.status}`)
@@ -31,14 +31,13 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
         */
     }
 
-// Used for UPDATE
-/*
-    const onEdit = async AdoptionRequestStatusCodeToEdit => {
-        setAdoptionRequestStatusCodeToEdit(AdoptionRequestStatusCodeToEdit);
-        history.push("/edit-AdoptionRequestStatusCode");
+    // Used for UPDATE
+    const onEdit = async adoptionRequestStatusCodeToEdit => {
+        setAdoptionRequestStatusCodeToEdit(adoptionRequestStatusCodeToEdit);
+        history.push("/edit-adoption-request-status-code");
     }
 
-
+/*
 <AdoptionRequestList 
     AdoptionRequests={AdoptionRequests} 
     onDelete={onDelete}
@@ -48,10 +47,10 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
 
     const loadAdoptionRequests = async () => {
         //fetch data from the server. For now it fetches from our sample data
-        //const response = await fetch('/browse-AdoptionRequests');
+        //const response = await fetch('/adoption-requests');
         //const data = await response.json();
 
-        const data = adoption_requests; // Fetches sample data. Remove this later after implemented server code.
+        const data = adoption_requests_sample_data; // Fetches sample data. Remove this later after implemented server code.
         console.log(`data: ${data}`);
         setAdoptionRequests(data);
     };
@@ -62,7 +61,7 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
     }, []);
 
     console.log("Hello World from BrowseAdoptionRequests");
-    console.log(`AdoptionRequests data in BrowseAdoptionRequests: ${JSON.stringify(adoption_requests)}`);
+    console.log(`adoption_requests data in BrowseAdoptionRequests: ${JSON.stringify(adoption_requests)}`);
 
     return (
         <>
@@ -70,7 +69,8 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestStatusCodeToEdit }) {
             <Link className="navigation-link" to="/add-adoption-request">Add New AdoptionRequest</Link>
             <AdoptionRequestList
                 adoption_requests={adoption_requests} 
-                onDelete={onDelete}>
+                onDelete={onDelete}
+                onEdit={onEdit}>
             </AdoptionRequestList>
             <Link className="App-link" to="/">
               Return to Home Page

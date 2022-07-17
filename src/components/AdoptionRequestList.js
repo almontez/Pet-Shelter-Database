@@ -7,7 +7,7 @@ import AdoptionRequest from './AdoptionRequest';
 //Removed from <tbody>. Use for entities that need UPDATE
 //                      onEdit={onEdit}
 
-function AdoptionRequestList({ adoption_requests, onDelete }) { //Removed onEdit (use for UPDATE), onEdit
+function AdoptionRequestList({ adoption_requests, onDelete, onEdit }) { //Removed onEdit (use for UPDATE), onEdit
 
     //DEBUG
     console.log(`adoption_requests data in AdoptionRequestsList: ${JSON.stringify(adoption_requests)}`);
@@ -29,6 +29,7 @@ function AdoptionRequestList({ adoption_requests, onDelete }) { //Removed onEdit
             <tbody>
                 {adoption_requests.map((adoption_request, i) => <AdoptionRequest adoption_request={adoption_request}
                     onDelete={onDelete}
+                    onEdit={onEdit}
                     key={i} />)}
             </tbody>
         </table>

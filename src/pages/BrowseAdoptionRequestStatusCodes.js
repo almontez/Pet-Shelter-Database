@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import AdoptionRequestStatusCodeList from '../components/AdoptionRequestStatusCodeList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import adoption_request_status_codes from '../data/adoption_request_status_codes'; // SAMPLE DATA
+import adoption_request_status_codes_sample_data from '../data/adoption_request_status_codes'; // SAMPLE DATA
 
 function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEdit }) {
     
-    const [AdoptionRequestStatusCodes, setAdoptionRequestStatusCodes] = useState([]);
+    const [adoption_request_status_codes, setAdoptionRequestStatusCodes] = useState([]);
     const history = useHistory();
 
     //Re-renders by updating AdoptionRequestStatusCodes to a new 
@@ -19,10 +19,10 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
         alert(`Clicked Delete for AdoptionRequestStatusCode_id: ${_id}`);
 
         /*// TO BE IMPLEMENTED: Makes DELETE method to server
-        const response = await fetch(`/browse-adoption-request-status-codes/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`/adoption-request-status-codes/${_id}`, { method: 'DELETE' });
         console.log(response.status);
         if (response.status === 204) {
-            const newAdoptionRequestStatusCodes = AdoptionRequestStatusCodes.filter(m => m._id !== _id);
+            const newAdoptionRequestStatusCodes = adoption_request_status_codes.filter(m => m._id !== _id);
             setAdoptionRequestStatusCodes(newAdoptionRequestStatusCodes);
         } else {
             console.error(`Failed to delete AdoptionRequestStatusCode with id = ${_id}, status code = ${response.status}`)
@@ -32,9 +32,9 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
 
 // Used for UPDATE
 /*
-    const onEdit = async AdoptionRequestStatusCodeToEdit => {
-        setAdoptionRequestStatusCodeToEdit(AdoptionRequestStatusCodeToEdit);
-        history.push("/edit-AdoptionRequestStatusCode");
+    const onEdit = async adoptionRequestStatusCodeToEdit => {
+        setAdoptionRequestStatusCodeToEdit(adoptionRequestStatusCodeToEdit);
+        history.push("/edit-adoption-request-status-code");
     }
 
 
@@ -47,10 +47,10 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
 
     const loadAdoptionRequestStatusCodes = async () => {
         //fetch data from the server. For now it fetches from our sample data
-        //const response = await fetch('/browse-AdoptionRequestStatusCodes');
+        //const response = await fetch('/adoption-request-status-codes');
         //const data = await response.json();
 
-        const data = adoption_request_status_codes; // Fetches sample data. Remove this later after implemented server code.
+        const data = adoption_request_status_codes_sample_data; // Fetches sample data. Remove this later after implemented server code.
         console.log(`data: ${data}`);
         setAdoptionRequestStatusCodes(data);
     };

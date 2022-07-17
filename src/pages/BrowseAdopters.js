@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import AdopterList from '../components/AdopterList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import adopters from '../data/adopters'; // SAMPLE DATA
+import adopters_sample_data from '../data/adopters'; // SAMPLE DATA
 
 function BrowseAdoptersPage({ setAdopterToEdit }) {
     
-    const [Adopters, setAdopters] = useState([]);
+    const [adopters, setAdopters] = useState([]);
     const history = useHistory();
 
     //Re-renders by updating Adopters to a new 
@@ -19,10 +19,10 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
         alert(`Clicked Delete for adopter_id: ${_id}`);
 
         /*// TO BE IMPLEMENTED: Makes DELETE method to server
-        const response = await fetch(`/browse-adopters/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`/adopters/${_id}`, { method: 'DELETE' });
         console.log(response.status);
         if (response.status === 204) {
-            const newAdopters = Adopters.filter(m => m._id !== _id);
+            const newAdopters = adopters.filter(m => m._id !== _id);
             setAdopters(newAdopters);
         } else {
             console.error(`Failed to delete Adopter with id = ${_id}, status code = ${response.status}`)
@@ -32,8 +32,8 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
 
 // Used for UPDATE
 /*
-    const onEdit = async AdopterToEdit => {
-        setAdopterToEdit(AdopterToEdit);
+    const onEdit = async adopterToEdit => {
+        setAdopterToEdit(adopterToEdit);
         history.push("/edit-adopter");
     }
 
@@ -50,7 +50,7 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
         //const response = await fetch('/browse-adopters');
         //const data = await response.json();
 
-        const data = adopters; // Fetches sample data. Remove this later after implemented server code.
+        const data = adopters_sample_data; // Fetches sample data. Remove this later after implemented server code.
         console.log(`data: ${data}`);
         setAdopters(data);
     };
