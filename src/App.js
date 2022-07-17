@@ -19,6 +19,10 @@ import BrowsePersonnelPage from './pages/BrowsePersonnel';
 import BrowseIntakesPage from './pages/BrowseIntakes';
 import AddIntakePage from './pages/AddIntake';
 
+// Adopters_Pets and AdoptionRequests
+import BrowseAdoptionRequestsPage from './pages/BrowseAdoptionRequests';
+import AddAdoptionRequestPage from './pages/AddAdoptionRequestPage';
+
 //import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
 
 function App() {
@@ -67,6 +71,14 @@ function App() {
           <Route path="/add-intake" exact>
             <AddIntakePage  />
           </Route>
+
+          <Route path="/browse-adoption-requests">
+            <BrowseAdoptionRequestsPage />
+          </Route>
+          <Route path="/add-adoption-request">
+            <AddAdoptionRequestPage />
+          </Route>
+
         </div>
       </Router>
       <footer>
