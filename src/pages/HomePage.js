@@ -12,27 +12,39 @@ function BrowseAdoptersPage({ setExerciseToEdit }) {
               Please select a table to manage!
             </p>
             <div> 
-            <Link className="App-link" to="/browse-pets">
-              Browse Pets
-            </Link>
+              <Link className="App-link" to="/browse-pets">
+                Browse Pets
+              </Link>
             </div>
             <div>
-            <Link className="App-link" to="/browse-adopters">
-              Browse Adopters
-            </Link>
+              <Link className="App-link" to="/browse-adopters">
+                Browse Adopters
+              </Link>
             </div>
             <div>
-            <Link className="App-link" to="/browse-personnel">
-              Browse Personnel
-            </Link>
+              <Link className="App-link" to="/browse-personnel">
+                Browse Personnel
+              </Link>
             </div>
             <div>
-            <Link className="App-link" to="/browse-adoption-requests">
-              Browse AdoptionRequests
-            </Link>
-            <Link className="App-link" to="/manage-category-tables">
-              Manage Category Tables (Goes to Category Tables landing page)
-            </Link>
+                <Link className="App-link" to="/browse-adoption-requests">
+                  Browse AdoptionRequests
+                </Link>
+            </div>
+            <div>
+              <Link className="App-link" to="/manage-category-tables">
+                Manage Category Tables (Goes to Category Tables landing page)
+              </Link>
+            </div>
+            <div>
+                <Link className="App-link" to="/browse-adoption-fee-codes">
+                  Browse AdoptionFeeCodes
+                </Link>
+            </div>
+            <div>
+                <Link className="App-link" to="/browse-adoption-request-status-codes">
+                  Browse AdoptionRequestStatusCodes
+                </Link>
             </div>
           </div>
         </>

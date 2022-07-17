@@ -2,8 +2,19 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+
+// Adopters
 import BrowseAdoptersPage from './pages/BrowseAdopters';
 import AddAdopterPage from './pages/AddAdopterPage';
+
+// AdoptionFeeCodes
+import BrowseAdoptionFeeCodesPage from './pages/BrowseAdoptionFeeCodes';
+import AddAdoptionFeeCodePage from './pages/AddAdoptionFeeCodePage';
+
+// AdoptionRequestStatusCodes
+import BrowseAdoptionRequestStatusCodesPage from './pages/BrowseAdoptionRequestStatusCodes';
+import AddAdoptionRequestStatusCodePage from './pages/AddAdoptionRequestStatusCodePage';
+
 //import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
 import Navigation from './components/Navigation';
 import { useState } from 'react';
@@ -22,6 +33,8 @@ function App() {
 </Route> 
 */
 
+  console.log("Hello World");
+
   return (
     <div className="App">
       <header>
@@ -39,6 +52,20 @@ function App() {
           </Route>
           <Route path="/add-adopter">
             <AddAdopterPage />
+          </Route>
+
+          <Route path="/browse-adoption-fee-codes">
+            <BrowseAdoptionFeeCodesPage />
+          </Route>
+          <Route path="/add-adoption-fee-code">
+            <AddAdoptionFeeCodePage />
+          </Route>
+
+          <Route path="/browse-adoption-request-status-codes">
+            <BrowseAdoptionRequestStatusCodesPage />
+          </Route>
+          <Route path="/add-adoption-request-status-code">
+            <AddAdoptionRequestStatusCodePage />
           </Route>
         </div>
       </Router>

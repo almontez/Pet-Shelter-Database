@@ -89,7 +89,7 @@ button {
 }
 
 /*Add Exercise Page*/
-form.add-exercise {
+form.add-row {
   display: table;
   border-color:royalblue;
   border-style: double;
@@ -97,7 +97,7 @@ form.add-exercise {
   padding:0% 10% 5% 10%;
 }
 
-fieldset.add-exercise {
+fieldset.add-row {
   background-color:lavender;
   border-color: purple;
   border-radius: 10%;
@@ -105,33 +105,33 @@ fieldset.add-exercise {
   width: 92%;
 }
 
-div.add-exercise {
+div.add-row {
   display: table-row;
 }
 
-div.add-exercise label,
-div.add-exercise input,
-div.add-exercise select {
+div.add-row label,
+div.add-row input,
+div.add-row select {
   display: table-cell;
   margin-bottom: 10px;
   text-align: left;
 }
 
-div.add-exercise label {
+div.add-row label {
   padding-right: 10px;
   text-align: right;
 }
 
-form.add-exercise legend {
+form.add-row legend {
   font-size:large;
   text-align: left;
 }
 
-div.add-exercise input {
+div.add-row input {
   direction: ltr; 
 }
 
-div.add-exercise select
+div.add-row select
 {
     right: auto;
     /* padding-right: 40px; */
