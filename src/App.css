@@ -147,24 +147,24 @@ div.edit-page {
   border-radius: 10%;
 }
 
-div.edit-exercise {
+div.edit-row {
   float: left;
   margin-right: 2.5px;
   margin-left: 2.5px;
   border-style: dashed
 }
 
-div.edit-exercise input,
-div.edit-exercise label {
+div.edit-row input,
+div.edit-row label {
   display: block;
 }
 
-div.edit-exercise label {
+div.edit-row label {
   background-color:paleturquoise;
 }
 
-div.edit-exercise input,
-div.edit-exercise select {
+div.edit-row input,
+div.edit-row select {
   background-color:khaki;
 }
 
