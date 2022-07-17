@@ -8,6 +8,7 @@ function Navigation() {
             <Link className="navigation-link" to="/browse-pets">Browse Pets</Link>&nbsp;|&nbsp;
             <Link className="navigation-link" to="/browse-adopters">Browse Adopters</Link>&nbsp;|&nbsp;
             <Link className="navigation-link" to="/browse-personnel">Browse Personnel</Link>&nbsp;|&nbsp;
+            <Link className="navigation-link" to="/browse-adoption-requests">Browse AdoptionRequests</Link>&nbsp;|&nbsp;
             <Link className="navigation-link" to="/browse-adoption-fee-codes">Browse AdoptionFeeCodes</Link>&nbsp;|&nbsp;
             <Link className="navigation-link" to="/browse-adoption-request-status-codes">Browse AdoptionRequestStatusCodes</Link>&nbsp;|&nbsp;
         </nav>

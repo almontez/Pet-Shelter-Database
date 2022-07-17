@@ -50,7 +50,7 @@ export const AddAdopterPage = () => {
             <fieldset className="add-row">
                 <legend>Enter values for new adopter:</legend>
                 <div className="add-row">
-                    <label htmlFor="first_name">First Name:</label>
+                    <label htmlFor="first_name_input">First Name:</label>
                     <input
                         id="first_name_input"
                         type="text"
@@ -60,7 +60,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="last_name">Last Name:</label>
+                    <label htmlFor="last_name_input">Last Name:</label>
                     <input
                         id="last_name_input"
                         type="text"

@@ -45,7 +45,7 @@ export const AddAdoptionFeeCodePage = () => {
             <fieldset className="add-row">
                 <legend>Enter values for new adoption_fee_code:</legend>
                 <div className="add-row">
-                    <label htmlFor="code">Code:</label>
+                    <label htmlFor="code_input">Code:</label>
                     <input
                         id="code_input"
                         type="text"
@@ -55,7 +55,7 @@ export const AddAdoptionFeeCodePage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="fee">Fee:</label>
+                    <label htmlFor="fee_input">Fee:</label>
                     <input
                         id="fee_input"
                         type="number"

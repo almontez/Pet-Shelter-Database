@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 export const AddAdoptionRequestStatusCodePage = () => {
 
     const [code, setCode] = useState('');
-    const [status, setRequestStatus] = useState('');
+    const [status, setStatus] = useState('');
 
 //Used for setting default value for dropdown menu
     // useEffect(() => {
@@ -45,7 +45,7 @@ export const AddAdoptionRequestStatusCodePage = () => {
             <fieldset className="add-row">
                 <legend>Enter values for new adoption_request_status_code:</legend>
                 <div className="add-row">
-                    <label htmlFor="code">Code:</label>
+                    <label htmlFor="code_input">Code:</label>
                     <input
                         id="code_input"
                         type="text"
@@ -55,13 +55,13 @@ export const AddAdoptionRequestStatusCodePage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="status">Status:</label>
+                    <label htmlFor="status_input">Status:</label>
                     <input
                         id="status_input"
                         type="text"
                         placeholder="Enter status here"
                         value={status}
-                        onChange={e => setRequestStatus(e.target.value)}
+                        onChange={e => setStatus(e.target.value)}
                         required />
                 </div>
                 <input type="submit" value="Add AdoptionRequestStatusCode" />
