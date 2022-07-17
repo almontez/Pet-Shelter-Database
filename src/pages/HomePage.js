@@ -27,6 +27,11 @@ function HomePage() {
               </Link>
             </div>
             <div>
+              <Link className="App-link" to="/browse-intakes">
+                Browse Intakes
+              </Link>
+            </div>
+            <div>
                 <Link className="App-link" to="/browse-adoption-requests">
                   Browse AdoptionRequests
                 </Link>

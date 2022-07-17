@@ -1,16 +1,25 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useState } from 'react';
+import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 
 // Adopters
 import BrowseAdoptersPage from './pages/BrowseAdopters';
 import AddAdopterPage from './pages/AddAdopterPage';
+
+// Pets
 import BrowsePetsPage from './pages/BrowsePets';
+
+// Personnel
+import BrowsePersonnelPage from './pages/BrowsePersonnel';
+
+// Intakes
+import BrowseIntakesPage from './pages/BrowseIntakes';
 import AddIntakePage from './pages/AddIntake';
+
 //import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
-import Navigation from './components/Navigation';
-import { useState } from 'react';
 
 function App() {
 // This could either go in App.js or BrowseEntity page for a particular entity. I'm still figuring this part out to see which is best.
@@ -48,6 +57,12 @@ function App() {
           </Route>
           <Route path="/browse-pets" exact>
             <BrowsePetsPage  />
+          </Route>
+          <Route path="/browse-personnel" exact>
+            <BrowsePersonnelPage  />
+          </Route>
+          <Route path="/browse-intakes" exact>
+            <BrowseIntakesPage  />
           </Route>
           <Route path="/add-intake" exact>
             <AddIntakePage  />

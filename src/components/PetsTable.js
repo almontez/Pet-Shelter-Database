@@ -22,12 +22,10 @@ function PetsTable({pets, onEdit, onDelete}) {
                 </tr>
             </thead>
             <tbody>
-                {/* Need to add sample data
-                    {pets.map((pet, i) => <PetRow pet={pet}
+                {pets.map((pet, i) => <PetRow pet={pet}
                     onEdit={onEdit}
                     onDelete={onDelete}
                     key={i}/>)}
-                */}
             </tbody>
         </table>
         </>
