@@ -11,6 +11,10 @@ import AddAdopterPage from './pages/AddAdopterPage';
 import BrowseAdoptionFeeCodesPage from './pages/BrowseAdoptionFeeCodes';
 import AddAdoptionFeeCodePage from './pages/AddAdoptionFeeCodePage';
 
+// AdoptionRequestStatusCodes
+import BrowseAdoptionRequestStatusCodesPage from './pages/BrowseAdoptionRequestStatusCodes';
+import AddAdoptionRequestStatusCodePage from './pages/AddAdoptionRequestStatusCodePage';
+
 //import EditEntityrPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
 import Navigation from './components/Navigation';
 import { useState } from 'react';
@@ -55,6 +59,13 @@ function App() {
           </Route>
           <Route path="/add-adoption-fee-code">
             <AddAdoptionFeeCodePage />
+          </Route>
+
+          <Route path="/browse-adoption-request-status-codes">
+            <BrowseAdoptionRequestStatusCodesPage />
+          </Route>
+          <Route path="/add-adoption-request-status-code">
+            <AddAdoptionRequestStatusCodePage />
           </Route>
         </div>
       </Router>

@@ -41,6 +41,11 @@ function BrowseAdoptersPage({ setExerciseToEdit }) {
                   Browse AdoptionFeeCodes
                 </Link>
             </div>
+            <div>
+                <Link className="App-link" to="/browse-adoption-request-status-codes">
+                  Browse AdoptionRequestStatusCodes
+                </Link>
+            </div>
           </div>
         </>
     );
