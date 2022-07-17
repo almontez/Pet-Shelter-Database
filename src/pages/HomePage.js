@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 //import { useState, useEffect } from 'react'; // not currently used here
 
-function BrowseAdoptersPage({ setExerciseToEdit }) {
+function HomePage() {
 
     return (
         <>
@@ -51,4 +51,4 @@ function BrowseAdoptersPage({ setExerciseToEdit }) {
     );
 }
 
-export default BrowseAdoptersPage;
+export default HomePage;
