@@ -11,9 +11,11 @@ import AddAdopterPage from './pages/AddAdopterPage';
 
 // Pets
 import BrowsePetsPage from './pages/BrowsePets';
+import BrowsePetStatusesPage from './pages/BrowsePetStatuses'
 
 // Personnel
 import BrowsePersonnelPage from './pages/BrowsePersonnel';
+import BrowsePersonnelCodesPage from './pages/BrowsePersonnelTypeCodes';
 
 // Intakes
 import BrowseIntakesPage from './pages/BrowseIntakes';
@@ -71,14 +73,18 @@ function App() {
           <Route path="/add-intake" exact>
             <AddIntakePage  />
           </Route>
-
           <Route path="/browse-adoption-requests">
             <BrowseAdoptionRequestsPage />
+          </Route>
+          <Route path="/browse-personnel-codes">
+            <BrowsePersonnelCodesPage />
+          </Route>
+          <Route path="/browse-pet-statuses">
+            <BrowsePetStatusesPage />
           </Route>
           <Route path="/add-adoption-request">
             <AddAdoptionRequestPage />
           </Route>
-
         </div>
       </Router>
       <footer>
