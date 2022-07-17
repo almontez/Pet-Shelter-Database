@@ -1,19 +1,23 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useState } from 'react';
+import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 
 // Adopters
 import BrowseAdoptersPage from './pages/BrowseAdopters';
 import AddAdopterPage from './pages/AddAdopterPage';
 
-// AdoptionFeeCodes
-import BrowseAdoptionFeeCodesPage from './pages/BrowseAdoptionFeeCodes';
-import AddAdoptionFeeCodePage from './pages/AddAdoptionFeeCodePage';
+// Pets
+import BrowsePetsPage from './pages/BrowsePets';
 
-// AdoptionRequestStatusCodes
-import BrowseAdoptionRequestStatusCodesPage from './pages/BrowseAdoptionRequestStatusCodes';
-import AddAdoptionRequestStatusCodePage from './pages/AddAdoptionRequestStatusCodePage';
+// Personnel
+import BrowsePersonnelPage from './pages/BrowsePersonnel';
+
+// Intakes
+import BrowseIntakesPage from './pages/BrowseIntakes';
+import AddIntakePage from './pages/AddIntake';
 
 // Adopters_Pets and AdoptionRequests
 import BrowseAdoptionRequestsPage from './pages/BrowseAdoptionRequests';
@@ -21,8 +25,6 @@ import AddAdoptionRequestPage from './pages/AddAdoptionRequestPage';
 import EditAdoptionRequestPage from './pages/EditAdoptionRequestPage';
 
 //import EditEntityPage from './pages/EditEntityPage'; // Add this line for any entity that requires UPDATE functionality (Pets, AdoptionRequests)
-import Navigation from './components/Navigation';
-import { useState } from 'react';
 
 function App() {
   // FOR UPDATE (applies to Pets and AdoptionRequests)
@@ -40,8 +42,8 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Pel Shelter Database UI</h1>
-        <p>Full Stack MERN app for managing the pet shelter database</p>
+        <h1>Pet Shelter Database</h1>
+        <p>Description</p>
       </header>
       <Router>
         <Navigation/>
@@ -55,19 +57,17 @@ function App() {
           <Route path="/add-adopter">
             <AddAdopterPage />
           </Route>
-
-          <Route path="/browse-adoption-fee-codes">
-            <BrowseAdoptionFeeCodesPage />
+          <Route path="/browse-pets" exact>
+            <BrowsePetsPage  />
           </Route>
-          <Route path="/add-adoption-fee-code">
-            <AddAdoptionFeeCodePage />
+          <Route path="/browse-personnel" exact>
+            <BrowsePersonnelPage  />
           </Route>
-
-          <Route path="/browse-adoption-request-status-codes">
-            <BrowseAdoptionRequestStatusCodesPage />
+          <Route path="/browse-intakes" exact>
+            <BrowseIntakesPage  />
           </Route>
-          <Route path="/add-adoption-request-status-code">
-            <AddAdoptionRequestStatusCodePage />
+          <Route path="/add-intake" exact>
+            <AddIntakePage  />
           </Route>
 
           <Route path="/browse-adoption-requests">

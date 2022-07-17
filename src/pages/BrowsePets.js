@@ -1,9 +1,33 @@
 import React from 'react';
 import PetsTable from '../components/PetsTable';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import petsData from '../data/petsData'; //sample data
 
 function BrowsePetsPage({ setPetToEdit }) {
-    // TODO: ADD JS CODE 
+    // TODO: Update JS CODE using sql queried data. Currently only loads sample data
+
+    const [pets, setPets] = useState([]);
+    const history = useHistory();
+
+    const onDelete = async(_id) => {
+        alert(`Clicked Delete for Pet_id: ${_id}`);
+    }; 
+
+    const onEdit = async petToEdit => {
+        setPetToEdit(petToEdit);
+        history.push("/edit-pet")
+    }
+
+    const loadPets = async() => {
+        const data = petsData
+        setPets(data)
+    }
+
+    useEffect(() => {
+        loadPets();
+    }, []);
 
     return (
         <>
@@ -11,11 +35,11 @@ function BrowsePetsPage({ setPetToEdit }) {
 
             <Link to="/add-pet">Add New Pet</Link>
 
-            <PetsTable></PetsTable>
-                {/* Need to add JS code and sample data to PetsTable
+            <PetsTable                 
                 pets={pets}
                 onEdit={onEdit}
-                onDelete={onDelete}*/}
+                onDelete={onDelete}>
+            </PetsTable>
  
             <Link to="/">Return to Home Page</Link>
         </>
