@@ -65,8 +65,8 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
 
     return (
         <>
-            <h2>List of Recorded AdoptionRequestStatusCodes</h2>
-            <Link className="navigation-link" to="/add-adoption-request-status-code">Add New AdoptionRequestStatusCode</Link>
+            <h2>List of Recorded Adoption Request Status Codes</h2>
+            <Link className="navigation-link" to="/add-adoption-request-status-code">Add New Adoption Request Status Code</Link>
             <AdoptionRequestStatusCodeList
                 adoption_request_status_codes={adoption_request_status_codes} 
                 onDelete={onDelete}>

@@ -41,11 +41,11 @@ export const AddAdoptionRequestStatusCodePage = () => {
 
     return (
         <form className="add-row" onSubmit={addAdoptionRequestStatusCode}>
-            <h1>Add New AdoptionRequestStatusCode</h1>
+            <h1>Add New Adoption Request Status Code</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new adoption_request_status_code:</legend>
+                <legend>Enter values for new adoption request status code</legend>
                 <div className="add-row">
-                    <label htmlFor="code_input">Code:</label>
+                    <label htmlFor="code_input">Code: </label>
                     <input
                         id="code_input"
                         type="text"
@@ -55,7 +55,7 @@ export const AddAdoptionRequestStatusCodePage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="status_input">Status:</label>
+                    <label htmlFor="status_input">Status: </label>
                     <input
                         id="status_input"
                         type="text"
@@ -64,7 +64,7 @@ export const AddAdoptionRequestStatusCodePage = () => {
                         onChange={e => setStatus(e.target.value)}
                         required />
                 </div>
-                <input type="submit" value="Add AdoptionRequestStatusCode" />
+                <input type="submit" value="Add Adoption Request Status Code" />
             </fieldset>
         </form>
     );

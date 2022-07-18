@@ -45,11 +45,11 @@ export const AddAdoptionRequestPage = () => {
 
     return (
         <form className="add-row" onSubmit={addAdoptionRequest}>
-            <h1>Add New AdoptionRequestStatusCode</h1>
+            <h1>Add New Adoption Request</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new adoption_request:</legend>
+                <legend>Enter values for new adoption request</legend>
                 <div className="add-row">
-                    <label htmlFor="adopter_id_input">Adopter:</label>
+                    <label htmlFor="adopter_id_input">Adopter: </label>
                     <select id="adopter_id_input" type="number" value={adopter_id} onChange={e => setAdopterId(e.target.value)} required>
                         <option value="1">Angela Montez</option>
                         <option value="2">Benjamin Ling</option>
@@ -58,7 +58,7 @@ export const AddAdoptionRequestPage = () => {
                     </select>
                 </div>
                 <div className="add-row">
-                    <label htmlFor="pet_id_input">Pet:</label>
+                    <label htmlFor="pet_id_input">Pet: </label>
                     <select id="pet_id_input" type="number" value={pet_id} onChange={e => setPetId(e.target.value)} required>
                         <option value="1">Cooper</option>
                         <option value="2">Elsa</option>
@@ -68,7 +68,7 @@ export const AddAdoptionRequestPage = () => {
                     </select>
                 </div>
                 <div className="add-row">
-                    <label htmlFor="processor_input">Processor:</label>
+                    <label htmlFor="processor_input">Processor: </label>
                     <select id="processor_input" type="number" value={processor} onChange={e => setProcessor(e.target.value)} required>
                         <option value="1">Muriel Rashn, Employee Full-Time</option>
                         <option value="2">Marie Cohnan, Employee Part-Time</option>
@@ -78,7 +78,7 @@ export const AddAdoptionRequestPage = () => {
                     </select>
                 </div>
                 <div className="add-row">
-                    <label htmlFor="request_date_input">Request Date:</label>
+                    <label htmlFor="request_date_input">Request Date: </label>
                     <input
                         id="request_date_input"
                         type="text"
@@ -88,7 +88,7 @@ export const AddAdoptionRequestPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="amount_paid_input">Amount Paid:</label>
+                    <label htmlFor="amount_paid_input">Amount Paid: </label>
                     <input
                         id="amount_paid_input"
                         type="number"
@@ -98,14 +98,14 @@ export const AddAdoptionRequestPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="application_status_input">Application Status:</label>
+                    <label htmlFor="application_status_input">Application Status: </label>
                     <select id="application_status_input" type="number" value={application_status} onChange={e => setApplicationStatus(e.target.value)} required>
                         <option value="1">Approved</option>
                         <option value="2">Under Review</option>
                         <option value="3">Denied</option>
                     </select>
                 </div>
-                <input type="submit" value="Add AdoptionRequestStatusCode" />
+                <input type="submit" value="Add Adoption Request" />
             </fieldset>
         </form>
     );

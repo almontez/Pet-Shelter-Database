@@ -36,7 +36,7 @@ export const AddIntakesPage = () => {
         <form className="add-row" onSubmit={addIntake}>
             <h1>Add New Pet</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new pet:</legend>
+                <legend>Enter values for new pet</legend>
                 <div className="add-row">
                     <label htmlFor="pet_species_input">Species: </label>
                     <input
@@ -130,7 +130,7 @@ export const AddIntakesPage = () => {
             </fieldset>
             <h1>Add New Intake</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new intake:</legend>
+                <legend>Enter values for new intake</legend>
                 <div className="add-row">
                     <label htmlFor="pet_id_input">Personnel Code: </label>
                     <input

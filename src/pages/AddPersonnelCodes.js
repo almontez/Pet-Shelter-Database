@@ -22,7 +22,7 @@ export const AddPersonnelCodesPage = () => {
         <form className="add-row" onSubmit={addPersonnelType}>
             <h1>Add New Personnel</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new personnel:</legend>
+                <legend>Enter values for new personnel</legend>
                 <div className="add-row">
                     <label htmlFor="code_input">Code: </label>
                     <input

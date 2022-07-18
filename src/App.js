@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
+import CategoryTableLP from './pages/CategoryTablesLandingPage';
 
 // Adopters
 import BrowseAdoptersPage from './pages/BrowseAdopters';
@@ -122,6 +123,9 @@ function App() {
           </Route>
           <Route path="/add-adoption-request-status-code">
             <AddAdoptionRequestStatusCodePage />
+          </Route>
+          <Route path="/category-tables-landing-page">
+            <CategoryTableLP />
           </Route>
         </div>
       </Router>

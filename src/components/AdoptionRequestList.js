@@ -24,6 +24,8 @@ function AdoptionRequestList({ adoption_requests, onDelete, onEdit }) { //Remove
                     <th>Request Date</th>
                     <th>Amount Paid</th>
                     <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>

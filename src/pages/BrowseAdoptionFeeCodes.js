@@ -65,8 +65,8 @@ function BrowseAdoptionFeeCodesPage({ setAdoptionFeeCodeToEdit }) {
 
     return (
         <>
-            <h2>List of Recorded AdoptionFeeCodes</h2>
-            <Link className="navigation-link" to="/add-adoption-fee-code">Add New AdoptionFeeCode</Link>
+            <h2>List of Recorded Adoption Fee Codes</h2>
+            <Link className="navigation-link" to="/add-adoption-fee-code">Add New Adoption Fee Code</Link>
             <AdoptionFeeCodeList 
                 adoption_fee_codes={adoption_fee_codes} 
                 onDelete={onDelete}>

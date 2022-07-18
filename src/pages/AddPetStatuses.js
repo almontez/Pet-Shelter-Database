@@ -22,7 +22,7 @@ export const AddPetStatusesPage = () => {
         <form className="add-row" onSubmit={addPetStatus}>
             <h1>Add New Pet Status</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new pet status:</legend>
+                <legend>Enter values for new pet status</legend>
                 <div className="add-row">
                     <label htmlFor="code_input">Code: </label>
                     <input

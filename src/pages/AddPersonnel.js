@@ -28,7 +28,7 @@ export const AddPersonnelPage = () => {
         <form className="add-row" onSubmit={addPersonnel}>
             <h1>Add New Personnel</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new personnel:</legend>
+                <legend>Enter values for new personnel</legend>
                 <div className="add-row">
                     <label htmlFor="personnel_type_input">Personnel Type: </label>
                     <input

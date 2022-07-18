@@ -48,9 +48,9 @@ export const AddAdopterPage = () => {
         <form className="add-row" onSubmit={addAdopter}>
             <h1>Add New Adopter</h1>
             <fieldset className="add-row">
-                <legend>Enter values for new adopter:</legend>
+                <legend>Enter values for new adopter</legend>
                 <div className="add-row">
-                    <label htmlFor="first_name_input">First Name:</label>
+                    <label htmlFor="first_name_input">First Name: </label>
                     <input
                         id="first_name_input"
                         type="text"
@@ -60,7 +60,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="last_name_input">Last Name:</label>
+                    <label htmlFor="last_name_input">Last Name: </label>
                     <input
                         id="last_name_input"
                         type="text"
@@ -70,7 +70,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="address_input">Address:</label>
+                    <label htmlFor="address_input">Address: </label>
                     <input
                         id="address_input"
                         type="text"
@@ -80,7 +80,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="phone_number_input">Phone Number:</label>
+                    <label htmlFor="phone_number_input">Phone Number: </label>
                     <input
                         id="phone_number_input"
                         type="text"
@@ -90,7 +90,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="email_input">Email:</label>
+                    <label htmlFor="email_input">Email: </label>
                     <input
                         id="email_input"
                         type="text"
@@ -100,7 +100,7 @@ export const AddAdopterPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="birth_date_input">Birth Date:</label>
+                    <label htmlFor="birth_date_input">Birth Date: </label>
                     <input
                         id="birth_date_input"
                         type="text"

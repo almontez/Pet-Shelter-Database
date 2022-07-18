@@ -37,8 +37,8 @@ function HomePage() {
                 </Link>
             </div>
             <div>
-              <Link className="App-link" to="/manage-category-tables">
-                Manage Category Tables (Goes to Category Tables landing page)
+              <Link className="App-link" to="/category-tables-landing-page">
+                View Category Tables
               </Link>
             </div>
             <div>
