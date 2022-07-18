@@ -1,0 +1,8 @@
+table, th, td {
+  border: 1px solid black;
+}
+
+tr:nth-child(even){background-color:floralwhite;}
+tr:nth-child(odd){background-color:azure;}
+
+tr:hover {background-color:gold;}

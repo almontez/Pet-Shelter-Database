@@ -11,6 +11,7 @@ function HomePage() {
             <p>
               Please select a table to manage!
             </p>
+            <h3>Entity Tables:</h3>
             <div> 
               <Link className="App-link" to="/browse-pets">
                 Browse Pets
@@ -36,19 +37,30 @@ function HomePage() {
                   Browse AdoptionRequests
                 </Link>
             </div>
-            <div>
+            <h3>Category Tables:</h3>
+            {/* <div>              
               <Link className="App-link" to="/category-tables-landing-page">
                 View Category Tables
               </Link>
+            </div> */}
+            <div>
+                <Link className="App-link" to="/browse-personnel-codes">
+                  Browse Personnel Codes
+                </Link>
+            </div>
+            <div>
+                <Link className="App-link" to="/browse-pet-statuses">
+                  Browse Pet Statuses
+                </Link>
             </div>
             <div>
                 <Link className="App-link" to="/browse-adoption-fee-codes">
-                  Browse AdoptionFeeCodes
+                  Browse Adoption Fee Codes
                 </Link>
             </div>
             <div>
                 <Link className="App-link" to="/browse-adoption-request-status-codes">
-                  Browse AdoptionRequestStatusCodes
+                  Browse Adoption Request Status Codes
                 </Link>
             </div>
           </div>
