@@ -4,7 +4,7 @@ import PetRow from './PetsRow';
 function PetsTable({pets, onEdit, onDelete}) {
     return (
         <>
-        <table>
+        <table id="pets-table">
             <thead>
                 <tr>
                     <th>ID</th>
