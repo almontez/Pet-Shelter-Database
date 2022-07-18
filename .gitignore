@@ -1,3 +1,4 @@
+*.7z
 /backup
 package-lock.json
 *.ts
