@@ -1,7 +1,7 @@
 import React from "react";
 import { MdDeleteForever, MdEdit } from 'react-icons/md'; 
 
-function PetRow({pet, deletePet, editPet}) {
+function PetRow({pet, onDelete, onEdit}) {
     return (
         <tr>
             <td>{pet.pet_id}</td>
@@ -14,8 +14,8 @@ function PetRow({pet, deletePet, editPet}) {
             <td>{pet.coat_color}</td>
             <td>{pet.adoption_status}</td>
             <td>{pet.adoption_fee_type}</td>
-            <td><MdEdit onClick={()=>editPet(pet)}/></td>
-            <td><MdDeleteForever onClick={()=>deletePet(pet)}/></td>
+            <td><MdEdit onClick={()=>onEdit(pet)}/></td>
+            <td><MdDeleteForever onClick={()=>onDelete(pet.pet_id)}/></td>
         </tr>
     );
 }

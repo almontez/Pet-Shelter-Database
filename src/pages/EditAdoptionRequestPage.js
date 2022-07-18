@@ -43,7 +43,7 @@ export const EditAdoptionRequestPage = ({ adoptionRequestToEdit }) => {
 
     return (
         <div className="edit-page">
-            <h1>Edit Exercise</h1>
+            <h1>Edit Adoption Request</h1>
             <div className="edit-row">
                 <label id="edit-adopter-id-label" htmlFor="adopter_id_input">Adopter</label>
                 <select id="adopter_id_input" type="number" value={String(adopter_id)} onChange={e => setAdopterId(e.target.value)} required>

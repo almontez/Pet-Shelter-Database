@@ -13,6 +13,7 @@ import AddAdopterPage from './pages/AddAdopterPage';
 import BrowsePetsPage from './pages/BrowsePets';
 import BrowsePetStatusesPage from './pages/BrowsePetStatuses'
 import AddPetStatusesPage from './pages/AddPetStatuses';
+import EditPetsPage from './pages/EditPetsPage';
 
 // Personnel
 import BrowsePersonnelPage from './pages/BrowsePersonnel';
@@ -43,7 +44,7 @@ import EditAdoptionRequestPage from './pages/EditAdoptionRequestPage';
 function App() {
   // FOR UPDATE (applies to Pets and AdoptionRequests)
   const [adoptionRequestToEdit, setAdoptionRequestToEdit] = useState();
-
+  const [petToEdit, setPetToEdit] = useState();
 // Add a route like this for any page that requires UPDATE functionality (applies to Pets and AdoptionRequests)
 /* 
 <Route path="/edit-exercise">
@@ -72,7 +73,10 @@ function App() {
             <AddAdopterPage />
           </Route>
           <Route path="/browse-pets" exact>
-            <BrowsePetsPage  />
+            <BrowsePetsPage setPetToEdit={setPetToEdit} />
+          </Route>
+          <Route path="/edit-pet">
+            <EditPetsPage petToEdit={petToEdit} />
           </Route>
           <Route path="/browse-intakes" exact>
             <BrowseIntakesPage  />
