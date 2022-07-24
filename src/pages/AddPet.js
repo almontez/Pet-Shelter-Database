@@ -35,7 +35,7 @@ export const AddPetsPage = () => {
                     <option value="None">Select Pet Species</option>
                     <option value="Dog">Dog</option>
                     <option value="Cat">Cat</option>
-                </select>
+                    </select>
                 </div>
                 <div className="add-row">
                     <label htmlFor="pet_name_input">Pet Name: </label>

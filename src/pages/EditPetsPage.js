@@ -30,14 +30,12 @@ export const EditPetsPage = ({ petToEdit }) => {
         <fieldset className="add-row">
             <legend>Enter updates for new pet</legend>
             <div className="edit-row">
-                <label htmlFor="pet_species_input">Species: </label>
-                <input
-                    id="pet_species_input"
-                    type="text"
-                    placeholder="Enter pet species here"
-                    value={species}
-                    onChange={e => setSpecies(e.target.value)}
-                    required />
+                    <label htmlFor="pet_species_input">Species: </label>
+                    <select id="pet_input" type="text" value={species} onChange={e => setSpecies(e.target.value)} required>
+                    <option value="None">Select Pet Species</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                </select>
             </div>
             <div className="pet-row">
                 <label htmlFor="pet_name_input">Pet Name: </label>
@@ -64,6 +62,7 @@ export const EditPetsPage = ({ petToEdit }) => {
                 <input
                     id="pet_age_input"
                     type="number"
+                    step="0.01"
                     placeholder="Enter pet age in years here"
                     value={age}
                     onChange={e => setAge(parseInt(e.target.value))}
@@ -71,19 +70,18 @@ export const EditPetsPage = ({ petToEdit }) => {
             </div>
             <div className="edit-row">
                 <label htmlFor="pet_gender_input">Gender: </label>
-                <input
-                    id="pet_gender_input"
-                    type="text"
-                    placeholder="Enter pet gender here"
-                    value={gender}
-                    onChange={e => setGender(e.target.value)}
-                    required />
+                    <select id="pet_gender_input" type="text" value={gender} onChange={e => setGender(e.target.value)} required>
+                        <option value="None">Select Pet Gender</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
             </div>
             <div className="edit-row">
                 <label htmlFor="pet_weight_input">Weight (lbs): </label>
                 <input
                     id="pet_weight_input"
                     type="number"
+                    step="0.01"
                     placeholder="Enter pet weight in lbs here"
                     value={weight}
                     onChange={e => setWeight(parseInt(e.target.value))}
@@ -100,24 +98,23 @@ export const EditPetsPage = ({ petToEdit }) => {
                     required />
             </div>
             <div className="edit-row">
-                <label htmlFor="adoption_status_input">Adoption Status: </label>
-                <input
-                    id="adoption_status_input"
-                    type="text"
-                    placeholder="Enter pet adoption status here"
-                    value={adoption_status}
-                    onChange={e => setAdoptionStatus(e.target.value)}
-                    required />
+                    <label htmlFor="adoption_status_input">Adoption Status: </label>
+                    <select id="adoption_status_input" type="number" value={adoption_status} onChange={e => setAdoptionStatus(e.target.value)} required>
+                        <option value="0">Select Adoption Status</option>
+                        <option value="1">On Hold</option>
+                        <option value="2">Approved for Adoption</option>
+                        <option value="3">Adopted</option>
+                    </select>
             </div>
             <div className="edit-row">
-                <label htmlFor="adoption_fee_type_input">Adoption Fee Type: </label>
-                <input
-                    id="adoption_fee_type_input"
-                    type="text"
-                    placeholder="Enter adoption fee type here"
-                    value={adoption_fee_type}
-                    onChange={e => setAdoptionFeeType(e.target.value)}
-                    required />
+                    <label htmlFor="adoption_fee_type_input">Adoption Fee Type: </label>
+                    <select id="adoption_fee_type_input" type="number" value={adoption_fee_type} onChange={e => setAdoptionFeeType(e.target.value)} required>
+                        <option value="0">Select Adoption Fee Type</option>
+                        <option value="1">Puppy: $250</option>
+                        <option value="2">Kitten: $200</option>
+                        <option value="3">Adult: $150</option>
+                        <option value="4">Senior: $100</option>
+                    </select>
             </div>
         </fieldset>
         <input type="submit" value="Save" />
