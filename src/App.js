@@ -15,6 +15,7 @@ import BrowsePetsPage from './pages/BrowsePets';
 import BrowsePetStatusesPage from './pages/BrowsePetStatuses'
 import AddPetStatusesPage from './pages/AddPetStatuses';
 import EditPetsPage from './pages/EditPetsPage';
+import AddPetsPage from './pages/AddPet';
 
 // Personnel
 import BrowsePersonnelPage from './pages/BrowsePersonnel';
@@ -75,6 +76,9 @@ function App() {
           </Route>
           <Route path="/browse-pets" exact>
             <BrowsePetsPage setPetToEdit={setPetToEdit} />
+          </Route>
+          <Route path="/add-pets" exact>
+            <AddPetsPage />
           </Route>
           <Route path="/edit-pet">
             <EditPetsPage petToEdit={petToEdit} />

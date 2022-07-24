@@ -31,13 +31,15 @@ export const AddPersonnelPage = () => {
                 <legend>Enter values for new personnel</legend>
                 <div className="add-row">
                     <label htmlFor="personnel_type_input">Personnel Type: </label>
-                    <input
-                        id="personnel_type_input"
-                        type="text"
-                        placeholder="Enter personnel type here"
-                        value={personnel_type}
-                        onChange={e => setPersonnelType(e.target.value)}
-                        required />
+                    <select id="personnel_type_input" type="number" value={personnel_type} onChange={e => setPersonnelType(e.target.value)} required>
+                        <option value="0">Select Personnel Type</option>
+                        <option value="1">EFT: Employee Full-Time</option>
+                        <option value="2">EPT: Employee Part-Time</option>
+                        <option value="3">VCT: Volunteer - Cats</option>
+                        <option value="4">VDO: Volunteer - Dogs</option>
+                        <option value="3">VCD: Volunteer - Both</option>
+                        
+                    </select>
                 </div>
                 <div className="add-row">
                     <label htmlFor="job_title_input">Job Title: </label>
@@ -83,8 +85,8 @@ export const AddPersonnelPage = () => {
                     <label htmlFor="phone_number_input">Phone Number: </label>
                     <input
                         id="phone_number_input"
-                        type="text"
-                        placeholder="Enter phone number of adopter here"
+                        type="tel"
+                        placeholder="Enter personnel phone number here"
                         value={phone_number}
                         onChange={e => setPhoneNumber(e.target.value)}
                         required />
@@ -93,8 +95,8 @@ export const AddPersonnelPage = () => {
                     <label htmlFor="email_input">Email: </label>
                     <input
                         id="email_input"
-                        type="text"
-                        placeholder="Enter email of adopter here"
+                        type="email"
+                        placeholder="Enter personnel email here"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         required />
@@ -103,14 +105,14 @@ export const AddPersonnelPage = () => {
                     <label htmlFor="birth_date_input">Birth Date: </label>
                     <input
                         id="birth_date_input"
-                        type="text"
-                        placeholder="Enter birth date of adopter here"
+                        type="date"
+                        placeholder="Enter personnel birth date here"
                         value={birth_date}
                         onChange={e => setBirthDate(e.target.value)}
                         required />
                 </div>
+                </fieldset>
                 <input type="submit" value="Add Personnel" />
-            </fieldset>
         </form>
     );
 }

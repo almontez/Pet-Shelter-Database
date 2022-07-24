@@ -28,7 +28,7 @@ function BrowseIntakesPage() {
         <>
             <h2>List of Recorded Intakes</h2>
 
-            <Link to="/add-intake">Add New Intake</Link>
+            <Link to="/add-pets">Add New Intake</Link>
 
             <IntakeTable
                 intakes={intakes}
