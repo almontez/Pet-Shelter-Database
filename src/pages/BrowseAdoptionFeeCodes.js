@@ -71,6 +71,8 @@ function BrowseAdoptionFeeCodesPage({ setAdoptionFeeCodeToEdit }) {
                 adoption_fee_codes={adoption_fee_codes} 
                 onDelete={onDelete}>
             </AdoptionFeeCodeList>
+            <Link to="/category-tables">Return Category Tables</Link>
+            <br></br>
             <Link className="App-link" to="/">
               Return to Home Page
             </Link>

@@ -12,7 +12,7 @@ function PetFilter() {
                        placeholder="Search for pet by breed"/>
                 <button onClick = {e => { 
                     alert(`You entered: ${attribute}`);
-                    }}>submit</button>
+                    }}>Submit</button>
             </form>
         </>
     );

@@ -35,6 +35,8 @@ function BrowsePetStatusesPage () {
                 onDelete={onDelete}>
             </PetStatusesTable>
 
+            <Link to="/category-tables">Return Category Tables</Link>
+            <br></br>
             <Link to="/">Return to Home Page</Link>
         </>
     );

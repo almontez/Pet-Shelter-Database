@@ -128,7 +128,7 @@ function App() {
           <Route path="/add-adoption-request-status-code">
             <AddAdoptionRequestStatusCodePage />
           </Route>
-          <Route path="/category-tables-landing-page">
+          <Route path="/category-tables">
             <CategoryTableLP />
           </Route>
         </div>

@@ -1,8 +1,13 @@
-table, th, td {
-  border: 1px solid black;
+.App {
+  margin-left: 10px;
 }
 
+table, th, td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+tr th {background-color:whitesmoke;}
 tr:nth-child(even){background-color:floralwhite;}
 tr:nth-child(odd){background-color:azure;}
-
 tr:hover {background-color:gold;}
