@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AdopterList from '../components/AdopterList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import adopters_sample_data from '../data/adopters'; // SAMPLE DATA
+//import adopters_sample_data from '../data/adopters'; // SAMPLE DATA
 
 function BrowseAdoptersPage({ setAdopterToEdit }) {
     
@@ -47,11 +47,32 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
 
     const loadAdopters = async () => {
         //fetch data from the server. For now it fetches from our sample data
-        //const response = await fetch('/browse-adopters');
-        //const data = await response.json();
+        const response = await fetch('/adopters');
+        const data = await response.json();
 
-        const data = adopters_sample_data; // Fetches sample data. Remove this later after implemented server code.
-        console.log(`data: ${data}`);
+        // Citation for following code block
+        // Date: 7/23/2022
+        // Adapted from:
+        // Source URL: https://stackoverflow.com/a/17743990/5715461
+        // Reformat birth_date to MM/DD/YYYY
+        const options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        };
+        for (let i = 0; i < data.length; i++) {
+            let dateFromDb = data[i]['birth_date'];
+            let dateForUi = new Date(dateFromDb).toLocaleString("en", options);
+            data[i]['birth_date'] = dateForUi
+          }
+
+        //const dateFromDb = data[0]['birth_date'];
+        //const dateForUi = new Date(dateFromDb).toLocaleString("en", options);
+        //console.log(`Converted Date: ${dateForUi}`);
+
+        //const data = adopters_sample_data; // Fetches sample data. Remove this later after implemented server code.
+        
+        //console.log(`data: ${data}`);
         setAdopters(data);
     };
 
