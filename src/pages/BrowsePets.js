@@ -35,19 +35,17 @@ function BrowsePetsPage({ setPetToEdit }) {
         <>
             <h2>List of Recorded Pets</h2>
 
-            <Link to="/add-pets">Add New Pet</Link>
-            <br></br>
-
-            <br></br>
             <PetFilter></PetFilter>
             <br></br>
-            
+
+            <Link to="/add-pets">Add New Pet</Link>
+
             <PetsTable                 
                 pets={pets}
                 onEdit={onEdit}
                 onDelete={onDelete}>
             </PetsTable>
- 
+
             <Link to="/">Return to Home Page</Link>
         </>
     );

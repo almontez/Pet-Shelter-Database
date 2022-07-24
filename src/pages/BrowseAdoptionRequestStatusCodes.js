@@ -71,6 +71,8 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
                 adoption_request_status_codes={adoption_request_status_codes} 
                 onDelete={onDelete}>
             </AdoptionRequestStatusCodeList>
+            <Link to="/category-tables">Return Category Tables</Link>
+            <br></br>
             <Link className="App-link" to="/">
               Return to Home Page
             </Link>
