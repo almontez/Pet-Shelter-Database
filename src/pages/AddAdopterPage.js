@@ -27,10 +27,10 @@ export const AddAdopterPage = () => {
         alert(`Added a new adopter: ${JSON.stringify(newAdopter)}`);
 
         // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET
-        /*
-        const response = await fetch('/adopters', {
+        
+        const response = await fetch('/adopter', {
             method: 'POST',
-            body: JSON.stringify(newAdopter),
+            body: JSON.stringify(newAdopter), //newAdopter
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -40,7 +40,7 @@ export const AddAdopterPage = () => {
         } else {
             alert(`Failed to add adopter, status code = ${response.status}`);
         }
-        */
+        
         history.push("/browse-adopters");
     };
 

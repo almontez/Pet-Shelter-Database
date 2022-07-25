@@ -62,6 +62,7 @@ function App() {
         <h1>Pet Shelter Database</h1>
         <p>Description</p>
       </header>
+      {/*For production, remove exact in each Route and use this: <Router basename="/~lingbe"> */}
       <Router>
         <Navigation/>
         <div className="App-header">  
