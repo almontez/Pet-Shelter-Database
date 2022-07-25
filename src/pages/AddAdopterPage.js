@@ -104,7 +104,7 @@ export const AddAdopterPage = () => {
                     <input
                         id="birth_date_input"
                         type="text"
-                        placeholder="Enter birth date of adopter here"
+                        placeholder="Enter birth date of adopter as YYYY-MM-DD"
                         value={birth_date}
                         onChange={e => setBirthDate(e.target.value)}
                         required />

@@ -9,6 +9,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 PORT        = 7000; // 9124;                 // Set a port number at the top so it's easy to change in the future
 
+var cors = require('cors')
+app.use(cors())
+
 // Database
 var db = require('./database/db-connector');
 
@@ -51,6 +54,7 @@ app.get('/', function(req, res)
         });
     });
 	
+// READ all Adopters
 app.get('/adopters', function(req, res)
     {
         // Define our queries
@@ -61,13 +65,65 @@ app.get('/adopters', function(req, res)
         // SELECT * FROM Adopters
         db.pool.query(query1, function (err, results, fields){
 			
-			console.log(`All rows from Adopter\n`);
-			console.log(results[0]);
-			console.log(results[0]['first_name']);
+			//console.log(`All rows from Adopter\n`);
+			//console.log(results[0]);
+			//console.log(results[0]['first_name']);
 			res.send(JSON.stringify(results));
 
         });
     });
+	
+	
+// CREATE new Adopter
+app.post('/adopter', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    console.log(`req.body received for new adopter:\n ${JSON.stringify(data)}`);
+    console.log(`req.query received for new adopter:\n ${JSON.stringify(req.query)}`);
+
+    console.log(`first_name: ${data['first_name']}`);
+    console.log(`last_name: ${data['last_name']}`);
+    console.log(`address: ${data['address']}`);
+    console.log(`phone_number: ${data['phone_number']}`);
+    console.log(`email: ${data['email']}`);
+    console.log(`birth_date: ${data['birth_date']}`);
+
+    // Capture NULL values
+    // let homeworld = parseInt(data['input-homeworld']);
+    // if (isNaN(homeworld))
+    // {
+    //     homeworld = 'NULL'
+    // }
+
+    // let age = parseInt(data['input-age']);
+    // if (isNaN(age))
+    // {
+    //     age = 'NULL'
+    // }
+
+    // Create the query and run it on the database
+    
+    //query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
+    query_insert_adopter = `INSERT INTO Adopters (first_name, last_name, address, phone_number, email, birth_date) VALUES ('${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}')`;
+    db.pool.query(query_insert_adopter, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.sendStatus(201);
+        }
+    })
+})
 
 /*
     LISTENER
