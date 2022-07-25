@@ -23,8 +23,8 @@ export const AddAdopterPage = () => {
         const newAdopter = { first_name, last_name, address, phone_number, email, birth_date };
 
         //DEBUG MESSAGE
-        console.log(`Added a new adopter: ${JSON.stringify(newAdopter)}`)
-        alert(`Added a new adopter: ${JSON.stringify(newAdopter)}`);
+        //console.log(`Added a new adopter: ${JSON.stringify(newAdopter)}`)
+        //alert(`Added a new adopter: ${JSON.stringify(newAdopter)}`);
 
         // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET
         
@@ -36,7 +36,7 @@ export const AddAdopterPage = () => {
             },
         });
         if(response.status === 201) {
-            alert("Successfully added the adopter!");
+            alert(`Successfully added the adopter!:\n${JSON.stringify(newAdopter)}`);
         } else {
             alert(`Failed to add adopter, status code = ${response.status}`);
         }

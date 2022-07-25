@@ -15,19 +15,28 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
     const onDelete = async (_id) => {
 
         //DEBUG MESSAGE
-        console.log(`Clicked Delete for adopter_id: ${_id}`)
-        alert(`Clicked Delete for adopter_id: ${_id}`);
+        //console.log(`Clicked Delete for adopter_id: ${_id}`)
+        //alert(`Clicked Delete for adopter_id: ${_id}`);
 
-        /*// TO BE IMPLEMENTED: Makes DELETE method to server
-        const response = await fetch(`/adopters/${_id}`, { method: 'DELETE' });
+        // TO BE IMPLEMENTED: Makes DELETE method request to server
+        //const response = await fetch(`/adopter/${_id}`, { method: 'DELETE' });
+        const response = await fetch('/adopter', {
+            method: 'DELETE',
+            body: JSON.stringify({adopter_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         console.log(response.status);
         if (response.status === 204) {
-            const newAdopters = adopters.filter(m => m._id !== _id);
+            console.log(`adopters list before deleting ${_id}:\n${JSON.stringify(adopters)}`);
+            const newAdopters = adopters.filter(m => m.adopter_id !== _id);
             setAdopters(newAdopters);
+            //console.log(`adopters list after deleting ${_id}:\n${JSON.stringify(adopters)}`);
         } else {
             console.error(`Failed to delete Adopter with id = ${_id}, status code = ${response.status}`)
         }
-        */
+        
     }
 
 // Used for UPDATE
@@ -81,8 +90,8 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
         loadAdopters();
     }, []);
 
-    console.log("Hello World from BrowseAdopters");
-    console.log(`adopters data in BrowseAdopters: ${JSON.stringify(adopters)}`);
+    //console.log("Hello World from BrowseAdopters");
+    //console.log(`adopters data in BrowseAdopters: ${JSON.stringify(adopters)}`);
 
     return (
         <>

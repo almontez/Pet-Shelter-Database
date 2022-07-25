@@ -10,7 +10,7 @@ import Adopter from './Adopter';
 function AdopterList({ adopters, onDelete }) { //Removed onEdit (use for UPDATE), onEdit
     
     //DEBUG
-    console.log(`adopters data in AdoptersList: ${JSON.stringify(adopters)}`);
+    //console.log(`adopters data in AdoptersList: ${JSON.stringify(adopters)}`);
 
     return (
         <table id="adopters">

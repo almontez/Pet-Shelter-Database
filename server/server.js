@@ -7,7 +7,7 @@ var express = require('express');   // We are using the express library for the 
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-PORT        = 7000; // 9124;                 // Set a port number at the top so it's easy to change in the future
+const PORT        = 7000; // 9124;                 // Set a port number at the top so it's easy to change in the future
 
 var cors = require('cors')
 app.use(cors())
@@ -23,13 +23,17 @@ app.get('/home', function(req, res)                 // This is the basic syntax 
         res.send("The server is running!");     // This function literally sends the string "The server is running!" to the computer
     });                                         // requesting the web site.
 
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for Adopters
+// ---------------------------------------------------------------------------------------------------------------------------------
 app.get('/', function(req, res)
     {
         // Define our queries
-        query1 = 'DROP TABLE IF EXISTS diagnostic;';
-        query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-        query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
-        query4 = 'SELECT * FROM diagnostic;';
+        const query1 = 'DROP TABLE IF EXISTS diagnostic;';
+        const query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
+        const query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
+        const query4 = 'SELECT * FROM diagnostic;';
 
         // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
 
@@ -58,16 +62,18 @@ app.get('/', function(req, res)
 app.get('/adopters', function(req, res)
     {
         // Define our queries
-        query1 = 'SELECT * FROM Adopters;';
+        const selectAllAdoptersQuery = 'SELECT * FROM Adopters;';
 
         // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
 
         // SELECT * FROM Adopters
-        db.pool.query(query1, function (err, results, fields){
+        db.pool.query(selectAllAdoptersQuery, function (err, results, fields){
 			
+            //DEBUG MESSAGE
 			//console.log(`All rows from Adopter\n`);
 			//console.log(results[0]);
 			//console.log(results[0]['first_name']);
+
 			res.send(JSON.stringify(results));
 
         });
@@ -77,17 +83,17 @@ app.get('/adopters', function(req, res)
 // CREATE new Adopter
 app.post('/adopter', function(req, res){
     // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
+    const data = req.body;
 
-    console.log(`req.body received for new adopter:\n ${JSON.stringify(data)}`);
-    console.log(`req.query received for new adopter:\n ${JSON.stringify(req.query)}`);
-
-    console.log(`first_name: ${data['first_name']}`);
-    console.log(`last_name: ${data['last_name']}`);
-    console.log(`address: ${data['address']}`);
-    console.log(`phone_number: ${data['phone_number']}`);
-    console.log(`email: ${data['email']}`);
-    console.log(`birth_date: ${data['birth_date']}`);
+    //DEBUG MESSAGE
+    // console.log(`req.body received for new adopter:\n ${JSON.stringify(data)}`);
+    // console.log(`req.query received for new adopter:\n ${JSON.stringify(req.query)}`);
+    // console.log(`first_name: ${data['first_name']}`);
+    // console.log(`last_name: ${data['last_name']}`);
+    // console.log(`address: ${data['address']}`);
+    // console.log(`phone_number: ${data['phone_number']}`);
+    // console.log(`email: ${data['email']}`);
+    // console.log(`birth_date: ${data['birth_date']}`);
 
     // Capture NULL values
     // let homeworld = parseInt(data['input-homeworld']);
@@ -105,8 +111,8 @@ app.post('/adopter', function(req, res){
     // Create the query and run it on the database
     
     //query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
-    query_insert_adopter = `INSERT INTO Adopters (first_name, last_name, address, phone_number, email, birth_date) VALUES ('${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}')`;
-    db.pool.query(query_insert_adopter, function(error, rows, fields){
+    const insertAdopterQuery = `INSERT INTO Adopters (first_name, last_name, address, phone_number, email, birth_date) VALUES ('${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}')`;
+    db.pool.query(insertAdopterQuery, function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -124,6 +130,37 @@ app.post('/adopter', function(req, res){
         }
     })
 })
+
+app.delete('/adopter', function(req, res){                                                                
+    let data = req.body;
+    //let personID = parseInt(data._id);
+    //let deleteBsg_Cert_People = `DELETE FROM bsg_cert_people WHERE pid = ?`;
+    //let deleteBsg_People= `DELETE FROM bsg_people WHERE id = ?`;
+
+    let adopter_id = parseInt(data.adopter_id);
+    let deleteAdopterQuery = `DELETE FROM Adopters WHERE adopter_id = ${adopter_id}`;
+
+    //DEBUG MESSAGE
+    //console.log(`req.body received for delete adopter: ${JSON.stringify(data)}`);
+    //console.log(`adopter_id received for delete adopter: ${adopter_id}`);
+    //res.sendStatus(201);
+  
+          // Run the delete query
+          db.pool.query(deleteAdopterQuery, function(error, rows, fields){
+              if (error) {
+  
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error);
+                res.sendStatus(400);
+              }
+  
+              else
+              {
+                res.sendStatus(204);
+              }
+            }
+        )
+});
 
 /*
     LISTENER
