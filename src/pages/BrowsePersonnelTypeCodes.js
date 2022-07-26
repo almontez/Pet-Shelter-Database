@@ -6,24 +6,46 @@ import { useHistory } from 'react-router-dom';
 import personnelCodeData from '../data/personnelTypeCodesData'; // SAMPLE DATA
 
 function BrowsePersonnelCodesPage () {
-    // TODO: Update JS CODE using sql queried data. Currently only loads sample data.
-
+    
+    // DESCRIBE ME!
     const [personnel_codes, setPersonnelCodes] = useState([]);
     const history = useHistory();
 
+    // Remove Personnel Code instance from PersonnelTypeCodes Table
     const onDelete = async(_id) => {
-        alert(`Clicked Delete for Personnel_Code_id: ${_id}`);
-    };
+        // Get personnel_type_id from delete route in server.js
+        const response = await fetch('/personnel-codes', {
+            method: 'DELETE',
+            body: JSON.stringify({personnel_type_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 204) {
+            // For the record: Request Successfully Fulfilled
+            console.log(`Status Code: ${response.status}. Deleting Personnel Code with id = ${_id}`);
+
+            // Generate new pets list for table
+            const newPersonnelCodesList = personnel_codes.filter(m => m.personnel_type_id !== _id);
+            setPersonnelCodes(newPersonnelCodesList);
+        } else {
+            // For the record: Log error
+            console.error(`Status Code: ${response.status}. Failed to delete Personnel Code with id = ${_id}`);
+        }
+    }; 
 
     const loadCodes = async() => {
-        // fetches data using server route to Pets table in DB 
-       const response = await fetch('/personnel-codes');
-       const data = await response.json();
-           
+         // fetch PersonnelTypeCodes data [from DB] using READ route in server.js  
+        const response = await fetch('/personnel-codes');
+        const data = await response.json();
+        
+        // load data into personnel_codes variable 
         setPersonnelCodes(data)
     };
 
     useEffect(() => {
+        // load data into Personnel Codes UI table
         loadCodes();
     }, []);
 

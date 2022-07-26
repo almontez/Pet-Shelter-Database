@@ -7,14 +7,34 @@ import { useHistory } from 'react-router-dom';
 import PetFilter from '../components/PetFilter';
 
 function BrowsePetsPage({ setPetToEdit }) {
-    // TODO: Update JS CODE using sql queried data. Currently only loads sample data
-
+    
+    // DESCRIBE ME!!!
     const [pets, setPets] = useState([]);
     const [filter, setFilter] = useState([]);
     const history = useHistory();
 
+    // Remove Pet instance from Pets Table
     const onDelete = async(_id) => {
-        alert(`Clicked Delete for Pet_id: ${_id}`);
+        // Get pet_id from delete route in server.js
+        const response = await fetch('/pets', {
+            method: 'DELETE',
+            body: JSON.stringify({pet_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 204) {
+            // For the record: Request Successfully Fulfilled
+            console.log(`Status Code: ${response.status}. Deleting Pet with id = ${_id}`);
+
+            // Generate new pets list for table
+            const newPetList = pets.filter(m => m.pet_id !== _id);
+            setPets(newPetList);
+        } else {
+            // For the record: Log error
+            console.error(`Status Code: ${response.status}. Failed to delete Pet with id = ${_id}`);
+        }
     }; 
 
     const onEdit = async petToEdit => {
@@ -23,14 +43,16 @@ function BrowsePetsPage({ setPetToEdit }) {
     };
 
     const loadPets = async() => {
-        // fetches data using server route to Pets table in DB 
+        // fetch Pets data [from DB] using READ route in server.js  
         const response = await fetch('/pets');
         const data = await response.json();
-        
+
+        // load data into pets variable
         setPets(data);
     };
 
     useEffect(() => {
+        // load all pets data into UI table
         loadPets();
     }, []);
 

@@ -6,24 +6,46 @@ import { useHistory } from 'react-router-dom';
 import petStatusesData from '../data/petStatusesData'; // SAMPLE DATA
 
 function BrowsePetStatusesPage () {
-    // TODO: Update JS CODE using sql queried data. Currently only loads sample data.
-
+    
+    // DESCRIBE ME
     const [pet_statuses, setPetStatuses] = useState([]);
     const history = useHistory();
 
+    // Remove PetStatus instance from PetStatuses Table
     const onDelete = async(_id) => {
-        alert(`Clicked Delete for Pet_status_id: ${_id}`);
-    };
+        // Get pet_status_id from delete route in server.js
+        const response = await fetch('/pet-statuses', {
+            method: 'DELETE',
+            body: JSON.stringify({pet_status_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 204) {
+            // For the record: Request Successfully Fulfilled
+            console.log(`Status Code: ${response.status}. Deleting Pet Status with id = ${_id}`);
+
+            // Generate new pets list for table
+            const newPetStatusesList = pet_statuses.filter(m => m.pet_status_id !== _id);
+            setPetStatuses(newPetStatusesList);
+        } else {
+            // For the record: Log error
+            console.error(`Status Code: ${response.status}. Failed to delete Pet Status with id = ${_id}`);
+        }
+    }; 
 
     const loadStatuses = async() => {
-       // fetches data using server route to Pets table in DB 
-       const response = await fetch('/pet-statuses');
-       const data = await response.json();
-       
+        // fetch PetStatuses data [from DB] using READ route in server.js  
+        const response = await fetch('/pet-statuses');
+        const data = await response.json();
+        
+        // load data into pet_statuses variable
         setPetStatuses(data)
     };
 
     useEffect(() => {
+        // load all pet statuses data into UI table
         loadStatuses();
     }, []);
 

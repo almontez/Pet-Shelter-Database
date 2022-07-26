@@ -6,24 +6,46 @@ import { useHistory } from 'react-router-dom';
 import intakeData from '../data/intakeData'; // SAMPLE DATA
 
 function BrowseIntakesPage() {
-    // TODO: Update JS CODE using sql queried data. Currently only loads sample data.
-
+    
+    // DESCRIBE ME!
     const [intakes, setIntakes] = useState([]);
     const history = useHistory();
 
+    // Remove Intake instance from Intakes table
     const onDelete = async(_id) => {
-        alert(`Clicked Delete for Intake_id: ${_id}`);
+        // Get intake_id from delete route in server.js
+        const response = await fetch('/intakes', {
+            method: 'DELETE',
+            body: JSON.stringify({intake_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 204) {
+            // For the record: Request Successfully Fulfilled
+            console.log(`Status Code: ${response.status}. Deleting Intake with id = ${_id}`);
+
+            // Generate new pets list for table
+            const newIntakesList = intakes.filter(m => m.intake_id !== _id);
+            setIntakes(newIntakesList);
+        } else {
+            // For the record: Log error
+            console.error(`Status Code: ${response.status}. Failed to delete Intake with id = ${_id}`);
+        } 
     };
 
     const loadIntakes = async() => {
-       // fetches data using server route to Pets table in DB 
-       const response = await fetch('/intakes');
-       const data = await response.json();
-       
+        // fetch Intakes data [from DB] using READ route in server.js 
+        const response = await fetch('/intakes');
+        const data = await response.json();
+        
+        // load data into intakes variable
         setIntakes(data);
     };
 
     useEffect(() => {
+        // load all intakes data into UI table
         loadIntakes();
     }, []);
 

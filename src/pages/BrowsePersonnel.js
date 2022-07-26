@@ -6,24 +6,46 @@ import { useHistory } from 'react-router-dom';
 import personnelData from '../data/personnelData'; // SAMPLE DATA
 
 function BrowsePersonnelPage() {
-    // TODO: Update JS CODE using sql queried data. Currently only loads sample data
     
+    // DESCRIBE ME!
     const [personnel, setPersonnel] = useState([]);
     const history = useHistory();
 
+    // Remove Personnel instance from Personnel Table
     const onDelete = async(_id) => {
-        alert(`Clicked Delete for Personnel_id: ${_id}`);
+        // Get personnel_id from delete route in server.js
+        const response = await fetch('/personnel', {
+            method: 'DELETE',
+            body: JSON.stringify({personnel_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 204) {
+            // For the record: Request Successfully Fulfilled
+            console.log(`Status Code: ${response.status}. Deleting Personnel with id = ${_id}`);
+
+            // Generate new pets list for table
+            const newPersonnelList = personnel.filter(m => m.personnel_id !== _id);
+            setPersonnel(newPersonnelList);
+        } else {
+            // For the record: Log error
+            console.error(`Status Code: ${response.status}. Failed to delete Personnel with id = ${_id}`);
+        }
     };
 
     const loadPersonnel = async() => {
-        // fetches data using server route to Personnel table in DB 
+        // fetch Personnel data [from DB] using READ route in server.js
         const response = await fetch('/personnel');
         const data = await response.json();
 
+        // load data into personnel variable
         setPersonnel(data);
     };
 
     useEffect(() => {
+        // load all personnel data into UI table
         loadPersonnel();
     }, []);
 

@@ -5,7 +5,7 @@
 */
 var express = require('express');      // We are using the express library for the web server
 var app     = express();               // We need to instantiate an express object to interact with the server in our code
-const PORT  = 7000; // 9124;     // Set a port number at the top so it's easy to change in the future
+const PORT  = 7000; // 9124;           // Set a port number at the top so it's easy to change in the future
 var cors    = require('cors')
 
 app.use(cors())
@@ -18,7 +18,7 @@ var db = require('./database/db-connector');
 /*
     ROUTES
 */
-app.get('/home', function(req, res)                 // This is the basic syntax for what is called a 'route'
+app.get('/home', function(req, res)             // This is the basic syntax for what is called a 'route'
     {
         res.send("The server is running!");     // This function literally sends the string "The server is running!" to the computer
     });                                         // requesting the web site.
@@ -191,11 +191,10 @@ app.get('/adoption-requests', function(req, res)
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Pets
 // ---------------------------------------------------------------------------------------------------------------------------------
-	
 // READ Route: Get all data from Pets Table
 app.get('/pets', function(req, res)
     {
-        // Define query 
+        // Define query // Update this query later [should match one from DML file?]
         const selectAllPetsQuery = 'SELECT * FROM Pets;';
 
         // Execute every query in an asynchronous manner
@@ -206,11 +205,39 @@ app.get('/pets', function(req, res)
         });
     });
 
+// Delete Route for Pets by pet_id
+app.delete('/pets', function(req, res) 
+    {                
+        // get pet_id from user request (req)                                                
+        let data = req.body;
+        let pet_id = parseInt(data.pet_id);
+
+        // SQL query 
+        const deletePetInstanceQuery = `DELETE FROM Pets WHERE pet_id = ${pet_id}`;
+
+        // Run delete query
+        db.pool.query(deletePetInstanceQuery, function(error, rows, fields)
+            {
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong
+                    console.log(error);
+                    
+                    // Send HTTP response 400 indicating a bad request to user
+                    res.sendStatus(400);
+
+                } else {
+                    // Request Successfully Fulfilled
+                    res.sendStatus(204);
+
+                }
+            }
+        );
+});
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Personnel
 // ---------------------------------------------------------------------------------------------------------------------------------
-	
-// READ Route: Get all data from Pets Table
+// READ Route: Get all data from Personnel Table
 app.get('/personnel', function(req, res)
     {
         // Define query 
@@ -224,11 +251,39 @@ app.get('/personnel', function(req, res)
         });
     });
 
+// Delete Route for Personnel by personnel_id // ERROR: Request is returning undefined for personnel_id
+app.delete('/personnel', function(req, res) 
+    {                
+        // get personnel_id from user request (req)                                             
+        let data = req.body;
+        console.log(data.personnel_id);
+        let personnel_id = parseInt(data.personnel_id);
+
+        // SQL query 
+        const deletePersonnelInstanceQuery = `DELETE FROM Personnel WHERE personnel_id = ${personnel_id}`;
+
+        // Run delete query
+        db.pool.query(deletePersonnelInstanceQuery, function(error, rows, fields)
+            {
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong
+                    console.log(error);
+                    
+                    // Send HTTP response 400 indicating a bad request to user
+                    res.sendStatus(400);
+
+                } else {
+                    // Request successfully fulfilled
+                    res.sendStatus(204);
+                }
+            }
+        );
+});
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for PersonnelCodes
 // ---------------------------------------------------------------------------------------------------------------------------------
-	
-// READ Route: Get all data from Pets Table
+// READ Route: Get all data from PersonnelCodes Table
 app.get('/personnel-codes', function(req, res)
     {
         // Define query 
@@ -242,11 +297,40 @@ app.get('/personnel-codes', function(req, res)
         });
     });
 
+// Delete Route for PersonnelTypeCodes by personnel_type_id // ERROR: Request is returning undefined for personnel_type_id
+app.delete('/personnel-codes', function(req, res) 
+    {                
+        // get personnel_type_id from user request (req)                                                
+        let data = req.body;
+        console.log(data.personnel_type_id)
+        let code_id = parseInt(data.personnel_type_id);
+
+        // SQL query 
+        const deletePersonnelCodeQuery = `DELETE FROM PersonnelTypeCodes WHERE personnel_type_id = ${code_id}`;
+
+        // Run delete query
+        db.pool.query(deletePersonnelCodeQuery, function(error, rows, fields)
+            {
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong
+                    console.log(error);
+                    
+                    // Send HTTP response 400 indicating a bad request to user
+                    res.sendStatus(400);
+
+                } else {
+                    // Request Successfully Fulfilled 
+                    res.sendStatus(204);
+
+                }
+            }
+        );
+});
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Intakes
 // ---------------------------------------------------------------------------------------------------------------------------------
-	
-// READ Route: Get all data from Pets Table
+// READ Route: Get all data from Intakes Table
 app.get('/intakes', function(req, res)
     {
         // Define query 
@@ -260,11 +344,39 @@ app.get('/intakes', function(req, res)
         });
     });
 
+// Delete Route for Intakes by inake_id
+app.delete('/intakes', function(req, res) 
+    {                
+        // get pet_id from user request (req)                                                
+        let data = req.body;
+        let intake_id = parseInt(data.intake_id);
+
+        // SQL query 
+        const deleteIntakeInstanceQuery = `DELETE FROM Intakes WHERE intake_id = ${intake_id}`;
+
+        // Run delete query
+        db.pool.query(deleteIntakeInstanceQuery, function(error, rows, fields)
+            {
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong
+                    console.log(error);
+                    
+                    // Send HTTP response 400 indicating a bad request to user
+                    res.sendStatus(400);
+
+                } else {
+                    // Request successfully fulfilled
+                    res.sendStatus(204);
+
+                }
+            }
+        )
+});
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for PetStatuses
 // ---------------------------------------------------------------------------------------------------------------------------------
-	
-// READ Route: Get all data from Pets Table
+// READ Route: Get all data from PetStatuses Table
 app.get('/pet-statuses', function(req, res)
     {
         // Define query 
@@ -277,6 +389,35 @@ app.get('/pet-statuses', function(req, res)
 
         });
     });
+
+// Delete Route for Pets by pet_id // ERROR: Request is returning undefined for pet_status_id
+app.delete('/pet-statuses', function(req, res) 
+    {                
+        // get _id from user request (req)                                                
+        let data = req.body;
+        let status_id = parseInt(data.pet_status_id);
+
+        // SQL query 
+        const deletePetStatusQuery = `DELETE FROM PetStatuses WHERE pet_status_id = ${status_id}`;
+
+        // Run delete query
+        db.pool.query(deletePetStatusQuery, function(error, rows, fields)
+            {
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong
+                    console.log(error);
+                    
+                    // Send HTTP response 400 indicating a bad request to user
+                    res.sendStatus(400);
+
+                } else {
+                    // Request Successfully Fulfilled
+                    res.sendStatus(204);
+
+                }
+            }
+        );
+});
 
 
 /*
