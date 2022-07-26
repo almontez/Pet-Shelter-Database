@@ -16,7 +16,10 @@ function BrowsePersonnelCodesPage () {
     };
 
     const loadCodes = async() => {
-        const data = personnelCodeData
+        // fetches data using server route to Pets table in DB 
+       const response = await fetch('/personnel-codes');
+       const data = await response.json();
+           
         setPersonnelCodes(data)
     };
 

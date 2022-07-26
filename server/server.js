@@ -3,14 +3,14 @@
 /*
     SETUP
 */
-var express = require('express');   // We are using the express library for the web server
-var app     = express();            // We need to instantiate an express object to interact with the server in our code
+var express = require('express');      // We are using the express library for the web server
+var app     = express();               // We need to instantiate an express object to interact with the server in our code
+const PORT  = 7000; // 9124;     // Set a port number at the top so it's easy to change in the future
+var cors    = require('cors')
+
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-const PORT        = 7000; // 9124;                 // Set a port number at the top so it's easy to change in the future
-
-var cors = require('cors')
-app.use(cors())
 
 // Database
 var db = require('./database/db-connector');
@@ -161,6 +161,97 @@ app.delete('/adopter', function(req, res){
             }
         )
 });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for Pets
+// ---------------------------------------------------------------------------------------------------------------------------------
+	
+// READ Route: Get all data from Pets Table
+app.get('/pets', function(req, res)
+    {
+        // Define query 
+        const selectAllPetsQuery = 'SELECT * FROM Pets;';
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectAllPetsQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for Personnel
+// ---------------------------------------------------------------------------------------------------------------------------------
+	
+// READ Route: Get all data from Pets Table
+app.get('/personnel', function(req, res)
+    {
+        // Define query 
+        const selectAllPersonnelQuery = 'SELECT * FROM Personnel;';
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectAllPersonnelQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for PersonnelCodes
+// ---------------------------------------------------------------------------------------------------------------------------------
+	
+// READ Route: Get all data from Pets Table
+app.get('/personnel-codes', function(req, res)
+    {
+        // Define query 
+        const selectAllPersonnelCodesQuery = 'SELECT * FROM PersonnelTypeCodes;';
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectAllPersonnelCodesQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for Intakes
+// ---------------------------------------------------------------------------------------------------------------------------------
+	
+// READ Route: Get all data from Pets Table
+app.get('/intakes', function(req, res)
+    {
+        // Define query 
+        const selectAllIntakesQuery = 'SELECT * FROM Intakes;';
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectAllIntakesQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for PetStatuses
+// ---------------------------------------------------------------------------------------------------------------------------------
+	
+// READ Route: Get all data from Pets Table
+app.get('/pet-statuses', function(req, res)
+    {
+        // Define query 
+        const selectAllPetStatusesQuery = 'SELECT * FROM PetStatuses;';
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectAllPetStatusesQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
 
 /*
     LISTENER

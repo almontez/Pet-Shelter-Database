@@ -16,7 +16,10 @@ function BrowsePetStatusesPage () {
     };
 
     const loadStatuses = async() => {
-        const data = petStatusesData
+       // fetches data using server route to Pets table in DB 
+       const response = await fetch('/pet-statuses');
+       const data = await response.json();
+       
         setPetStatuses(data)
     };
 

@@ -4,9 +4,9 @@ import { MdDeleteForever } from 'react-icons/md';
 function PersonnelRow({ personnel, onDelete }) {
     return (
         <tr>
-            <td>{personnel.pid}</td>
-            <td>{personnel.ptype}</td>
-            <td>{personnel.title}</td>
+            <td>{personnel.personnel_id}</td>
+            <td>{personnel.personnel_type}</td>
+            <td>{personnel.job_title}</td>
             <td>{personnel.first_name}</td>
             <td>{personnel.last_name}</td>
             <td>{personnel.address}</td>

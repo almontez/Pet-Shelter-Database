@@ -16,8 +16,11 @@ function BrowsePersonnelPage() {
     };
 
     const loadPersonnel = async() => {
-        const data = personnelData
-        setPersonnel(data)
+        // fetches data using server route to Personnel table in DB 
+        const response = await fetch('/personnel');
+        const data = await response.json();
+
+        setPersonnel(data);
     };
 
     useEffect(() => {

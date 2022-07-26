@@ -16,8 +16,11 @@ function BrowseIntakesPage() {
     };
 
     const loadIntakes = async() => {
-        const data = intakeData
-        setIntakes(data)
+       // fetches data using server route to Pets table in DB 
+       const response = await fetch('/intakes');
+       const data = await response.json();
+       
+        setIntakes(data);
     };
 
     useEffect(() => {

@@ -7,7 +7,7 @@ function PetsTable({pets, onEdit, onDelete}) {
         <table id="pets-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Pet ID</th>
                     <th>Species</th>
                     <th>Name</th>
                     <th>Breed</th>

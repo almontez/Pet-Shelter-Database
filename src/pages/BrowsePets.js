@@ -3,7 +3,7 @@ import PetsTable from '../components/PetsTable';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import petsData from '../data/petsData'; //sample data
+//import petsData from '../data/petsData'; // sample data
 import PetFilter from '../components/PetFilter';
 
 function BrowsePetsPage({ setPetToEdit }) {
@@ -23,8 +23,11 @@ function BrowsePetsPage({ setPetToEdit }) {
     };
 
     const loadPets = async() => {
-        const data = petsData
-        setPets(data)
+        // fetches data using server route to Pets table in DB 
+        const response = await fetch('/pets');
+        const data = await response.json();
+        
+        setPets(data);
     };
 
     useEffect(() => {

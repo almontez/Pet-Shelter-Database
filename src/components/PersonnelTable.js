@@ -6,7 +6,7 @@ function PersonnelTable( { personnel, onDelete }) {
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Personnel ID</th>
                     <th>Personnel Type</th>
                     <th>Job Title</th>
                     <th>First Name</th>
