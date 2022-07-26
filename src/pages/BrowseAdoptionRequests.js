@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import AdoptionRequestList from '../components/AdoptionRequestList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import adoption_requests_sample_data from '../data/adoption_requests'; // SAMPLE DATA
+import { reformatDate } from './utils/helpers.js'
+//import adoption_requests_sample_data from '../data/adoption_requests'; // SAMPLE DATA
 
 function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
     
@@ -52,11 +53,13 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
 
     const loadAdoptionRequests = async () => {
         //fetch data from the server. For now it fetches from our sample data
-        //const response = await fetch('/adoption-requests');
-        //const data = await response.json();
+        const response = await fetch('/adoption-requests');
+        const data = await response.json();
 
-        const data = adoption_requests_sample_data; // Fetches sample data. Remove this later after implemented server code.
-        console.log(`data: ${data}`);
+        reformatDate(data, 'request_date');
+
+        //const data = adoption_requests_sample_data; // Fetches sample data. Remove this later after implemented server code.
+        //console.log(`data: ${data}`);
         setAdoptionRequests(data);
     };
 
@@ -65,7 +68,7 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
         loadAdoptionRequests();
     }, []);
 
-    console.log("Hello World from BrowseAdoptionRequests");
+    //console.log("Hello World from BrowseAdoptionRequests");
     console.log(`adoption_requests data in BrowseAdoptionRequests: ${JSON.stringify(adoption_requests)}`);
 
     return (

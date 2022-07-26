@@ -18,7 +18,7 @@ function AdoptionRequest({ adoption_request, onDelete, onEdit }) { //Removed OnE
             <td>{adoption_request.processor}</td>
             <td>{adoption_request.request_date}</td>
             <td>{adoption_request.amount_paid}</td>
-            <td>{adoption_request.status}</td>
+            <td>{adoption_request.request_status}</td>
             <td>< MdEdit onClick={() => onEdit(adoption_request)}/></td>
             <td>< MdDeleteForever onClick={() => onDelete(adoption_request.adopter_pet_id)}/></td>
         </tr>

@@ -23,7 +23,7 @@ function AdoptionRequestList({ adoption_requests, onDelete, onEdit }) { //Remove
                     <th>Processor</th>
                     <th>Request Date</th>
                     <th>Amount Paid</th>
-                    <th>Status</th>
+                    <th>Request Status</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>

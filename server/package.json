@@ -10,6 +10,7 @@
   "author": "Benjamin Ling",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.1",
     "forever": "^4.0.3",
     "mysql": "^2.18.1",

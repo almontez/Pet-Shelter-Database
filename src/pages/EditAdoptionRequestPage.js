@@ -12,12 +12,12 @@ export const EditAdoptionRequestPage = ({ adoptionRequestToEdit }) => {
     const [processor, setProcessor] = useState(adoptionRequestToEdit.processor);     // updated in AdoptionRequests
     const [request_date, setRequestDate] = useState(adoptionRequestToEdit.request_date);               // updated in AdoptionRequests
     const [amount_paid, setAmountPaid] = useState(adoptionRequestToEdit.amount_paid);               // updated in AdoptionRequests
-    const [application_status, setApplicationStatus] = useState(adoptionRequestToEdit.adoption_request_status_id);               // updated in AdoptionRequests
+    const [request_status, setApplicationStatus] = useState(adoptionRequestToEdit.adoption_request_status_id);               // updated in AdoptionRequests
 
     const history = useHistory();
 
     const editAdoptionRequest = async () => {
-        const editedAdoptionRequest = { adopter_id: adopter_id, pet_id: pet_id, processor: processor, request_date: request_date, amount_paid: amount_paid, application_status: application_status };
+        const editedAdoptionRequest = { adopter_id: adopter_id, pet_id: pet_id, processor: processor, request_date: request_date, amount_paid: amount_paid, application_status: request_status };
         
         //DEBUG MESSAGE
         console.log(`Edited an adoption_request: ${JSON.stringify(editedAdoptionRequest)}`)
@@ -91,7 +91,7 @@ export const EditAdoptionRequestPage = ({ adoptionRequestToEdit }) => {
             </div>          
             <div className="edit-row">
                 <label id="edit-application-status-label" htmlFor="application_status_input">Application Status</label>
-                <select id="application_status_input" type="number" value={String(application_status)} onChange={e => setApplicationStatus(e.target.value)} required>
+                <select id="application_status_input" type="number" value={String(request_status)} onChange={e => setApplicationStatus(e.target.value)} required>
                     <option value="1">Approved</option>
                     <option value="2">Under Review</option>
                     <option value="3">Denied</option>
