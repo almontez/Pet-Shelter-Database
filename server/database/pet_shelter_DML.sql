@@ -102,17 +102,8 @@ DELETE FROM Adopters WHERE adopter_id = :adopter_id_selected_from_browse_adopter
 -- AdoptionRequestStatusCodes
 -- -----------------------------------------------------
 -- Get all AdoptionRequestStatusCodes
-SELECT ap.adopter_pet_id, ar.adoption_request_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.status as request_status
-FROM AdoptionRequests as ar
-INNER JOIN AdoptionRequestStatusCodes as arsc on ar.application_status = arsc.adoption_request_status_id
-INNER JOIN Adopters_Pets as ap on ar.adopter_pet_id = ap.adopter_pet_id
-INNER JOIN Adopters as a on ap.adopter_id = a.adopter_id
-INNER JOIN Pets as pets on ap.pet_id = pets.pet_id
-INNER JOIN Personnel as p on ar.processor = p.personnel_id;
-
--- Probably won't need this anymore since we are combine the display of Adopters_Pets with AdoptionRequests
--- SELECT arpc.adoption_request_status_id, arpc.code, arpc.status
--- FROM AdoptionRequestStatusCodes as arpc;
+SELECT arpc.adoption_request_status_id, arpc.code, arpc.status
+FROM AdoptionRequestStatusCodes as arpc;
 
 -- Add a new adoption request status code
 INSERT INTO AdoptionRequestStatusCodes (code, status)
@@ -125,13 +116,29 @@ DELETE FROM AdoptionRequestStatusCodes WHERE adoption_request_status_id = :adopt
 -- Adopters_Pets and AdoptionRequests
 -- -----------------------------------------------------
 -- Get all Adopters_Pets and AdoptionRequests
-SELECT ap.adopter_pet_id, ar.adoption_request_id, ap.adopter_id, CONCAT(a.first_name, ' ', a.last_name) as adopter_name, ap.pet_id, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.status as application_status
+SELECT ap.adopter_pet_id, ar.adoption_request_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.status as request_status
 FROM AdoptionRequests as ar
 INNER JOIN AdoptionRequestStatusCodes as arsc on ar.application_status = arsc.adoption_request_status_id
 INNER JOIN Adopters_Pets as ap on ar.adopter_pet_id = ap.adopter_pet_id
 INNER JOIN Adopters as a on ap.adopter_id = a.adopter_id
 INNER JOIN Pets as pets on ap.pet_id = pets.pet_id
 INNER JOIN Personnel as p on ar.processor = p.personnel_id;
+
+-- Get Adopter namnes for dropdown list
+SELECT a.adopter_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name
+FROM Adopters as a;
+
+-- Get Pet namnes for dropdown list
+SELECT pets.pet_id, pets.name as pet_name
+FROM Pets as pets;
+
+-- Get personnel namnes for dropdown list
+SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name) as personnel_name
+FROM Personnel as p;
+
+-- Get adoption request statuses for dropdown list
+SELECT arcs.adoption_request_status_id, arcs.status as request_status
+FROM AdoptionRequestStatusCodes as arcs;
 
 -- Add an Adopters_Pets relationship...
 -- 	Associates an adopter with a pet (M-to-M relationship addition)

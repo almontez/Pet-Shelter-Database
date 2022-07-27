@@ -1,3 +1,7 @@
+/** Convert date format for a data field to MM/DD?YYYY
+ * @param {object} jsonData       Object containing field names as keys and data values.
+ * @param {string} dataFieldName  The name of the data field.
+ */
 const reformatDate = (jsonData, dateFieldName) => {
   // Citation for following code block
   // Date: 7/23/2022

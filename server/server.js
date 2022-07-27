@@ -188,6 +188,78 @@ app.get('/adoption-requests', function(req, res)
         });
     });
 
+// Fetch list of Adopters for dropdown menu
+app.get('/adopter-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllAdoptersForDropDownMenuQuery = 
+        `SELECT a.adopter_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name
+        FROM Adopters as a;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllAdoptersForDropDownMenuQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Fetch list of Pets for dropdown menu
+app.get('/pet-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllPetsForDropDownMenuQuery = 
+        `SELECT pets.pet_id, pets.name as pet_name
+        FROM Pets as pets;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllPetsForDropDownMenuQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Fetch list of Personnel for dropdown menu
+app.get('/personnel-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllPersonnelForDropDownMenuQuery = 
+        `SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name) as personnel_name
+        FROM Personnel as p;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllPersonnelForDropDownMenuQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+    // Fetch list of Adoption Request Statuses for dropdown menu
+app.get('/adoption-request-status-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllAdoptionRequestStatusesQuery = 
+        `SELECT arcs.adoption_request_status_id, arcs.status as request_status
+        FROM AdoptionRequestStatusCodes as arcs;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllAdoptionRequestStatusesQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Pets
 // ---------------------------------------------------------------------------------------------------------------------------------

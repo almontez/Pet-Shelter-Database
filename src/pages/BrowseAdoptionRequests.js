@@ -13,23 +13,30 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
 
     //Re-renders by updating AdoptionRequests to a new 
     // filtered list of AdoptionRequests that excludes the deleted AdoptionRequestStatusCode
-    const onDelete = async (adopter_pet_id) => {
+    const onDelete = async (_id) => {
 
         //DEBUG MESSAGE
-        const debugMessage = `Clicked Delete for adopter_pet_id: ${adopter_pet_id}`;
+        const debugMessage = `Clicked Delete for adopter_pet_id: ${_id}`;
         console.log(debugMessage);
         alert(debugMessage);
 
-        /*// TO BE IMPLEMENTED: Makes DELETE method to server
-        const response = await fetch(`/adoption-requests/${_id}`, { method: 'DELETE' });
+        // TO BE IMPLEMENTED: Makes DELETE method to server on adopter_pet_id, 
+        // which should also delete the corresponding adoption_request_id in AdoptionRequests table
+        const response = await fetch('/adoption-request', {
+            method: 'DELETE',
+            body: JSON.stringify({adopter_pet_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         console.log(response.status);
         if (response.status === 204) {
-            const newAdoptionRequests = adoption_requests.filter(m => m._id !== _id);
+            const newAdoptionRequests = adoption_requests.filter(m => m.adopter_pet_id !== _id);
             setAdoptionRequests(newAdoptionRequests);
         } else {
-            console.error(`Failed to delete AdoptionRequestStatusCode with id = ${_id}, status code = ${response.status}`)
+            console.error(`Failed to delete Adopters_Pets with adopter_pet_id = ${_id}, status code = ${response.status}`)
         }
-        */
+        
     }
 
     // Used for UPDATE

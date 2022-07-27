@@ -19,7 +19,7 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
         //console.log(`Clicked Delete for adopter_id: ${_id}`)
         //alert(`Clicked Delete for adopter_id: ${_id}`);
 
-        // TO BE IMPLEMENTED: Makes DELETE method request to server
+        // TO BE IMPLEMENTED: Makes DELETE method request to server on adopter_id
         //const response = await fetch(`/adopter/${_id}`, { method: 'DELETE' });
         const response = await fetch('/adopter', {
             method: 'DELETE',
@@ -35,7 +35,7 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
             setAdopters(newAdopters);
             //console.log(`adopters list after deleting ${_id}:\n${JSON.stringify(adopters)}`);
         } else {
-            console.error(`Failed to delete Adopter with id = ${_id}, status code = ${response.status}`)
+            console.error(`Failed to delete Adopter with adopter_id = ${_id}, status code = ${response.status}`)
         }
         
     }
@@ -70,6 +70,10 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
         
         //console.log(`data: ${data}`);
         setAdopters(data);
+
+        //DEBUG MESSAGE
+        //const dataJSONstring = JSON.stringify(data);
+        //console.log(`dataJSONstring: ${dataJSONstring}`);
     };
 
 
