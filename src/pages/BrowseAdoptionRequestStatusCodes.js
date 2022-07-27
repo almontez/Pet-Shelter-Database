@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AdoptionRequestStatusCodeList from '../components/AdoptionRequestStatusCodeList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import adoption_request_status_codes_sample_data from '../data/adoption_request_status_codes'; // SAMPLE DATA
+//import adoption_request_status_codes_sample_data from '../data/adoption_request_status_codes'; // SAMPLE DATA
 
 function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEdit }) {
     
@@ -18,16 +18,22 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
         console.log(`Clicked Delete for AdoptionRequestStatusCode_id: ${_id}`)
         alert(`Clicked Delete for AdoptionRequestStatusCode_id: ${_id}`);
 
-        /*// TO BE IMPLEMENTED: Makes DELETE method to server
-        const response = await fetch(`/adoption-request-status-codes/${_id}`, { method: 'DELETE' });
+        // TO BE IMPLEMENTED: Makes DELETE method to server
+        const response = await fetch('/adoption-request-status-code', {
+            method: 'DELETE',
+            body: JSON.stringify({adoption_request_status_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         console.log(response.status);
         if (response.status === 204) {
-            const newAdoptionRequestStatusCodes = adoption_request_status_codes.filter(m => m._id !== _id);
+            const newAdoptionRequestStatusCodes = adoption_request_status_codes.filter(m => m.adoption_request_status_id !== _id);
             setAdoptionRequestStatusCodes(newAdoptionRequestStatusCodes);
         } else {
             console.error(`Failed to delete AdoptionRequestStatusCode with id = ${_id}, status code = ${response.status}`)
         }
-        */
+        
     }
 
 // Used for UPDATE
@@ -47,10 +53,10 @@ function BrowseAdoptionRequestStatusCodesPage({ setAdoptionRequestStatusCodeToEd
 
     const loadAdoptionRequestStatusCodes = async () => {
         //fetch data from the server. For now it fetches from our sample data
-        //const response = await fetch('/adoption-request-status-codes');
-        //const data = await response.json();
+        const response = await fetch('/adoption-request-status-codes');
+        const data = await response.json();
 
-        const data = adoption_request_status_codes_sample_data; // Fetches sample data. Remove this later after implemented server code.
+        //const data = adoption_request_status_codes_sample_data; // Fetches sample data. Remove this later after implemented server code.
         console.log(`data: ${data}`);
         setAdoptionRequestStatusCodes(data);
     };

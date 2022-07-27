@@ -111,7 +111,9 @@ app.post('/adopter', function(req, res){
     // Create the query and run it on the database
     
     //query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
-    const insertAdopterQuery = `INSERT INTO Adopters (first_name, last_name, address, phone_number, email, birth_date) VALUES ('${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}')`;
+    const insertAdopterQuery = 
+    `INSERT INTO Adopters (first_name, last_name, address, phone_number, email, birth_date) 
+    VALUES ('${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}');`;
     db.pool.query(insertAdopterQuery, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -131,6 +133,7 @@ app.post('/adopter', function(req, res){
     })
 })
 
+// DELETE an Adopter
 app.delete('/adopter', function(req, res){                                                                
     let data = req.body;
     //let personID = parseInt(data._id);
@@ -138,12 +141,12 @@ app.delete('/adopter', function(req, res){
     //let deleteBsg_People= `DELETE FROM bsg_people WHERE id = ?`;
 
     let adopter_id = parseInt(data.adopter_id);
-    let deleteAdopterQuery = `DELETE FROM Adopters WHERE adopter_id = ${adopter_id}`;
+    let deleteAdopterQuery = `DELETE FROM Adopters WHERE adopter_id = ${adopter_id};`;
 
     //DEBUG MESSAGE
     //console.log(`req.body received for delete adopter: ${JSON.stringify(data)}`);
     //console.log(`adopter_id received for delete adopter: ${adopter_id}`);
-    //res.sendStatus(201);
+    //res.sendStatus(204);
   
           // Run the delete query
           db.pool.query(deleteAdopterQuery, function(error, rows, fields){
@@ -170,13 +173,14 @@ app.get('/adoption-requests', function(req, res)
     {
         // Define our queries
         const selectAllAdoptionRequestsQuery = 
-        `SELECT ap.adopter_pet_id, ar.adoption_request_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.status as request_status
+        `SELECT ap.adopter_pet_id, ar.adoption_request_id, a.adopter_id, pets.pet_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name, pets.name as pet_name, p.personnel_id, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.adoption_request_status_id, arsc.status as request_status
         FROM AdoptionRequests as ar
         INNER JOIN AdoptionRequestStatusCodes as arsc on ar.application_status = arsc.adoption_request_status_id
         INNER JOIN Adopters_Pets as ap on ar.adopter_pet_id = ap.adopter_pet_id
         INNER JOIN Adopters as a on ap.adopter_id = a.adopter_id
         INNER JOIN Pets as pets on ap.pet_id = pets.pet_id
-        INNER JOIN Personnel as p on ar.processor = p.personnel_id;`;
+        LEFT JOIN Personnel as p on ar.processor = p.personnel_id
+        ORDER BY ar.adoption_request_id;`;
 
         // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
 
@@ -229,8 +233,9 @@ app.get('/personnel-dropdown-list', function(req, res)
     {
         // Define our queries
         const selectAllPersonnelForDropDownMenuQuery = 
-        `SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name) as personnel_name
-        FROM Personnel as p;`;
+        `SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name, ', ', pts.personnel_type) as personnel_name
+        FROM Personnel as p
+        INNER JOIN PersonnelTypeCodes as pts ON p.personnel_type = pts.personnel_type_id;`;
 
         // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
 
@@ -349,10 +354,10 @@ app.delete('/adoption-request', function(req, res){
     let data = req.body;
 
     let adopter_pet_id = parseInt(data.adopter_pet_id);
-    let deleteAdoptionRequestQuery = `DELETE FROM Adopters_Pets WHERE adopter_pet_id = ${adopter_pet_id}`;
+    let deleteAdoptionRequestQuery = `DELETE FROM Adopters_Pets WHERE adopter_pet_id = ${adopter_pet_id};`;
 
     //DEBUG MESSAGE
-    console.log(`req.body received for delete AdoptionRequest: ${JSON.stringify(data)}`);
+    //console.log(`req.body received for delete AdoptionRequest: ${JSON.stringify(data)}`);
     //res.sendStatus(201);
   
           // Run the delete query
@@ -378,7 +383,7 @@ app.put('/adoption-request', function(req, res){
     const data = req.body;
 
     //DEBUG MESSAGE
-    console.log(`req.body received for editing AdoptionRequest:\n ${JSON.stringify(data)}`);
+    //console.log(`req.body received for editing AdoptionRequest:\n ${JSON.stringify(data)}`);
     //res.sendStatus(200);
 
     // Capture 0 or ZLS values
@@ -453,6 +458,93 @@ app.put('/adoption-request', function(req, res){
                 
             }
         });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for AdoptionRequestStatusCodes
+// ---------------------------------------------------------------------------------------------------------------------------------
+// READ all AdoptionRequestStatusCodes
+app.get('/adoption-request-status-codes', function(req, res)
+    {
+        // Define our queries
+        const selectAllAdoptionRequestStatusCodes = 
+        `SELECT arpc.adoption_request_status_id, arpc.code, arpc.status
+        FROM AdoptionRequestStatusCodes as arpc;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllAdoptionRequestStatusCodes, function (err, results, fields){
+            //DEBUG MESSAGE
+			//console.log(`All rows from Adopter\n`);
+			//console.log(results[0]);
+			//console.log(results[0]['first_name']);
+
+			return res.status(200).send(JSON.stringify(results));
+        });
+    });
+
+// CREATE new AdoptionRequestStatusCode
+app.post('/adoption-request-status-code', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    const data = req.body;
+
+    //DEBUG MESSAGE
+    //console.log(`req.body received for new adopter:\n ${JSON.stringify(data)}`);
+    // console.log(`req.query received for new adopter:\n ${JSON.stringify(req.query)}`);
+
+    // Create the query and run it on the database
+    const insertAdoptionRequestStatusCodeQuery =
+    `INSERT INTO AdoptionRequestStatusCodes (code, status)
+    VALUES ('${data['code']}', '${data['status']}');`;
+    db.pool.query(insertAdoptionRequestStatusCodeQuery, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.sendStatus(201);
+        }
+    })
+})
+
+// DELETE an AdoptionRequestStatusCode
+app.delete('/adoption-request-status-code', function(req, res){                                                                
+    let data = req.body;
+
+    const adoption_request_status_id = parseInt(data.adoption_request_status_id);
+    const deleteAdoptionRequestStatusCodeQuery =
+    `DELETE FROM AdoptionRequestStatusCodes 
+    WHERE adoption_request_status_id = ${adoption_request_status_id}`;
+
+    //DEBUG MESSAGE
+    //console.log(`req.body received for delete adopter: ${JSON.stringify(data)}`);
+    //console.log(`adopter_id received for delete adopter: ${adopter_id}`);
+    //res.sendStatus(204);
+  
+          // Run the delete query
+          db.pool.query(deleteAdoptionRequestStatusCodeQuery, function(error, rows, fields){
+              if (error) {
+  
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error);
+                res.sendStatus(400);
+              }
+  
+              else
+              {
+                res.sendStatus(204);
+              }
+            }
+        )
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------

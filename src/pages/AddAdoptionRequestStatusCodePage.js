@@ -18,12 +18,11 @@ export const AddAdoptionRequestStatusCodePage = () => {
         const newAdoptionRequestStatusCode = { code, status };
 
         //DEBUG MESSAGE
-        console.log(`Added a new adoption_request_status_code: ${JSON.stringify(newAdoptionRequestStatusCode)}`)
-        alert(`Added a new adoption_request_status_code: ${JSON.stringify(newAdoptionRequestStatusCode)}`);
+        //console.log(`Added a new adoption_request_status_code: ${JSON.stringify(newAdoptionRequestStatusCode)}`)
+        //alert(`Added a new Adoption Request Status Code: ${JSON.stringify(newAdoptionRequestStatusCode)}`);
 
         // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET
-        /*
-        const response = await fetch('/adoption_request_status_codes', {
+        const response = await fetch('/adoption-request-status-code', {
             method: 'POST',
             body: JSON.stringify(newAdoptionRequestStatusCode),
             headers: {
@@ -31,11 +30,11 @@ export const AddAdoptionRequestStatusCodePage = () => {
             },
         });
         if(response.status === 201) {
-            alert("Successfully added the adoption_request_status_code!");
+            alert("Successfully added the Adoption Request Status Code!");
         } else {
-            alert(`Failed to add adoption_request_status_code, status code = ${response.status}`);
+            alert(`Failed to add Adoption Request Status Code. Response status code = ${response.status}`);
         }
-        */
+        
         history.push("/browse-adoption-request-status-codes");
     };
 

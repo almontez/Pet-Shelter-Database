@@ -47,8 +47,8 @@ export const AddAdoptionRequestPage = () => {
         const newAdoptionRequest = { adopter_id, pet_id, processor: processorToBeSubmitted, request_date, amount_paid: amountPaidToBeSubmitted, application_status };
 
         //DEBUG MESSAGE
-        console.log(`Added a new adoption_request: ${JSON.stringify(newAdoptionRequest)}`)
-        alert(`Added a new adoption_request: ${JSON.stringify(newAdoptionRequest)}`);
+        //console.log(`Added a new adoption_request: ${JSON.stringify(newAdoptionRequest)}`)
+        //alert(`Added a new adoption_request: ${JSON.stringify(newAdoptionRequest)}`);
 
         // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET    
         const response = await fetch('/adoption-request', {
