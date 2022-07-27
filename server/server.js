@@ -311,11 +311,10 @@ app.post('/adoption-request', function(req, res){
             else
             {
                 //DEBUG MESSAGE
-                console.log(`Last inserted adopter_pet_id: ${results.insertId}`);
-                console.log(`Last inserted Adopters_Pets row: ${JSON.stringify(results)}`);
-                console.log(`fields from Insert into Adopters_Pets: ${JSON.stringify(fields)}`);
-
-                console.log(`amount_paid after possible mod: ${amount_paid}`);
+                //console.log(`Last inserted adopter_pet_id: ${results.insertId}`);
+                //console.log(`Last inserted Adopters_Pets row: ${JSON.stringify(results)}`);
+                //console.log(`fields from Insert into Adopters_Pets: ${JSON.stringify(fields)}`);
+                //console.log(`amount_paid after possible mod: ${amount_paid}`);
                 const insertAdoptionRequestsQuery = 
                 `INSERT INTO AdoptionRequests (adopter_pet_id, processor, request_date, application_status, amount_paid)
                 VALUES (${results.insertId}, ${processor}, '${data['request_date']}', ${data['application_status']}, ${amount_paid});`
@@ -330,9 +329,9 @@ app.post('/adoption-request', function(req, res){
                     }
                     else {
                         //DEBUG MESSAGE
-                        console.log(`Last inserted adoption_request_id: ${results.insertId}`);
-                        console.log(`Last inserted AdoptionRequests row: ${JSON.stringify(results)}`);
-                        console.log(`fields from Insert into AdoptionRequests: ${JSON.stringify(fields)}`);
+                        //console.log(`Last inserted adoption_request_id: ${results.insertId}`);
+                        //console.log(`Last inserted AdoptionRequests row: ${JSON.stringify(results)}`);
+                        //console.log(`fields from Insert into AdoptionRequests: ${JSON.stringify(fields)}`);
 
                         res.sendStatus(201);
                     }
@@ -344,6 +343,34 @@ app.post('/adoption-request', function(req, res){
 
         });
 })
+
+// DELETE an AdoptionRequest
+app.delete('/adoption-request', function(req, res){                                                                
+    let data = req.body;
+
+    let adopter_pet_id = parseInt(data.adopter_pet_id);
+    let deleteAdoptionRequestQuery = `DELETE FROM Adopters_Pets WHERE adopter_pet_id = ${adopter_pet_id}`;
+
+    //DEBUG MESSAGE
+    console.log(`req.body received for delete AdoptionRequest: ${JSON.stringify(data)}`);
+    //res.sendStatus(201);
+  
+          // Run the delete query
+          db.pool.query(deleteAdoptionRequestQuery, function(error, rows, fields){
+              if (error) {
+  
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error);
+                res.sendStatus(400);
+              }
+  
+              else
+              {
+                res.sendStatus(204);
+              }
+            }
+        )
+});
 
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Pets
@@ -576,6 +603,13 @@ app.delete('/pet-statuses', function(req, res)
         );
 });
 
+/**
+ * Error handling middleware.
+ */
+ app.use((error, req, res, next) => {
+    console.log(`Unhandled error ${error}. URL = ${req.originalUrl}, method = ${req.method}`);
+    res.status(500).send('500 - Server Error!');
+  });
 
 /*
     LISTENER
