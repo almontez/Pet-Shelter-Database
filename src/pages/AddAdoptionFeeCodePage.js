@@ -18,12 +18,11 @@ export const AddAdoptionFeeCodePage = () => {
         const newAdoptionFeeCode = { code, fee };
 
         //DEBUG MESSAGE
-        console.log(`Added a new adoption_fee_code: ${JSON.stringify(newAdoptionFeeCode)}`)
-        alert(`Added a new adoption_fee_code: ${JSON.stringify(newAdoptionFeeCode)}`);
+        //console.log(`Added a new adoption_fee_code: ${JSON.stringify(newAdoptionFeeCode)}`)
+        //alert(`Added a new adoption_fee_code: ${JSON.stringify(newAdoptionFeeCode)}`);
 
         // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET
-        /*
-        const response = await fetch('/adoption_fee_codes', {
+        const response = await fetch('/adoption-fee-code', {
             method: 'POST',
             body: JSON.stringify(newAdoptionFeeCode),
             headers: {
@@ -35,7 +34,7 @@ export const AddAdoptionFeeCodePage = () => {
         } else {
             alert(`Failed to add adoption_fee_code, status code = ${response.status}`);
         }
-        */
+        
         history.push("/browse-adoption-fee-codes");
     };
 

@@ -11,7 +11,7 @@
 SELECT ps.pet_status_id, ps.code, ps.status FROM PetStatuses as ps;
 
 -- Add a new pet status
-INSERT INTO PetStatuses (code, status) VALUES (:code_input, :status_input)
+INSERT INTO PetStatuses (code, status) VALUES (:code_input, :status_input);
 
 -- -----------------------------------------------------
 -- AdoptionFeeCodes
@@ -23,6 +23,9 @@ SELECT afc.adoption_fee_id, afc.code, afc.fee FROM AdoptionFeeCodes as afc;
 
 -- Add a new adoption fee code
 INSERT INTO AdoptionFeeCodes (code, fee) VALUES (:code_input, :fee_input)
+
+-- Delete an adoption fee code
+DELETE FROM AdoptionFeeCodes WHERE adoption_fee_id = :adoption_fee_id_selected_from_browse_adoption_fee_codes_page;
 
 -- -----------------------------------------------------
 -- Pets

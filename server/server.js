@@ -88,12 +88,6 @@ app.post('/adopter', function(req, res){
     //DEBUG MESSAGE
     // console.log(`req.body received for new adopter:\n ${JSON.stringify(data)}`);
     // console.log(`req.query received for new adopter:\n ${JSON.stringify(req.query)}`);
-    // console.log(`first_name: ${data['first_name']}`);
-    // console.log(`last_name: ${data['last_name']}`);
-    // console.log(`address: ${data['address']}`);
-    // console.log(`phone_number: ${data['phone_number']}`);
-    // console.log(`email: ${data['email']}`);
-    // console.log(`birth_date: ${data['birth_date']}`);
 
     // Capture NULL values
     // let homeworld = parseInt(data['input-homeworld']);
@@ -347,7 +341,7 @@ app.post('/adoption-request', function(req, res){
 
 
         });
-})
+});
 
 // DELETE an AdoptionRequest
 app.delete('/adoption-request', function(req, res){                                                                
@@ -431,8 +425,8 @@ app.put('/adoption-request', function(req, res){
             else
             {
                 //DEBUG MESSAGE
-                console.log(`results from UPDATE Adopters_Pets: ${JSON.stringify(results)}`);
-                console.log(`fields from Update Adopters_Pets: ${JSON.stringify(fields)}`);
+                //console.log(`results from UPDATE Adopters_Pets: ${JSON.stringify(results)}`);
+                //console.log(`fields from Update Adopters_Pets: ${JSON.stringify(fields)}`);
                 const updateAdoptionRequestsQuery = 
                 `UPDATE AdoptionRequests
                 SET processor = ${data['processor']}, request_date = '${data['request_date']}', application_status = ${data['application_status']}, amount_paid = ${data['amount_paid']}
@@ -448,8 +442,8 @@ app.put('/adoption-request', function(req, res){
                     }
                     else {
                         //DEBUG MESSAGE
-                        console.log(`results from UPDATE AdoptionRequests: ${JSON.stringify(results)}`);
-                        console.log(`fields from UPDATE AdoptionRequests: ${JSON.stringify(fields)}`);
+                        //console.log(`results from UPDATE AdoptionRequests: ${JSON.stringify(results)}`);
+                        //console.log(`fields from UPDATE AdoptionRequests: ${JSON.stringify(fields)}`);
 
                         res.sendStatus(200);
                     }
@@ -514,7 +508,7 @@ app.post('/adoption-request-status-code', function(req, res){
             res.sendStatus(201);
         }
     })
-})
+});
 
 // DELETE an AdoptionRequestStatusCode
 app.delete('/adoption-request-status-code', function(req, res){                                                                
@@ -546,6 +540,88 @@ app.delete('/adoption-request-status-code', function(req, res){
             }
         )
 });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for AdoptionFeeCodes
+// ---------------------------------------------------------------------------------------------------------------------------------
+// READ all AdoptionRequestStatusCodes
+app.get('/adoption-fee-codes', function(req, res)
+    {
+        // Define our queries
+        const selectAllAdoptionRequestStatusCodes = 
+        `SELECT afc.adoption_fee_id, afc.code, afc.fee FROM AdoptionFeeCodes as afc;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+        db.pool.query(selectAllAdoptionRequestStatusCodes, function (err, results, fields){
+            //DEBUG MESSAGE
+            //console.log(`results from READ from AdoptionFeeCodes: ${JSON.stringify(results)}`);
+
+			return res.status(200).send(JSON.stringify(results));
+        });
+    });
+
+// CREATE new AdoptionFeeCode
+app.post('/adoption-fee-code', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    const data = req.body;
+
+    //DEBUG MESSAGE
+    //console.log(`req.body received for new AdoptionFeeCode:\n ${JSON.stringify(data)}`);
+    //console.log(`req.query received for new AdoptionFeeCode:\n ${JSON.stringify(req.query)}`);
+
+    // Create the query and run it on the database
+    const insertAdoptionFeeCodeQuery =
+    `INSERT INTO AdoptionFeeCodes (code, fee) 
+    VALUES ('${data['code']}', ${data['fee']})`;
+    db.pool.query(insertAdoptionFeeCodeQuery, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.sendStatus(201);
+        }
+    })
+});
+
+// DELETE an AdoptionFeeCode
+app.delete('/adoption-fee-code', function(req, res){                                                                
+    let data = req.body;
+
+    const adoption_fee_id = parseInt(data.adoption_fee_id);
+    const deleteAdoptionFeeCodeQuery = 
+    `DELETE FROM AdoptionFeeCodes 
+    WHERE adoption_fee_id = ${adoption_fee_id};`;
+
+    //DEBUG MESSAGE
+    //console.log(`req.body received for delete adopter: ${JSON.stringify(data)}`);
+    //console.log(`adopter_id received for delete adopter: ${adopter_id}`);
+    //res.sendStatus(204);
+  
+          // Run the delete query
+          db.pool.query(deleteAdoptionFeeCodeQuery, function(error, rows, fields){
+              if (error) {
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error);
+                res.sendStatus(400);
+              }
+  
+              else
+              {
+                res.sendStatus(204);
+              }
+            }
+        )
+});
+
 
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Pets
