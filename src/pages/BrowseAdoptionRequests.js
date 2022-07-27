@@ -76,7 +76,7 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
     }, []);
 
     //console.log("Hello World from BrowseAdoptionRequests");
-    console.log(`adoption_requests data in BrowseAdoptionRequests: ${JSON.stringify(adoption_requests)}`);
+    //console.log(`adoption_requests data in BrowseAdoptionRequests: ${JSON.stringify(adoption_requests)}`);
 
     return (
         <>

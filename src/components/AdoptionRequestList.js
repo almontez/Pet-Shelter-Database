@@ -10,7 +10,7 @@ import AdoptionRequest from './AdoptionRequest';
 function AdoptionRequestList({ adoption_requests, onDelete, onEdit }) { //Removed onEdit (use for UPDATE), onEdit
 
     //DEBUG
-    console.log(`adoption_requests data in AdoptionRequestsList: ${JSON.stringify(adoption_requests)}`);
+    //console.log(`adoption_requests data in AdoptionRequestsList: ${JSON.stringify(adoption_requests)}`);
     
     return (
         <table id="adoption_requests">

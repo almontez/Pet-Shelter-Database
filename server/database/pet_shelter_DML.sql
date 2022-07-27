@@ -122,7 +122,7 @@ INNER JOIN AdoptionRequestStatusCodes as arsc on ar.application_status = arsc.ad
 INNER JOIN Adopters_Pets as ap on ar.adopter_pet_id = ap.adopter_pet_id
 INNER JOIN Adopters as a on ap.adopter_id = a.adopter_id
 INNER JOIN Pets as pets on ap.pet_id = pets.pet_id
-INNER JOIN Personnel as p on ar.processor = p.personnel_id;
+LEFT JOIN Personnel as p on ar.processor = p.personnel_id;
 
 -- Get Adopter namnes for dropdown list
 SELECT a.adopter_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name

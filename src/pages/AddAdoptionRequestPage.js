@@ -18,23 +18,40 @@ export const AddAdoptionRequestPage = () => {
     const [application_status, setApplicationStatus] = useState('');    // FK: requires drop down menu
 
 //Used for setting default value for dropdown menu
-    useEffect(() => {
-        setAdopterId("1");
-    }, []);
+    // useEffect(() => {
+    //     setAdopterId("0");
+    // }, []);
 
     const history = useHistory();
 
     const addAdoptionRequest = async (event) => {
         event.preventDefault();
-        const newAdoptionRequest = { adopter_id, pet_id, processor, request_date, amount_paid, application_status };
+
+        let processorToBeSubmitted = processor;
+        let amountPaidToBeSubmitted = amount_paid;
+
+        // Capture 0 or ZLS values and replace them with null
+        //console.log(`processor in addAdoptionRequest: ${processor}`);
+        //console.log(`amount_paid in addAdoptionRequest: ${amount_paid}`);
+        if (processor === "0" || processor === null) {
+            //setProcessor(null);
+            processorToBeSubmitted = null;
+            console.log(`attempted to set null on processor: ${processor}`);
+        }
+        if (amount_paid === "" || amount_paid === null) {
+            //setAmountPaid(null);
+            amountPaidToBeSubmitted = null;
+            console.log(`amount_paid is ZLS or null: ${amount_paid}`);
+        }
+
+        const newAdoptionRequest = { adopter_id, pet_id, processor: processorToBeSubmitted, request_date, amount_paid: amountPaidToBeSubmitted, application_status };
 
         //DEBUG MESSAGE
         console.log(`Added a new adoption_request: ${JSON.stringify(newAdoptionRequest)}`)
         alert(`Added a new adoption_request: ${JSON.stringify(newAdoptionRequest)}`);
 
-        // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET
-        /*
-        const response = await fetch('/adoption_requests', {
+        // Makes a POST request to the server. SERVER CODE NOT IMPLEMENTED YET    
+        const response = await fetch('/adoption-request', {
             method: 'POST',
             body: JSON.stringify(newAdoptionRequest),
             headers: {
@@ -42,15 +59,13 @@ export const AddAdoptionRequestPage = () => {
             },
         });
         if(response.status === 201) {
-            alert("Successfully added the adoption_request!");
+            alert("Successfully added the Adoption Request!");
         } else {
-            alert(`Failed to add adoption_request, status code = ${response.status}`);
+            alert(`Failed to add Adoption Request, status code = ${response.status}`);
         }
-        */
+
         history.push("/browse-adoption-requests");
     };
-
-
 
     const loadAdopterDropDownList = async () => {
         // Fetch adopter dropdown list data from the server
@@ -101,7 +116,7 @@ export const AddAdoptionRequestPage = () => {
     //DEBUG MESSAGE
     //console.log(`adopterDropDownList: ${JSON.stringify(adopterDropDownList)}`);
     //console.log(`petDropDownList: ${JSON.stringify(petDropDownList)}`);    
-    console.log(`personnelDropDownList: ${JSON.stringify(personnelDropDownList)}`);    
+    //console.log(`personnelDropDownList: ${JSON.stringify(personnelDropDownList)}`);    
 
     return (
         <form className="add-row" onSubmit={addAdoptionRequest}>
@@ -111,7 +126,7 @@ export const AddAdoptionRequestPage = () => {
                 <div className="add-row">
                     <label htmlFor="adopter_id_input">Adopter: </label>
                     <select id="adopter_id_input" type="number" value={null} onChange={e => setAdopterId(e.target.value)} required>
-                        <option value="1">-- Please select an Adopter --</option>
+                        <option value="">-- Please select an Adopter --</option>
                         {
                             adopterDropDownList.map( (row, i) => 
                             <option key={i} value={row.adopter_id}>{row.adopter_name}</option> )
@@ -140,8 +155,14 @@ export const AddAdoptionRequestPage = () => {
                 </div>
                 <div className="add-row">
                     <label htmlFor="processor_input">Processor: </label>
-                    <select id="processor_input" type="number" value={processor} onChange={e => setProcessor(e.target.value)} required>
+                    <select id="processor_input" 
+                        type="number" 
+                        value={processor} 
+                        onChange={e => {
+                            setProcessor(e.target.value);
+                        }} required>
                         <option value="">-- Please select a Processor --</option>
+                        <option value="0">NULL</option>
                         {
                             personnelDropDownList.map( (data, i) => 
                             <option key={data.personnel_id} value={data.personnel_id}>{data.personnel_name}</option> )
@@ -170,8 +191,10 @@ export const AddAdoptionRequestPage = () => {
                         type="number"
                         placeholder="Enter amount paid here"
                         value={amount_paid}
-                        onChange={e => setAmountPaid(e.target.value)}
-                        required />
+                        onChange={e => {
+                            setAmountPaid(e.target.value);                            
+                        }}
+                        />
                 </div>
                 <div className="add-row">
                     <label htmlFor="application_status_input">Application Status: </label>
