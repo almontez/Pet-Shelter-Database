@@ -116,7 +116,7 @@ DELETE FROM AdoptionRequestStatusCodes WHERE adoption_request_status_id = :adopt
 -- Adopters_Pets and AdoptionRequests
 -- -----------------------------------------------------
 -- Get all Adopters_Pets and AdoptionRequests
-SELECT ap.adopter_pet_id, ar.adoption_request_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.status as request_status
+SELECT ap.adopter_pet_id, ar.adoption_request_id, a.adopter_id, pets.pet_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, ar.request_date, ar.amount_paid, arsc.adoption_request_status_id, arsc.status as request_status
 FROM AdoptionRequests as ar
 INNER JOIN AdoptionRequestStatusCodes as arsc on ar.application_status = arsc.adoption_request_status_id
 INNER JOIN Adopters_Pets as ap on ar.adopter_pet_id = ap.adopter_pet_id
@@ -134,8 +134,9 @@ SELECT pets.pet_id, pets.name as pet_name
 FROM Pets as pets;
 
 -- Get personnel namnes for dropdown list
-SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name) as personnel_name
-FROM Personnel as p;
+SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name, ', ', pts.personnel_type) as personnel_name
+FROM Personnel as p
+INNER JOIN PersonnelTypeCodes as pts ON p.personnel_type = pts.personnel_type_id;
 
 -- Get adoption request statuses for dropdown list
 SELECT arcs.adoption_request_status_id, arcs.status as request_status

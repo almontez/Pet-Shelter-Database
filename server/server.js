@@ -372,6 +372,89 @@ app.delete('/adoption-request', function(req, res){
         )
 });
 
+// UPDATE an AdoptionRequest
+app.put('/adoption-request', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    const data = req.body;
+
+    //DEBUG MESSAGE
+    console.log(`req.body received for editing AdoptionRequest:\n ${JSON.stringify(data)}`);
+    //res.sendStatus(200);
+
+    // Capture 0 or ZLS values
+    let processor = parseInt(data['processor']);
+    if (isNaN(processor) || processor === 0 || processor === null)
+    {
+        console.log(`processor was updated in UPDATE AdoptionRequest: ${processor}`);
+        processor = 'NULL';
+    }
+
+    let amount_paid = data['amount_paid'];
+    if (isNaN(amount_paid) || amount_paid === "" || amount_paid === null)
+    {
+        amount_paid = 'NULL';
+        console.log(`amount_paid was updated in UPDATE AdoptionRequest: ${amount_paid}`);
+    }
+
+    // Create the query and run it on the database
+    const updateAdoptersPetsQuery =
+    `UPDATE Adopters_Pets
+    SET adopter_id = ${data['adopter_id']}, pet_id = ${data['pet_id']}
+    WHERE adopter_pet_id= ${data['adopter_pet_id']};`
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+        // First query inserts adopter_id and pet_id into Adopter_Pets.
+        // Second query inserts adopter_pet_id and other data into AdoptionRequests.
+
+        // Citation for following code block to retrieve the last inserted id from an insert query
+        // Date: 7/23/2022
+        // Adapted from:
+        // Source URL: https://stackoverflow.com/a/31371153/5715461
+        //  Insert adopter_id and pet_id into Adopter_Pets
+        db.pool.query(updateAdoptersPetsQuery, function (error, results, fields){
+
+                        // Check to see if there was an error
+            if (error) {
+
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+
+            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+            // presents it on the screen
+            else
+            {
+                //DEBUG MESSAGE
+                console.log(`results from UPDATE Adopters_Pets: ${JSON.stringify(results)}`);
+                console.log(`fields from Update Adopters_Pets: ${JSON.stringify(fields)}`);
+                const updateAdoptionRequestsQuery = 
+                `UPDATE AdoptionRequests
+                SET processor = ${data['processor']}, request_date = '${data['request_date']}', application_status = ${data['application_status']}, amount_paid = ${data['amount_paid']}
+                WHERE adoption_request_id = ${data['adoption_request_id']};`
+
+                //  Insert adopter_pet_id and other data into Adopter_Pets
+                db.pool.query(updateAdoptionRequestsQuery, function(error, results, fields){
+
+                    if (error) {
+                        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                        console.log(error)
+                        res.sendStatus(400);
+                    }
+                    else {
+                        //DEBUG MESSAGE
+                        console.log(`results from UPDATE AdoptionRequests: ${JSON.stringify(results)}`);
+                        console.log(`fields from UPDATE AdoptionRequests: ${JSON.stringify(fields)}`);
+
+                        res.sendStatus(200);
+                    }
+
+                });
+                
+            }
+        });
+});
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Pets
 // ---------------------------------------------------------------------------------------------------------------------------------

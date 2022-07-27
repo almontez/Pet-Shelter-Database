@@ -109,6 +109,7 @@ export const AddAdoptionRequestPage = () => {
         await loadPersonnelDropDownList();
         await loadRequestStatusDropDownList();
     }, []);
+    
     useEffect(() => {
         loadDropDownLists();
     }, []);
@@ -199,7 +200,7 @@ export const AddAdoptionRequestPage = () => {
                 <div className="add-row">
                     <label htmlFor="application_status_input">Application Status: </label>
                     <select id="application_status_input" type="number" value={application_status} onChange={e => setApplicationStatus(e.target.value)} required>
-                    <option value="">-- Please select a request status --</option>
+                        <option value="">-- Please select a request status --</option>
                         {
                             requestStatusDropDownList.map( (data, i) => 
                             <option key={data.adoption_request_status_id} value={data.adoption_request_status_id}>{data.request_status}</option> )

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AdoptionRequestList from '../components/AdoptionRequestList';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { reformatDate } from './utils/helpers.js'
+import { reformatDate, reformatDateForDropDownMenu } from './utils/helpers.js'
 //import adoption_requests_sample_data from '../data/adoption_requests'; // SAMPLE DATA
 
 function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
@@ -41,6 +41,8 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
 
     // Used for UPDATE
     const onEdit = async adoptionRequestToEdit => {
+        reformatDateForDropDownMenu(adoptionRequestToEdit, 'request_date');
+        
         //DEBUG MESSAGE
         // const debug_message = `BrowseAdoptionRequests: Editing an Adoption Request: ${JSON.stringify(adoptionRequestToEdit)}`;
         // console.log(debug_message);
