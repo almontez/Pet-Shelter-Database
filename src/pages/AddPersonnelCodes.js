@@ -12,9 +12,20 @@ export const AddPersonnelCodesPage = () => {
         event.preventDefault();
         const newPersonnelType = { code, personnel_type };
 
-        //DEBUG MESSAGE
-        alert(`Added a new personnel type: ${JSON.stringify(newPersonnelType)}`);
+        const response = await fetch('/personnel-codes', {
+            method: 'POST',
+            body: JSON.stringify(newPersonnelType), 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
 
+        if (response.status === 201) {
+            alert("Successfully added new Personnel Code!");
+        } else {
+            alert(`Status Code: ${response.status}. Failed to add new Personnel`);
+        }
+        
         history.push("/browse-personnel-codes");
     };
 

@@ -733,7 +733,7 @@ app.post('/personnel', function(req, res) {
     );
 });
 
-// Delete Route for Personnel by personnel_id // ERROR: Request is returning undefined for personnel_id
+// Delete Route for Personnel by personnel_id
 app.delete('/personnel', function(req, res) 
     {                
         // get personnel_id from user request (req)                                             
@@ -765,7 +765,7 @@ app.delete('/personnel', function(req, res)
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for PersonnelCodes
 // ---------------------------------------------------------------------------------------------------------------------------------
-// READ Route: Get all data from PersonnelCodes Table
+// READ Route: Get all data from PersonnelTypeCodes Table
 app.get('/personnel-codes', function(req, res)
     {
         // Define query 
@@ -779,7 +779,34 @@ app.get('/personnel-codes', function(req, res)
         });
     });
 
-// Delete Route for PersonnelTypeCodes by personnel_type_id // ERROR: Request is returning undefined for personnel_type_id
+// CREATE route for PersonnelTypeCodes Table
+app.post('/personnel-codes', function(req, res){
+    // Capture incoming data and parse it back to a JS object
+    const data = req.body;
+
+    // Create query and run on the database
+    const insertNewPersonnelCodeQuery = `INSERT INTO PersonnelTypeCodes (code, personnel_type) 
+                                         VALUES ('${data['code']}', '${data['personnel_type']}')`;
+
+    // Run insert query
+    db.pool.query(insertNewPersonnelCodeQuery, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong
+            console.log(error)
+
+            // Send HTTP response 400 indicating a bad request to user 
+            res.sendStatus(400);
+        } else {
+            // Request succeeded: Resource created 
+            res.sendStatus(201);
+        }
+    })
+});
+
+// Delete Route for PersonnelTypeCodes by personnel_type_id
 app.delete('/personnel-codes', function(req, res) 
     {                
         // get personnel_type_id from user request (req)                                                
@@ -871,7 +898,35 @@ app.get('/pet-statuses', function(req, res)
         });
     });
 
-// Delete Route for Pets by pet_id // ERROR: Request is returning undefined for pet_status_id
+
+// CREATE route for PetStatuses Table
+app.post('/pet-statuses', function(req, res){
+    // Capture incoming data and parse it back to a JS object
+    const data = req.body;
+
+    // Create query and run on the database
+    const insertNewPetStatusQuery = `INSERT INTO PetStatuses (code, status) 
+                                         VALUES ('${data['code']}', '${data['status']}')`;
+
+    // Run insert query
+    db.pool.query(insertNewPetStatusQuery, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong
+            console.log(error)
+
+            // Send HTTP response 400 indicating a bad request to user 
+            res.sendStatus(400);
+        } else {
+            // Request succeeded: Resource created 
+            res.sendStatus(201);
+        }
+    })
+});
+
+// Delete Route for Pets by pet_id
 app.delete('/pet-statuses', function(req, res) 
     {                
         // get _id from user request (req)                                                
@@ -899,6 +954,10 @@ app.delete('/pet-statuses', function(req, res)
             }
         );
 });
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for Dropdown Menus
+// ---------------------------------------------------------------------------------------------------------------------------------
 
 /**
  * Error handling middleware.

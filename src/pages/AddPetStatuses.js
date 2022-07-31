@@ -12,8 +12,19 @@ export const AddPetStatusesPage = () => {
         event.preventDefault();
         const newPetStatus = { code, status };
 
-        //DEBUG MESSAGE
-        alert(`Added a new pet_status: ${JSON.stringify(newPetStatus)}`);
+        const response = await fetch('/pet-statuses', {
+            method: 'POST',
+            body: JSON.stringify(newPetStatus),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (response.status === 201) {
+            alert("Successfullly added new Pet Status!");
+        } else {
+            alert(`Status Code: ${response.status}. Failed to add new Pet Status.`);
+        }
 
         history.push("/browse-pet-statuses");
     };
