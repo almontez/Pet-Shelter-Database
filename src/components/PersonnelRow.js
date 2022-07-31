@@ -13,7 +13,7 @@ function PersonnelRow({ personnel, onDelete }) {
             <td>{personnel.phone_number}</td>
             <td>{personnel.email}</td>
             <td>{personnel.birth_date}</td>
-            <td>< MdDeleteForever onClick={() => onDelete(personnel.id)}/></td>
+            <td>< MdDeleteForever onClick={() => onDelete(personnel.personnel_id)}/></td>
         </tr>
     );
 }

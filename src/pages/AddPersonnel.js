@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from "react-router-dom";
 
 export const AddPersonnelPage = () => {
+    // data containers for dropdown menus 
+    const [personnelCodesDropDownList, setPersonnelCodesDropDownList] = useState([]);
 
-    const [personnel_type, setPersonnelType] = useState('');
-    const [job_title, setJobTitle] = useState('');
+    // data containers for personnel information
+    const [personnel_type, setPersonnelType] = useState('');    // FK: requires a dropdown menu
+    const [job_title, setJobTitle] = useState('');              // Can be null
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [address, setAddress] = useState('');
@@ -16,13 +19,52 @@ export const AddPersonnelPage = () => {
 
     const addPersonnel = async (event) => {
         event.preventDefault();
-        const newPersonnel = { personnel_type, job_title, first_name, last_name, address, phone_number, email, birth_date };
 
-        //DEBUG MESSAGE
-        alert(`Added a new adopter: ${JSON.stringify(newPersonnel)}`);
+        const newPersonnel = { personnel_type, 
+                               job_title, 
+                               first_name, 
+                               last_name, 
+                               address, 
+                               phone_number, 
+                               email, 
+                               birth_date };
+
+        // Make POST request to server 
+        const response = await fetch('/personnel', {
+            method: 'POST',
+            body: JSON.stringify(newPersonnel),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 201) {
+            alert("Successfully added new personnel")
+        } else {
+            alert(`Status Code: ${response.status}. Failed to add new personnel`)
+        }
 
         history.push("/browse-personnel");
     };
+
+    const loadPersonnelCodesDropDownList = async () => {
+        // Fetch personnel data from personnel-dropdown-list route
+        let response = await fetch('/personnel-codes-dropdown-list');
+        let data = await response.json()
+
+        console.log(data);
+        
+        // load personnel data into dropdown container 
+        setPersonnelCodesDropDownList(data);
+    };
+
+    const loadDropDownLists = useCallback(async () => {
+        await loadPersonnelCodesDropDownList();
+    }, []);
+
+    useEffect(() => {
+        loadDropDownLists();
+    }, []);
 
     return (
         <form className="add-row" onSubmit={addPersonnel}>
@@ -33,12 +75,12 @@ export const AddPersonnelPage = () => {
                     <label htmlFor="personnel_type_input">Personnel Type: </label>
                     <select id="personnel_type_input" type="number" value={personnel_type} onChange={e => setPersonnelType(e.target.value)} required>
                         <option value="0">Select Personnel Type</option>
-                        <option value="1">EFT: Employee Full-Time</option>
-                        <option value="2">EPT: Employee Part-Time</option>
-                        <option value="3">VCT: Volunteer - Cats</option>
-                        <option value="4">VDO: Volunteer - Dogs</option>
-                        <option value="3">VCD: Volunteer - Both</option>
-                        
+                        {
+                            personnelCodesDropDownList.map((data, i) =>
+                            <option key={data.pc_id} 
+                                    value={data.pc_id}>
+                                    {data.description}</option>)
+                        }          
                     </select>
                 </div>
                 <div className="add-row">

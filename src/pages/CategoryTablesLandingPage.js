@@ -27,7 +27,7 @@ function CategoryTableLP() {
             <p>Click the "Submit" button to view the selected category.</p>
 
             <form className="landing-page" onSubmit={redirect}>
-                <label htmlfor="category-tables">Choose a category table: </label>
+                <label htmlFor="category-tables">Choose a category table: </label>
                 <select id="category-tables" type="text" value={code_table} onChange={e => setTable(e.target.value)} required>
                     <option value="None">Category Tables</option>
                     <option value="Adoption Fee Codes">Adoption Fee Codes</option>

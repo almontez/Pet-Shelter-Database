@@ -60,7 +60,7 @@ DELETE FROM Pets WHERE pet_id = :pet_id_selected_from_browse_pets_page
 -- Get all personnel type codes for the: 
 --  List PersonnelTypeCodes
 --  and populate the perstonnel_type_codes dropdown for the Add Personnel page
-SELECT pts.personnel_type_id, pts.code, pts.personnel_type FROM PersonnelTypeCodes as pts;
+SELECT ptc.personnel_type_id, ptc.code, ptc.personnel_type FROM PersonnelTypeCodes as ptc;
 
 -- -----------------------------------------------------
 -- Personnel

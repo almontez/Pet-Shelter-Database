@@ -7,7 +7,7 @@ function PetStatusesRow({ pet_statuses, onDelete }) {
             <td>{pet_statuses.pet_status_id}</td>
             <td>{pet_statuses.code}</td>
             <td>{pet_statuses.status}</td>
-            <td>< MdDeleteForever onClick={() => onDelete(pet_statuses.ps_id)}/></td>
+            <td>< MdDeleteForever onClick={() => onDelete(pet_statuses.pet_status_id)}/></td>
         </tr>
     );
 }

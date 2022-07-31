@@ -544,7 +544,7 @@ app.delete('/adoption-request-status-code', function(req, res){
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for AdoptionFeeCodes
 // ---------------------------------------------------------------------------------------------------------------------------------
-// READ all AdoptionRequestStatusCodes
+// READ all AdoptionFeeCodes
 app.get('/adoption-fee-codes', function(req, res)
     {
         // Define our queries
@@ -686,6 +686,53 @@ app.get('/personnel', function(req, res)
         });
     });
 
+// Fetch data for Personnel Codes dropdown menu
+app.get('/personnel-codes-dropdown-list', function(req, res) 
+    {
+        // Define Query
+        const selectPersonnelCodesQuery = `SELECT ptc.personnel_type_id as pc_id, ptc.personnel_type as description 
+                                           FROM PersonnelTypeCodes as ptc`;
+
+        db.pool.query(selectPersonnelCodesQuery, function (err, results, fields) {
+            res.send(JSON.stringify(results));
+        });
+
+    }
+);
+
+// CREATE route for new Personnel Instance
+app.post('/personnel', function(req, res) { 
+    // Capture the incoming data and parse it back to a JS object
+    const data = req.body;
+    console.log(data);
+
+    // Capture Null values for job_title
+    let job_title = parseInt(data['job_title']);
+    if (isNaN(job_title) || job_title === '') {
+        job_title = 'NULL'
+    };
+    
+    const insertPersonnelQuery = 
+    `INSERT INTO Personnel (personnel_type, job_title, first_name, last_name, address, phone_number, email, birth_date) 
+    VALUES ('${data['pc_id']}', '${job_title}', '${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}');`;
+    
+    db.pool.query(insertPersonnelQuery, function(error, rows, fields)
+        {
+            if (error) {
+                // Log the error to the terminal so we know what went wrong
+                console.log(error);
+                
+                // Send HTTP response 400 indicating a bad request to user
+                res.sendStatus(400);
+
+            } else {
+                // Request succeeded: Resource Created 
+                res.sendStatus(201);
+            }
+        }
+    );
+});
+
 // Delete Route for Personnel by personnel_id // ERROR: Request is returning undefined for personnel_id
 app.delete('/personnel', function(req, res) 
     {                
@@ -737,7 +784,6 @@ app.delete('/personnel-codes', function(req, res)
     {                
         // get personnel_type_id from user request (req)                                                
         let data = req.body;
-        console.log(data.personnel_type_id)
         let code_id = parseInt(data.personnel_type_id);
 
         // SQL query 
