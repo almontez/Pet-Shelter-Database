@@ -676,7 +676,19 @@ app.delete('/pets', function(req, res)
 app.get('/personnel', function(req, res)
     {
         // Define query 
-        const selectAllPersonnelQuery = 'SELECT * FROM Personnel;';
+        const selectAllPersonnelQuery = `SELECT p.personnel_id, 
+                                                p.personnel_type, 
+                                                ptc.code, 
+                                                p.job_title, 
+                                                p.first_name, 
+                                                p.last_name, 
+                                                p.address, 
+                                                p.phone_number, 
+                                                p.email, 
+                                                p.birth_date
+                                        FROM Personnel as p
+                                        INNER JOIN PersonnelTypeCodes as ptc on p.personnel_type = ptc.personnel_type_id
+                                        ORDER BY p.personnel_id ASC;`
 
         // Execute every query in an asynchronous manner
         db.pool.query(selectAllPersonnelQuery, function (err, results, fields){
@@ -704,17 +716,15 @@ app.get('/personnel-codes-dropdown-list', function(req, res)
 app.post('/personnel', function(req, res) { 
     // Capture the incoming data and parse it back to a JS object
     const data = req.body;
-    console.log(data);
 
     // Capture Null values for job_title
-    let job_title = parseInt(data['job_title']);
-    if (isNaN(job_title) || job_title === '') {
+    let job_title = data['job_title'];
+    if (!(job_title) || job_title === '') {
         job_title = 'NULL'
     };
     
-    const insertPersonnelQuery = 
-    `INSERT INTO Personnel (personnel_type, job_title, first_name, last_name, address, phone_number, email, birth_date) 
-    VALUES ('${data['pc_id']}', '${job_title}', '${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}');`;
+    const insertPersonnelQuery = `INSERT INTO Personnel (personnel_type, job_title, first_name, last_name, address, phone_number, email, birth_date) 
+                                  VALUES ('${data['personnel_type_id']}', '${job_title}', '${data['first_name']}', '${data['last_name']}', '${data['address']}', '${data['phone_number']}', '${data['email']}', '${data['birth_date']}');`;
     
     db.pool.query(insertPersonnelQuery, function(error, rows, fields)
         {
@@ -738,7 +748,6 @@ app.delete('/personnel', function(req, res)
     {                
         // get personnel_id from user request (req)                                             
         let data = req.body;
-        console.log(data.personnel_id);
         let personnel_id = parseInt(data.personnel_id);
 
         // SQL query 

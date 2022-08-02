@@ -4,6 +4,7 @@ import IntakeTable from '../components/IntakeTable';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import intakeData from '../data/intakeData'; // SAMPLE DATA
+import { reformatDate } from "./utils/helpers";
 
 function BrowseIntakesPage() {
     
@@ -39,6 +40,8 @@ function BrowseIntakesPage() {
         // fetch Intakes data [from DB] using READ route in server.js 
         const response = await fetch('/intakes');
         const data = await response.json();
+        
+        reformatDate(data, 'intake_date')
         
         // load data into intakes variable
         setIntakes(data);

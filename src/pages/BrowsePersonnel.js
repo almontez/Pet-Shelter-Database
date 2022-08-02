@@ -4,6 +4,7 @@ import PersonnelTable from '../components/PersonnelTable';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import personnelData from '../data/personnelData'; // SAMPLE DATA
+import { reformatDate } from "./utils/helpers";
 
 function BrowsePersonnelPage() {
     
@@ -40,6 +41,7 @@ function BrowsePersonnelPage() {
         const response = await fetch('/personnel');
         const data = await response.json();
 
+        reformatDate(data, 'birth_date');
         // load data into personnel variable
         setPersonnel(data);
     };

@@ -6,8 +6,8 @@ export const AddPersonnelPage = () => {
     const [personnelCodesDropDownList, setPersonnelCodesDropDownList] = useState([]);
 
     // data containers for personnel information
-    const [personnel_type, setPersonnelType] = useState('');    // FK: requires a dropdown menu
-    const [job_title, setJobTitle] = useState('');              // Can be null
+    const [personnel_type_id, setPersonnelType] = useState('');    // FK: requires a dropdown menu
+    const [job_title, setJobTitle] = useState('');                 // Can be null
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [address, setAddress] = useState('');
@@ -20,7 +20,7 @@ export const AddPersonnelPage = () => {
     const addPersonnel = async (event) => {
         event.preventDefault();
 
-        const newPersonnel = { personnel_type, 
+        const newPersonnel = { personnel_type_id, 
                                job_title, 
                                first_name, 
                                last_name, 
@@ -51,9 +51,7 @@ export const AddPersonnelPage = () => {
         // Fetch personnel data from personnel-dropdown-list route
         let response = await fetch('/personnel-codes-dropdown-list');
         let data = await response.json()
-
-        console.log(data);
-        
+    
         // load personnel data into dropdown container 
         setPersonnelCodesDropDownList(data);
     };
@@ -73,7 +71,7 @@ export const AddPersonnelPage = () => {
                 <legend>Enter values for new personnel</legend>
                 <div className="add-row">
                     <label htmlFor="personnel_type_input">Personnel Type: </label>
-                    <select id="personnel_type_input" type="number" value={personnel_type} onChange={e => setPersonnelType(e.target.value)} required>
+                    <select id="personnel_type_input" type="number" value={personnel_type_id} onChange={e => setPersonnelType(e.target.value)} required>
                         <option value="0">Select Personnel Type</option>
                         {
                             personnelCodesDropDownList.map((data, i) =>
@@ -90,8 +88,7 @@ export const AddPersonnelPage = () => {
                         type="text"
                         placeholder="Enter job title here"
                         value={job_title}
-                        onChange={e => setJobTitle(e.target.value)}
-                        required />
+                        onChange={e => setJobTitle(e.target.value)} />
                 </div>
                 <div className="add-row">
                     <label htmlFor="first_name_input">First Name: </label>
