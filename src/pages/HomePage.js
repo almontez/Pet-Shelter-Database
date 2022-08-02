@@ -37,12 +37,8 @@ function HomePage() {
                   Browse AdoptionRequests
                 </Link>
             </div>
+
             <h3>Category Tables:</h3>
-            {/* <div>              
-              <Link className="App-link" to="/category-tables-landing-page">
-                View Category Tables
-              </Link>
-            </div> */}
             <div>
                 <Link className="App-link" to="/browse-personnel-codes">
                   Browse Personnel Codes

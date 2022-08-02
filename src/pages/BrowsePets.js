@@ -63,7 +63,7 @@ function BrowsePetsPage({ setPetToEdit }) {
             <PetFilter></PetFilter>
             <br></br>
 
-            <Link to="/add-pets">Add New Pet</Link>
+            <Link to="/add-intake">Add New Pet</Link>
 
             <PetsTable                 
                 pets={pets}

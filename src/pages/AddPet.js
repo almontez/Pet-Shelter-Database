@@ -1,3 +1,6 @@
+// DO NOT USE!! 
+// THIS PAGES WAS COMBINED WITH THE ADDINAKES PAGE
+
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
