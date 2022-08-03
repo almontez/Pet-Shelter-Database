@@ -23,41 +23,9 @@ app.get('/home', function(req, res)             // This is the basic syntax for 
         res.send("The server is running!");     // This function literally sends the string "The server is running!" to the computer
     });                                         // requesting the web site.
 
-
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Adopters
-// ---------------------------------------------------------------------------------------------------------------------------------
-app.get('/', function(req, res)
-    {
-        // Define our queries
-        const query1 = 'DROP TABLE IF EXISTS diagnostic;';
-        const query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-        const query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
-        const query4 = 'SELECT * FROM diagnostic;';
-
-        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-        // DROP TABLE...
-        db.pool.query(query1, function (err, results, fields){
-
-            // CREATE TABLE...
-            db.pool.query(query2, function(err, results, fields){
-
-                // INSERT INTO...
-                db.pool.query(query3, function(err, results, fields){
-
-                    // SELECT *...
-                    db.pool.query(query4, function(err, results, fields){
-
-                        // Send the results to the browser
-                        const base = "<h1>MySQL Results:</h1>";
-                        res.send(base + JSON.stringify(results));
-                    });
-                });
-            });
-        });
-    });
-	
+// ---------------------------------------------------------------------------------------------------------------------------------	
 // READ all Adopters
 app.get('/adopters', function(req, res)
     {
@@ -180,79 +148,6 @@ app.get('/adoption-requests', function(req, res)
 
         // SELECT * FROM Adopters
         db.pool.query(selectAllAdoptionRequestsQuery, function (err, results, fields){
-
-			res.send(JSON.stringify(results));
-
-        });
-    });
-
-// Fetch list of Adopters for dropdown menu
-app.get('/adopter-dropdown-list', function(req, res)
-    {
-        // Define our queries
-        const selectAllAdoptersForDropDownMenuQuery = 
-        `SELECT a.adopter_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name
-        FROM Adopters as a;`;
-
-        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-        // SELECT * FROM Adopters
-        db.pool.query(selectAllAdoptersForDropDownMenuQuery, function (err, results, fields){
-
-			res.send(JSON.stringify(results));
-
-        });
-    });
-
-// Fetch list of Pets for dropdown menu
-app.get('/pet-dropdown-list', function(req, res)
-    {
-        // Define our queries
-        const selectAllPetsForDropDownMenuQuery = 
-        `SELECT pets.pet_id, pets.name as pet_name
-        FROM Pets as pets;`;
-
-        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-        // SELECT * FROM Adopters
-        db.pool.query(selectAllPetsForDropDownMenuQuery, function (err, results, fields){
-
-			res.send(JSON.stringify(results));
-
-        });
-    });
-
-// Fetch list of Personnel for dropdown menu
-app.get('/personnel-dropdown-list', function(req, res)
-    {
-        // Define our queries
-        const selectAllPersonnelForDropDownMenuQuery = 
-        `SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name, ', ', pts.personnel_type) as personnel_name
-        FROM Personnel as p
-        INNER JOIN PersonnelTypeCodes as pts ON p.personnel_type = pts.personnel_type_id;`;
-
-        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-        // SELECT * FROM Adopters
-        db.pool.query(selectAllPersonnelForDropDownMenuQuery, function (err, results, fields){
-
-			res.send(JSON.stringify(results));
-
-        });
-    });
-
-    // Fetch list of Adoption Request Statuses for dropdown menu
-app.get('/adoption-request-status-dropdown-list', function(req, res)
-    {
-        // Define our queries
-        const selectAllAdoptionRequestStatusesQuery = 
-        `SELECT arcs.adoption_request_status_id, arcs.status as request_status
-        FROM AdoptionRequestStatusCodes as arcs;`;
-
-        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-        // SELECT * FROM Adopters
-        db.pool.query(selectAllAdoptionRequestStatusesQuery, function (err, results, fields){
 
 			res.send(JSON.stringify(results));
 
@@ -622,7 +517,6 @@ app.delete('/adoption-fee-code', function(req, res){
         )
 });
 
-
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Pets
 // ---------------------------------------------------------------------------------------------------------------------------------
@@ -670,6 +564,52 @@ app.delete('/pets', function(req, res)
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------
+// CRUD Routes for Intakes
+// ---------------------------------------------------------------------------------------------------------------------------------
+// READ Route: Get all data from Intakes Table
+app.get('/intakes', function(req, res)
+    {
+        // Define query 
+        const selectAllIntakesQuery = 'SELECT * FROM Intakes;';
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectAllIntakesQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Delete Route for Intakes by inake_id
+app.delete('/intakes', function(req, res) 
+    {                
+        // get pet_id from user request (req)                                                
+        let data = req.body;
+        let intake_id = parseInt(data.intake_id);
+
+        // SQL query 
+        const deleteIntakeInstanceQuery = `DELETE FROM Intakes WHERE intake_id = ${intake_id}`;
+
+        // Run delete query
+        db.pool.query(deleteIntakeInstanceQuery, function(error, rows, fields)
+            {
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong
+                    console.log(error);
+                    
+                    // Send HTTP response 400 indicating a bad request to user
+                    res.sendStatus(400);
+
+                } else {
+                    // Request successfully fulfilled
+                    res.sendStatus(204);
+
+                }
+            }
+        )
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Personnel
 // ---------------------------------------------------------------------------------------------------------------------------------
 // READ Route: Get all data from Personnel Table
@@ -697,20 +637,6 @@ app.get('/personnel', function(req, res)
 
         });
     });
-
-// Fetch data for Personnel Codes dropdown menu
-app.get('/personnel-codes-dropdown-list', function(req, res) 
-    {
-        // Define Query
-        const selectPersonnelCodesQuery = `SELECT ptc.personnel_type_id as pc_id, ptc.personnel_type as description 
-                                           FROM PersonnelTypeCodes as ptc`;
-
-        db.pool.query(selectPersonnelCodesQuery, function (err, results, fields) {
-            res.send(JSON.stringify(results));
-        });
-
-    }
-);
 
 // CREATE route for new Personnel Instance
 app.post('/personnel', function(req, res) { 
@@ -845,52 +771,6 @@ app.delete('/personnel-codes', function(req, res)
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------
-// CRUD Routes for Intakes
-// ---------------------------------------------------------------------------------------------------------------------------------
-// READ Route: Get all data from Intakes Table
-app.get('/intakes', function(req, res)
-    {
-        // Define query 
-        const selectAllIntakesQuery = 'SELECT * FROM Intakes;';
-
-        // Execute every query in an asynchronous manner
-        db.pool.query(selectAllIntakesQuery, function (err, results, fields){
-
-			res.send(JSON.stringify(results));
-
-        });
-    });
-
-// Delete Route for Intakes by inake_id
-app.delete('/intakes', function(req, res) 
-    {                
-        // get pet_id from user request (req)                                                
-        let data = req.body;
-        let intake_id = parseInt(data.intake_id);
-
-        // SQL query 
-        const deleteIntakeInstanceQuery = `DELETE FROM Intakes WHERE intake_id = ${intake_id}`;
-
-        // Run delete query
-        db.pool.query(deleteIntakeInstanceQuery, function(error, rows, fields)
-            {
-                if (error) {
-                    // Log the error to the terminal so we know what went wrong
-                    console.log(error);
-                    
-                    // Send HTTP response 400 indicating a bad request to user
-                    res.sendStatus(400);
-
-                } else {
-                    // Request successfully fulfilled
-                    res.sendStatus(204);
-
-                }
-            }
-        )
-});
-
-// ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for PetStatuses
 // ---------------------------------------------------------------------------------------------------------------------------------
 // READ Route: Get all data from PetStatuses Table
@@ -906,7 +786,6 @@ app.get('/pet-statuses', function(req, res)
 
         });
     });
-
 
 // CREATE route for PetStatuses Table
 app.post('/pet-statuses', function(req, res){
@@ -967,7 +846,118 @@ app.delete('/pet-statuses', function(req, res)
 // ---------------------------------------------------------------------------------------------------------------------------------
 // CRUD Routes for Dropdown Menus
 // ---------------------------------------------------------------------------------------------------------------------------------
+// Fetch list of Adopters for dropdown menu
+app.get('/adopter-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllAdoptersForDropDownMenuQuery = 
+        `SELECT a.adopter_id, CONCAT(a.first_name, ' ',  a.last_name) as adopter_name
+        FROM Adopters as a;`;
 
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllAdoptersForDropDownMenuQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Fetch list of Pets for dropdown menu
+app.get('/pet-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllPetsForDropDownMenuQuery = 
+        `SELECT pets.pet_id, pets.name as pet_name
+        FROM Pets as pets;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllPetsForDropDownMenuQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Fetch list of Personnel for dropdown menu
+app.get('/personnel-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllPersonnelForDropDownMenuQuery = 
+        `SELECT p.personnel_id, CONCAT(p.first_name, ' ',  p.last_name, ', ', pts.personnel_type) as personnel_name
+        FROM Personnel as p
+        INNER JOIN PersonnelTypeCodes as pts ON p.personnel_type = pts.personnel_type_id;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllPersonnelForDropDownMenuQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Fetch list of Adoption Request Statuses for dropdown menu
+app.get('/adoption-request-status-dropdown-list', function(req, res)
+    {
+        // Define our queries
+        const selectAllAdoptionRequestStatusesQuery = 
+        `SELECT arcs.adoption_request_status_id, arcs.status as request_status
+        FROM AdoptionRequestStatusCodes as arcs;`;
+
+        // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
+
+        // SELECT * FROM Adopters
+        db.pool.query(selectAllAdoptionRequestStatusesQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
+// Fetch data for Personnel Codes dropdown menu
+app.get('/personnel-codes-dropdown-list', function(req, res) 
+    {
+        // Define Query
+        const selectPersonnelCodesQuery = `SELECT ptc.personnel_type_id as pc_id, ptc.personnel_type as description 
+                                            FROM PersonnelTypeCodes as ptc`;
+
+        db.pool.query(selectPersonnelCodesQuery, function (err, results, fields) {
+            res.send(JSON.stringify(results));
+        });
+
+    });
+
+// Fetch data for Adoption Fee Type dropdown menu
+app.get('/adoption-fee-type-dropdown-list', function(req, res) 
+    {
+        // Define Query
+        const selectAdoptionFeeTypeQuery = `SELECT afc.adoption_fee_id as afc_id, afc.code as code, afc.fee as fee 
+                                            FROM AdoptionFeeCodes as afc`;
+
+        db.pool.query(selectAdoptionFeeTypeQuery, function (err, results, fields) {
+            res.send(JSON.stringify(results));
+        });
+
+    });
+
+// Fetch data for Pet Status dropdown menu
+app.get('/pet-statuses-dropdown-list', function(req, res) 
+    {
+        // Define Query
+        const selectPetStatusesQuery = `SELECT ps.pet_status_id as ps_id, ps.status as status 
+                                        FROM PetStatuses as ps`;
+
+        db.pool.query(selectPetStatusesQuery, function (err, results, fields) {
+            res.send(JSON.stringify(results));
+        });
+
+    });
+    
 /**
  * Error handling middleware.
  */

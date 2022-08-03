@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from "react-router-dom";
 
 export const AddIntakesPage = () => {
+    // data for dropdown menus
+    const [petStatusDropDownList, setPetStatusDropDownList] = useState([]);
+    const [adoptionFeeTypeDropDownList, setAdoptionFeeTypeDropDownList] = useState([]);
+    const [personnelDropDownList, setPersonnelDropDownList] = useState([]);
+
     // pet information
     const [species, setSpecies] = useState('');
     const [name, setPetName] = useState('');
@@ -14,7 +19,7 @@ export const AddIntakesPage = () => {
     const [adoption_fee_type, setAdoptionFeeType] = useState('') //FK - Need to add drop down menu
 
     // intake information
-    const [pet_id, setPetId] = useState('');  //FK - Need to add drop down menu
+    const [pet_id, setPetId] = useState('');    //FK - Pull from INSERT Pet query
     const [intake_date, setIntakeDate] = useState(''); 
     const [processor, setProcessor] = useState(''); //FK - Need to add drop down menu
     const [drop_off_type, setDropOffType] = useState('');
@@ -31,6 +36,43 @@ export const AddIntakesPage = () => {
 
         history.push("/browse-intakes");
     };
+
+    const loadPetStatusesDropDownList = async () => {
+        // Fetch Pet Status data from server
+        let response = await fetch('/pet-statuses-dropdown-list');
+        let data = await response.json();
+
+        // load pet statuses into dropdown container
+        setPetStatusDropDownList(data);
+    };
+
+    const loadAdoptionFeeTypeDropDownList = async () => {
+        // Fetch Adoption Fee Type data from server
+        let response = await fetch('/adoption-fee-type-dropdown-list');
+        let data = await response.json();
+
+        // load adoption fee type data into dropdown container
+        setAdoptionFeeTypeDropDownList(data);
+    };
+
+    const loadPersonnelDropDownList = async () => {
+        // Fetch Personnel data from server
+        let response = await fetch('/personnel-dropdown-list');
+        let data = await response.json();
+
+        // load adoption fee type data into dropdown container
+        setPersonnelDropDownList(data);
+    };
+
+    const loadDropDownLists = useCallback(async () => {
+        await loadPetStatusesDropDownList();
+        await loadAdoptionFeeTypeDropDownList();
+        await loadPersonnelDropDownList();
+    }, []);
+
+    useEffect(() => {
+        loadDropDownLists();
+    }, []);
 
     return (
         <form className="add-row" onSubmit={addIntake}>
@@ -74,14 +116,15 @@ export const AddIntakesPage = () => {
                         placeholder="Enter pet age in years here"
                         value={age}
                         onChange={e => setAge(e.target.value)}
+                        min="0.01"
                         required />
                 </div>
                 <div className="add-row">
                     <label htmlFor="pet_gender_input">Gender: </label>
                     <select id="pet_gender_input" type="text" value={gender} onChange={e => setGender(e.target.value)} required>
                         <option value="None">Select Pet Gender</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
+                        <option value="F">Female</option>
+                        <option value="M">Male</option>
                     </select>
                 </div>
                 <div className="add-row">
@@ -93,6 +136,7 @@ export const AddIntakesPage = () => {
                         placeholder="Enter pet weight in lbs here"
                         value={weight}
                         onChange={e => setWeight(e.target.value)}
+                        min="0.01"
                         required />
                 </div>
                 <div className="add-row">
@@ -106,22 +150,27 @@ export const AddIntakesPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="adoption_status_input">Adoption Status: </label>
-                    <select id="adoption_status_input" type="number" value={adoption_status} onChange={e => setAdoptionStatus(e.target.value)} required>
-                        <option value="0">Select Adoption Status</option>
-                        <option value="1">On Hold</option>
-                        <option value="2">Approved for Adoption</option>
-                        <option value="3">Adopted</option>
+                    <label htmlFor="pet_status_input">Pet Status: </label>
+                    <select id="pet_status_input" type="number" value={adoption_status} onChange={e => setAdoptionStatus(e.target.value)} required>
+                        <option value="0">Select Pet Status</option>
+                        {
+                            petStatusDropDownList.map( (data, i) => 
+                            <option key={data.ps_id} 
+                                    value={data.ps_id}>
+                                    {data.status}</option> )
+                        }
                     </select>
                 </div>
                 <div className="add-row">
                     <label htmlFor="adoption_fee_type_input">Adoption Fee Type: </label>
                     <select id="adoption_fee_type_input" type="number" value={adoption_fee_type} onChange={e => setAdoptionFeeType(e.target.value)} required>
                         <option value="0">Select Adoption Fee Type</option>
-                        <option value="1">Puppy: $250</option>
-                        <option value="2">Kitten: $200</option>
-                        <option value="3">Adult: $150</option>
-                        <option value="4">Senior: $100</option>
+                        {
+                            adoptionFeeTypeDropDownList.map( (data, i) => 
+                            <option key={data.afc_id} 
+                                    value={data.afc_id}>
+                                    {data.code}: ${data.fee}</option> )
+                        }
                     </select>
                 </div>
             </fieldset>
@@ -143,11 +192,12 @@ export const AddIntakesPage = () => {
                     <label htmlFor="processor_input">Processor: </label>
                     <select id="processor_input" type="number" value={processor} onChange={e => setProcessor(e.target.value)} required>
                         <option value="0">Select Processor</option>
-                        <option value="1">Muriel Rashn, Employee Full-Time</option>
-                        <option value="2">Marie Cohnan, Employee Part-Time</option>
-                        <option value="3">Vanna Tran, Volunteer - Cats</option>
-                        <option value="4">Arthur Brooks, Volunteer- Cats</option>
-                        <option value="4">Bobby Lee, Volunteer - Both</option>
+                        {
+                            personnelDropDownList.map( (data, i) => 
+                            <option key={data.personnel_id} 
+                                    value={data.personnel_id}>
+                                    {data.personnel_name}</option> )
+                        }
                     </select>
                 </div>
                 <div className="add-row">
