@@ -12,8 +12,9 @@ function PetRow({pet, onDelete, onEdit}) {
             <td>{pet.gender}</td>
             <td>{pet.weight}</td>
             <td>{pet.coat_color}</td>
-            <td>{pet.adoption_status}</td>
-            <td>{pet.adoption_fee_type}</td>
+            <td>{pet.status_code}</td>
+            <td>{pet.fee_code}</td>
+            <td>${pet.fee}</td>
             <td><MdEdit onClick={()=>onEdit(pet)}/></td>
             <td><MdDeleteForever onClick={()=>onDelete(pet.pet_id)}/></td>
         </tr>

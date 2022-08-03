@@ -8,6 +8,7 @@ function IntakeTable( { intakes, onDelete }) {
                 <tr>
                     <th>Intake ID</th>
                     <th>Pet ID</th>
+                    <th>Pet Name</th>
                     <th>Intake Date</th>
                     <th>Processor</th>
                     <th>Drop Off Type</th>

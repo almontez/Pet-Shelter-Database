@@ -15,8 +15,9 @@ function PetsTable({pets, onEdit, onDelete}) {
                     <th>Gender</th>
                     <th>Weight</th>
                     <th>Color</th>
-                    <th>Adoption Status</th>
-                    <th>Adoption Fee Type</th>
+                    <th>Pet Status Code</th>
+                    <th>Adoption Fee Code</th>
+                    <th>Fee</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>

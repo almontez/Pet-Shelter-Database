@@ -27,12 +27,12 @@ export const AddIntakesPage = () => {
 
     const history = useHistory();
 
-    const addIntake = async (event) => {
+    const addPetIntake = async (event) => {
         event.preventDefault();
-        const newIntake = { species, name, breed, age, gender, weight, coat_color, adoption_status, adoption_fee_type,
+        const newPetIntake = { species, name, breed, age, gender, weight, coat_color, adoption_status, adoption_fee_type,
                             pet_id, intake_date, processor, drop_off_type, intake_details };
 
-        alert(`Added a new intake: ${JSON.stringify(newIntake)}`);
+        alert(`Added a new intake: ${JSON.stringify(newPetIntake)}`);
 
         history.push("/browse-intakes");
     };
@@ -75,7 +75,7 @@ export const AddIntakesPage = () => {
     }, []);
 
     return (
-        <form className="add-row" onSubmit={addIntake}>
+        <form className="add-row" onSubmit={addPetIntake}>
             <h1>Add New Pet</h1>
             <fieldset className="add-row">
                 <legend>Enter values for new pet</legend>

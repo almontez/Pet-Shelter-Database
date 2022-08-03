@@ -524,7 +524,21 @@ app.delete('/adoption-fee-code', function(req, res){
 app.get('/pets', function(req, res)
     {
         // Define query // Update this query later [should match one from DML file?]
-        const selectAllPetsQuery = 'SELECT * FROM Pets;';
+        const selectAllPetsQuery = `SELECT Pets.pet_id, 
+                                           Pets.species, 
+                                           Pets.name, 
+                                           Pets.breed, 
+                                           Pets.age, 
+                                           Pets.gender, 
+                                           Pets.weight, 
+                                           Pets.coat_color, 
+                                           ps.code as status_code, 
+                                           afc.code as fee_code, 
+                                           afc.fee
+                                    FROM Pets
+                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                    ORDER BY Pets.pet_id ASC;`
 
         // Execute every query in an asynchronous manner
         db.pool.query(selectAllPetsQuery, function (err, results, fields){
@@ -570,7 +584,17 @@ app.delete('/pets', function(req, res)
 app.get('/intakes', function(req, res)
     {
         // Define query 
-        const selectAllIntakesQuery = 'SELECT * FROM Intakes;';
+        const selectAllIntakesQuery = `SELECT Intakes.intake_id, 
+                                              Intakes.pet_id, 
+                                              Pets.name, 
+                                              Intakes.intake_date, 
+                                              CONCAT(p.first_name, ' ', p.last_name) as processor, 
+                                              Intakes.drop_off_type, 
+                                              Intakes.intake_details
+                                        FROM Intakes
+                                        INNER JOIN Pets on Intakes.pet_id = Pets.pet_id
+                                        LEFT JOIN Personnel as p on Intakes.processor = p.personnel_id
+                                        ORDER BY Intakes.intake_id ASC;`
 
         // Execute every query in an asynchronous manner
         db.pool.query(selectAllIntakesQuery, function (err, results, fields){
@@ -957,7 +981,7 @@ app.get('/pet-statuses-dropdown-list', function(req, res)
         });
 
     });
-    
+
 /**
  * Error handling middleware.
  */
