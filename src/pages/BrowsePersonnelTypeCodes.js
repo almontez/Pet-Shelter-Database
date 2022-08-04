@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PersonnelCodesTable from '../components/PersonnelCodesTable';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import personnelCodeData from '../data/personnelTypeCodesData'; // SAMPLE DATA
+// import personnelCodeData from '../data/personnelTypeCodesData'; // SAMPLE DATA
 
 function BrowsePersonnelCodesPage () {
     

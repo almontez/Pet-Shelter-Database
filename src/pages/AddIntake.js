@@ -54,9 +54,9 @@ export const AddIntakesPage = () => {
     
         if (response.status === 201) {
             alert("Successfully added new pet and intake data")
-            } else {
-                alert(`Status Code: ${response.status}. Failed to add new pet and intake data`)
-            }
+        } else {
+            alert(`Status Code: ${response.status}. Failed to add new pet and intake data`)
+        }
 
         history.push("/browse-intakes");
     };

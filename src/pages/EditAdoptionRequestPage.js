@@ -117,6 +117,8 @@ export const EditAdoptionRequestPage = ({ adoptionRequestToEdit }) => {
     return (
         <div className="edit-page">
             <h1>Edit Adoption Request</h1>
+            <fieldset>
+            <legend>Enter updates for selected adoption request</legend>
             <div className="edit-row">
                 <label id="edit-adopter-id-label" htmlFor="adopter_id_input">Adopter: </label>
                 <select id="adopter_id_input" type="number" value={String(adopter_id)} onChange={e => setAdopterId(e.target.value)} required>
@@ -191,7 +193,8 @@ export const EditAdoptionRequestPage = ({ adoptionRequestToEdit }) => {
                     <option value="3">Denied</option> */}
                 </select>
             </div>
-            <button id="save-button" onClick={editAdoptionRequest}>Save</button>
+            </fieldset>
+            <button id="save-button" onClick={editAdoptionRequest}>Save Updates</button>
         </div>
     );
 }

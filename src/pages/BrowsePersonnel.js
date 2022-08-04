@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PersonnelTable from '../components/PersonnelTable';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import personnelData from '../data/personnelData'; // SAMPLE DATA
+// import personnelData from '../data/personnelData'; // SAMPLE DATA
 import { reformatDate } from "./utils/helpers";
 
 function BrowsePersonnelPage() {

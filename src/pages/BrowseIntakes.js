@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import IntakeTable from '../components/IntakeTable';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import intakeData from '../data/intakeData'; // SAMPLE DATA
+// import intakeData from '../data/intakeData'; // SAMPLE DATA
 import { reformatDate } from "./utils/helpers";
 
 function BrowseIntakesPage() {

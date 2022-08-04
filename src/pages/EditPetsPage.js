@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 export const EditPetsPage = ({ petToEdit }) => {
+    // data for dropdown menus
+    const [petStatusDropDownList, setPetStatusDropDownList] = useState([]);
+    const [adoptionFeeTypeDropDownList, setAdoptionFeeTypeDropDownList] = useState([]);
 
+    // pet information container 
     const [species, setSpecies] = useState(petToEdit.species);
     const [name, setPetName] = useState(petToEdit.name);
     const [breed, setPetBreed] = useState(petToEdit.breed);
@@ -10,29 +14,79 @@ export const EditPetsPage = ({ petToEdit }) => {
     const [gender, setGender] = useState(petToEdit.gender);
     const [weight, setWeight] = useState(petToEdit.weight);
     const [coat_color, setCoatColor] = useState(petToEdit.coat_color);
-    const [adoption_status, setAdoptionStatus] = useState(petToEdit.adoption_status) //FK - Need to add drop down menu
-    const [adoption_fee_type, setAdoptionFeeType] = useState(petToEdit.adoption_fee_type) //FK - Need to add drop down menu
+    const [adoption_status, setAdoptionStatus] = useState(petToEdit.pet_status_id) //FK - Need to add drop down menu
+    const [adoption_fee_type, setAdoptionFeeType] = useState(petToEdit.adoption_fee_id) //FK - Need to add drop down menu
 
     const history = useHistory();
 
     const editPet = async () => {
-        const editedPet = { species: species, name: name, breed: breed, age: age, gender: gender, adoption_status: adoption_status, adoption_fee_type: adoption_fee_type };
+
+        const editedPet = { pet_id: petToEdit.pet_id, 
+                            species: species, 
+                            name: name, 
+                            breed: breed, 
+                            age: age, 
+                            gender: gender, 
+                            weight: weight, 
+                            adoption_status: adoption_status, 
+                            adoption_fee_type: adoption_fee_type };
         
-        //DEBUG MESSAGE
-        alert(`Edited a an adoption_request: ${JSON.stringify(editedPet)}`);
+        const response = await fetch('/pets', {
+            method: 'PUT',
+            body: JSON.stringify(editedPet),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if(response.status === 200){
+            alert("Successfully edited selected pet!");
+        } else {
+            alert(`Status Code: ${response.status}. Failed to edit selected pet.`);
+        }  
 
         history.push("/browse-pets");
     };
 
+    const loadPetStatusesDropDownList = async () => {
+        // Fetch Pet Status data from server
+        let response = await fetch('/pet-statuses-dropdown-list');
+        let data = await response.json();
+
+        // load pet statuses into dropdown container
+        setPetStatusDropDownList(data);
+    };
+
+    const loadAdoptionFeeTypeDropDownList = async () => {
+        // Fetch Adoption Fee Type data from server
+        let response = await fetch('/adoption-fee-type-dropdown-list');
+        let data = await response.json();
+
+        // load adoption fee type data into dropdown container
+        setAdoptionFeeTypeDropDownList(data);
+    };
+
+    // Citation for following code block
+    // Date: 7/23/2022
+    // Adapted from:
+    // Source URL: https://stackoverflow.com/a/53572588/5715461
+    const loadDropDownLists = useCallback(async () => {
+        await loadPetStatusesDropDownList();
+        await loadAdoptionFeeTypeDropDownList();
+    }, []);
+
+    useEffect(() => {
+        loadDropDownLists();
+    }, []);
+
     return (
-        <form className="add-row" onSubmit={editPet}>
+        <div className="edit-page">
         <h1>Update Pet Information</h1>
-        <fieldset className="add-row">
-            <legend>Enter updates for new pet</legend>
+        <fieldset>
+            <legend>Enter updates for selected pet</legend>
             <div className="edit-row">
-                    <label htmlFor="pet_species_input">Species: </label>
-                    <select id="pet_input" type="text" value={species} onChange={e => setSpecies(e.target.value)} required>
-                    <option value="None">Select Pet Species</option>
+                <label htmlFor="pet_species_input">Species: </label>
+                <select id="pet_input" type="text" value={species} onChange={e => setSpecies(e.target.value)} required>
                     <option value="Dog">Dog</option>
                     <option value="Cat">Cat</option>
                 </select>
@@ -65,15 +119,15 @@ export const EditPetsPage = ({ petToEdit }) => {
                     step="0.01"
                     placeholder="Enter pet age in years here"
                     value={age}
-                    onChange={e => setAge(parseInt(e.target.value))}
+                    onChange={e => setAge(parseFloat(e.target.value))}
+                    min="0.01"
                     required />
             </div>
             <div className="edit-row">
                 <label htmlFor="pet_gender_input">Gender: </label>
                     <select id="pet_gender_input" type="text" value={gender} onChange={e => setGender(e.target.value)} required>
-                        <option value="None">Select Pet Gender</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
+                        <option value="F">Female</option>
+                        <option value="M">Male</option>
                     </select>
             </div>
             <div className="edit-row">
@@ -85,6 +139,7 @@ export const EditPetsPage = ({ petToEdit }) => {
                     placeholder="Enter pet weight in lbs here"
                     value={weight}
                     onChange={e => setWeight(parseInt(e.target.value))}
+                    min="0.01"
                     required />
             </div>
             <div className="edit-row">
@@ -98,27 +153,30 @@ export const EditPetsPage = ({ petToEdit }) => {
                     required />
             </div>
             <div className="edit-row">
-                    <label htmlFor="adoption_status_input">Adoption Status: </label>
-                    <select id="adoption_status_input" type="number" value={adoption_status} onChange={e => setAdoptionStatus(e.target.value)} required>
-                        <option value="0">Select Adoption Status</option>
-                        <option value="1">On Hold</option>
-                        <option value="2">Approved for Adoption</option>
-                        <option value="3">Adopted</option>
+                    <label htmlFor="pet_status_input">Adoption Status: </label>
+                    <select id="pet_status_input" type="number" value={adoption_status} onChange={e => setAdoptionStatus(parseFloat(e.target.value))} required>
+                        {
+                            petStatusDropDownList.map( (data, i) => 
+                            <option key={data.ps_id} 
+                                    value={data.ps_id}>
+                                    {data.status}</option> )
+                        }
                     </select>
             </div>
             <div className="edit-row">
                     <label htmlFor="adoption_fee_type_input">Adoption Fee Type: </label>
-                    <select id="adoption_fee_type_input" type="number" value={adoption_fee_type} onChange={e => setAdoptionFeeType(e.target.value)} required>
-                        <option value="0">Select Adoption Fee Type</option>
-                        <option value="1">Puppy: $250</option>
-                        <option value="2">Kitten: $200</option>
-                        <option value="3">Adult: $150</option>
-                        <option value="4">Senior: $100</option>
+                    <select id="adoption_fee_type_input" type="number" value={adoption_fee_type} onChange={e => setAdoptionFeeType(parseInt(e.target.value))} required>
+                        {
+                            adoptionFeeTypeDropDownList.map( (data, i) => 
+                            <option key={data.afc_id} 
+                                    value={data.afc_id}>
+                                    {data.code}: ${data.fee}</option> )
+                        }
                     </select>
             </div>
         </fieldset>
-        <input type="submit" value="Save" />
-    </form>
+        <button id='save-button' onClick={editPet}>Save Updates</button>
+    </div>
     );
 }
 

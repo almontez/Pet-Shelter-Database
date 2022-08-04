@@ -531,7 +531,9 @@ app.get('/pets', function(req, res)
                                            Pets.gender, 
                                            Pets.weight, 
                                            Pets.coat_color, 
-                                           ps.code as status_code, 
+                                           ps.pet_status_id,
+                                           ps.code as status_code,
+                                           afc.adoption_fee_id, 
                                            afc.code as fee_code, 
                                            afc.fee
                                     FROM Pets
@@ -601,6 +603,38 @@ app.post('/pet-intake', function(req, res) {
         });
 });
 
+// Update Route for Pets by pet_id
+app.put('/pets', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    const data = req.body;
+
+    // Create query
+    const updatePetsQuery = `UPDATE Pets
+                             SET species='${data['species']}', 
+                                    name='${data['name']}', 
+                                    breed='${data['breed']}', 
+                                    age=${data['age']}, 
+                                    gender='${data['gender']}', 
+                                    weight=${data['weight']}, 
+                                    adoption_status=${data['adoption_status']}, 
+                                    adoption_fee_type=${data['adoption_fee_type']}
+                             WHERE pet_id=${data['pet_id']};`;
+    
+    // Run Update query
+    db.pool.query(updatePetsQuery, function(error, results, fields){
+        if (error) {
+            // Log error to the terminal
+            console.log(error);
+
+            // Send HTTP response 400 indicating bad request to user
+            res.sendStatus(400);
+        } else {
+            // Request Successful 
+            res.sendStatus(200);
+        }
+    });
+})
+
 // Delete Route for Pets by pet_id
 app.delete('/pets', function(req, res) 
     {                
@@ -656,6 +690,9 @@ app.get('/intakes', function(req, res)
 
         });
     });
+    
+// CREATE ROUTE FOR INTAKES TABLE EMBEDED IN CREATE ROUTE FOR PET-INTAKE [UNDER CRUD ROUTES FOR PETS]
+// REASON: A NEW INTAKE REQUIRES NEW PET DATA AND A NEW PET SHOULD NOT BE ADDED TO THE SYSTEM WITHOUT INTAKE DATA
 
 // Delete Route for Intakes by inake_id
 app.delete('/intakes', function(req, res) 
