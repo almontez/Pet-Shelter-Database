@@ -56,6 +56,10 @@ export const AddPersonnelPage = () => {
         setPersonnelCodesDropDownList(data);
     };
 
+    // Citation for following code block
+    // Date: 7/23/2022
+    // Adapted from:
+    // Source URL: https://stackoverflow.com/a/53572588/5715461
     const loadDropDownLists = useCallback(async () => {
         await loadPersonnelCodesDropDownList();
     }, []);

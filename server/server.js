@@ -46,8 +46,7 @@ app.get('/adopters', function(req, res)
 
         });
     });
-	
-	
+		
 // CREATE new Adopter
 app.post('/adopter', function(req, res){
     // Capture the incoming data and parse it back to a JS object
@@ -547,6 +546,60 @@ app.get('/pets', function(req, res)
 
         });
     });
+
+// CREATE 
+app.post('/pet-intake', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    const data = req.body;
+
+    // Capture 0 or ZLS values for processor
+    let processor = parseInt(data['processor']);
+    if (isNaN(processor) || processor === 0 || processor === null)
+    {
+        processor = 'NULL';
+    }
+
+    // Capture Null values for intake details
+    let intake_details = data['intake_details'];
+    if (!(intake_details) || intake_details === '') {
+        intake_details = 'NULL'
+    };
+    
+    // Create INSERT Pets query and run it on the database
+    const insertPetsQuery = `INSERT INTO Pets (species, name, breed, age, gender, weight, coat_color, adoption_status, adoption_fee_type)
+                             VALUES ('${data['species']}', '${data['name']}', '${data['breed']}', ${data['age']}, '${data['gender']}', ${data['weight']}, '${data['coat_color']}', ${data['adoption_status']}, ${data['adoption_fee_type']});`;
+    
+    // Insert pets data into Pets table
+    db.pool.query(insertPetsQuery, function (error, results, fields)
+        {
+            if (error) {
+                // Log the error to the terminal so we know what went wrong
+                console.log(error)
+
+                // Send HTTP response 400 indicating a bad request to user
+                res.sendStatus(400);
+            } else {
+                const insertIntakesQuery = `INSERT INTO Intakes (pet_id, intake_date, processor, drop_off_type, intake_details)
+                                            VALUES (${results.insertId}, '${data['intake_date']}', ${processor}, '${data['drop_off_type']}', '${intake_details}');`;
+
+                //  Insert intake data into Intakes table
+                db.pool.query(insertIntakesQuery, function(error, results, fields)
+                    {
+                        if (error) {
+                            // Log the error to the terminal so we know what went wrong
+                            console.log(error)
+
+                            // Send HTTP response 400 indicating a bad request to user
+                            res.sendStatus(400);
+                        } else {
+                            // Request succeeded: Resource Created 
+                            res.sendStatus(201);
+                        }
+
+                    });   
+            }
+        });
+});
 
 // Delete Route for Pets by pet_id
 app.delete('/pets', function(req, res) 

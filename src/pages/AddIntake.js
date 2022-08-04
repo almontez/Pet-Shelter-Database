@@ -19,7 +19,6 @@ export const AddIntakesPage = () => {
     const [adoption_fee_type, setAdoptionFeeType] = useState('') //FK - Need to add drop down menu
 
     // intake information
-    const [pet_id, setPetId] = useState('');    //FK - Pull from INSERT Pet query
     const [intake_date, setIntakeDate] = useState(''); 
     const [processor, setProcessor] = useState(''); //FK - Need to add drop down menu
     const [drop_off_type, setDropOffType] = useState('');
@@ -29,10 +28,35 @@ export const AddIntakesPage = () => {
 
     const addPetIntake = async (event) => {
         event.preventDefault();
-        const newPetIntake = { species, name, breed, age, gender, weight, coat_color, adoption_status, adoption_fee_type,
-                            pet_id, intake_date, processor, drop_off_type, intake_details };
 
-        alert(`Added a new intake: ${JSON.stringify(newPetIntake)}`);
+        const newPetIntake = { species, 
+                               name, 
+                               breed, 
+                               age, 
+                               gender, 
+                               weight, 
+                               coat_color, 
+                               adoption_status, 
+                               adoption_fee_type,
+                               intake_date, 
+                               processor, 
+                               drop_off_type, 
+                               intake_details };
+        
+        // Make POST request to server 
+        const response = await fetch('/pet-intake', {
+            method: 'POST',
+            body: JSON.stringify(newPetIntake),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    
+        if (response.status === 201) {
+            alert("Successfully added new pet and intake data")
+            } else {
+                alert(`Status Code: ${response.status}. Failed to add new pet and intake data`)
+            }
 
         history.push("/browse-intakes");
     };
@@ -64,6 +88,10 @@ export const AddIntakesPage = () => {
         setPersonnelDropDownList(data);
     };
 
+    // Citation for following code block
+    // Date: 7/23/2022
+    // Adapted from:
+    // Source URL: https://stackoverflow.com/a/53572588/5715461
     const loadDropDownLists = useCallback(async () => {
         await loadPetStatusesDropDownList();
         await loadAdoptionFeeTypeDropDownList();
@@ -215,8 +243,7 @@ export const AddIntakesPage = () => {
                         type="text"
                         placeholder="Enter intake details here"
                         value={intake_details}
-                        onChange={e => setIntakeDetails(e.target.value)}
-                        required />
+                        onChange={e => setIntakeDetails(e.target.value)} />
                 </div>
             </fieldset>
             <br></br>
