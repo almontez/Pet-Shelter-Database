@@ -550,38 +550,116 @@ app.get('/pets', function(req, res)
     });
 
 // Read Route for Pets filter
-app.get('/pets-filter/:breedSearch', function(req, res)
-    {
-        const breed = req.params.breedSearch;
-        console.log(breed);
-        console.log(`${breed}%`)
+app.get('/pets-filter/:attribute/:searchCriteria', function(req, res)
+    {   const attribute = req.params.attribute;
+        
+        // process search parameter
+        if (attribute === 'adoption_status') {
+            // search parameter for adoption_status needs to be an int 
+            // adoption_status is a FK with values of int from PetStatuses DB table
+            const findIdQuery = `SELECT pet_status_id
+                                 FROM PetStatuses
+                                 WHERE code='${req.params.searchCriteria}';`;
+            
+            // execute first query to find int FK based on code value
+            db.pool.query(findIdQuery, function (err, results, fields) {
+                const object = JSON.parse(JSON.stringify(results));
+                const results_obj = object[0];
+                const search = results_obj.pet_status_id;
 
-        // Define query // Update this query later [should match one from DML file?]
-        const selectFilteredPetsQuery = `SELECT Pets.pet_id, 
-                                           Pets.species, 
-                                           Pets.name, 
-                                           Pets.breed, 
-                                           Pets.age, 
-                                           Pets.gender, 
-                                           Pets.weight, 
-                                           Pets.coat_color, 
-                                           ps.pet_status_id,
-                                           ps.code as status_code,
-                                           afc.adoption_fee_id, 
-                                           afc.code as fee_code, 
-                                           afc.fee
-                                    FROM Pets
-                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
-                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
-                                    WHERE Pets.breed LIKE '${breed}%'
-                                    ORDER BY Pets.pet_id ASC;`
+                // Define general filter/search query
+                let selectFilteredPetsQuery = `SELECT Pets.pet_id, 
+                                                          Pets.species, 
+                                                          Pets.name, 
+                                                          Pets.breed, 
+                                                          Pets.age, 
+                                                          Pets.gender, 
+                                                          Pets.weight, 
+                                                          Pets.coat_color, 
+                                                          ps.pet_status_id,
+                                                          ps.code as status_code,
+                                                          afc.adoption_fee_id, 
+                                                          afc.code as fee_code, 
+                                                          afc.fee
+                                                    FROM Pets
+                                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                                    WHERE Pets.${attribute} LIKE '${search}%'
+                                                    ORDER BY Pets.pet_id ASC;`
 
-        // Execute every query in an asynchronous manner
-        db.pool.query(selectFilteredPetsQuery, function (err, results, fields){
+                // Execute second query get data to populate filtered UI table
+                db.pool.query(selectFilteredPetsQuery, function (err, results, fields){
+                    res.send(JSON.stringify(results));
+                })
+            });
+        } else if (attribute === 'adoption_fee_type') {
+            // search paramemter for adoption_fee_type neeeds to be an int
+            // adoption_fee_type is a FK with values of int from AdoptionFeeCodes DB table
+            const findIdQuery = `SELECT adoption_fee_id
+                                 FROM AdoptionFeeCodes
+                                 WHERE code='${req.params.searchCriteria}';`;
+            
+            // exectute fist query to find int FK based on code value
+            db.pool.query(findIdQuery, function (err, results, fields) {
+                const object = JSON.parse(JSON.stringify(results));
+                const results_obj = object[0];
+                const search = results_obj.adoption_fee_id;
 
-			res.send(JSON.stringify(results));
+                // Define general filter/search query
+                let selectFilteredPetsQuery = `SELECT Pets.pet_id, 
+                                                          Pets.species, 
+                                                          Pets.name, 
+                                                          Pets.breed, 
+                                                          Pets.age, 
+                                                          Pets.gender, 
+                                                          Pets.weight, 
+                                                          Pets.coat_color, 
+                                                          ps.pet_status_id,
+                                                          ps.code as status_code,
+                                                          afc.adoption_fee_id, 
+                                                          afc.code as fee_code, 
+                                                          afc.fee
+                                                    FROM Pets
+                                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                                    WHERE Pets.${attribute} LIKE '${search}%'
+                                                    ORDER BY Pets.pet_id ASC;`
 
-        });
+                // Execute second query get data to populate filtered UI table
+                db.pool.query(selectFilteredPetsQuery, function (err, results, fields) {
+                    res.send(JSON.stringify(results));
+                });
+            });
+        } else {
+            // search criteria does not need to be processed 
+            // already in proper form [should be a string]
+            const search = req.params.searchCriteria;
+
+            // Define general filter/search query
+            let selectFilteredPetsQuery = `SELECT Pets.pet_id, 
+                                                    Pets.species, 
+                                                    Pets.name, 
+                                                    Pets.breed, 
+                                                    Pets.age, 
+                                                    Pets.gender, 
+                                                    Pets.weight, 
+                                                    Pets.coat_color, 
+                                                    ps.pet_status_id,
+                                                    ps.code as status_code,
+                                                    afc.adoption_fee_id, 
+                                                    afc.code as fee_code, 
+                                                    afc.fee
+                                            FROM Pets
+                                            INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                            INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                            WHERE Pets.${attribute} LIKE '${search}%'
+                                            ORDER BY Pets.pet_id ASC;`
+
+            // Execute query get data to populate filtered UI table
+            db.pool.query(selectFilteredPetsQuery, function (err, results, fields){
+                res.send(JSON.stringify(results));
+            });
+        }
     });
 
 // CREATE 
@@ -1102,6 +1180,20 @@ app.get('/pet-statuses-dropdown-list', function(req, res)
                                         FROM PetStatuses as ps`;
 
         db.pool.query(selectPetStatusesQuery, function (err, results, fields) {
+            res.send(JSON.stringify(results));
+        });
+
+    });
+
+// Fetch data for Pets Table Attributes dropdown menu
+app.get('/attribute-dropdown-list', function(req, res) 
+    {
+        // Define Query
+        const selectFilterAttQuery = `SELECT Column_name 
+                                      FROM Information_schema.columns
+                                      WHERE Table_Name = 'Pets';`;
+
+        db.pool.query(selectFilterAttQuery, function (err, results, fields) {
             res.send(JSON.stringify(results));
         });
 

@@ -1,15 +1,20 @@
 import React from 'react';
 import PetsTable from '../components/PetsTable';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 //import petsData from '../data/petsData'; // sample data
 
 function BrowsePetsPage({ setPetToEdit }) {
+    // data container for dropdown menu in filter
+    const [attributeDropDownList, setAttributeDropDownList] = useState([]);
+
+    // data container for search/filter functionalities
+    const [attribute, setAttribute] = useState([]);
+    const [search, setSearch] = useState([]);
     
     // data containers for pet information
     const [pets, setPets] = useState([]);
-    const [breedSearch, setBreedSearch] = useState([]);
 
     const history = useHistory();
 
@@ -45,9 +50,9 @@ function BrowsePetsPage({ setPetToEdit }) {
 
     // Filter Pets by Breed
     const filterPets = async(event) => {
-        event.preventDefault()
+        event.preventDefault();
 
-        const response = await fetch(`/pets-filter/${breedSearch}`);
+        const response = await fetch(`/pets-filter/${attribute}/${search}`);
         const data = await response.json();
 
         setPets(data);
@@ -63,9 +68,39 @@ function BrowsePetsPage({ setPetToEdit }) {
         setPets(data);
     };
 
+    // resets the table 
+    const resetPage = async( event ) => {
+        event.preventDefault();
+
+        // fetch Pets data [from DB] using READ route in server.js  
+        const response = await fetch('/pets');
+        const data = await response.json();
+
+        // load data into pets variable
+        setPets(data);
+    };
+
+    const loadAttributeDropDownList = async () => {
+        // Fetch Personnel data from server
+        let response = await fetch('/attribute-dropdown-list');
+        let data = await response.json();
+
+        // load adoption fee type data into dropdown container
+        setAttributeDropDownList(data);
+    };
+
+    // Citation for following code block
+    // Date: 7/23/2022
+    // Adapted from:
+    // Source URL: https://stackoverflow.com/a/53572588/5715461
+    const loadDropDownLists = useCallback(async () => {
+        await loadAttributeDropDownList();
+    }, []);
+
     useEffect(() => {
         // load all pets data into UI table
         loadPets();
+        loadDropDownLists();
     }, []);
 
     return (
@@ -73,11 +108,25 @@ function BrowsePetsPage({ setPetToEdit }) {
             <h2>List of Recorded Pets</h2>
 
             <form className="petFilter" id='petFilter' onSubmit={filterPets}> 
-                <input type="text"
-                       value={String(breedSearch)}
-                       onChange = {e => setBreedSearch(e.target.value)} 
-                       placeholder="Search for pet by breed"/>
-                <input type="submit" value="Search" />
+                <div className='search-bar'>
+                    <label>Search: </label>
+                    <input type="text"
+                        value={String(search)}
+                        onChange = {e => setSearch(e.target.value)} 
+                        placeholder="Search for pet by breed"/>
+                    <label htmlFor="filter"> Filter By:  </label>
+                        <select id="filter" type="text" value={attribute} onChange={e => setAttribute(e.target.value)} required>
+                            <option value="0">Select Search Attribute</option>
+                            {
+                                attributeDropDownList.map( (data, i) =>
+                                <option key={data.Column_name}
+                                        value={data.Column_name}>
+                                        {data.Column_name}</option>)
+                            }
+                        </select>
+                    <input type="submit" value="Search" />
+                    <button id='reset-bttn' onClick={resetPage}>Clear Search</button>
+                </div>
             </form>
             <br></br>
 
