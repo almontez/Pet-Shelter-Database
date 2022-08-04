@@ -549,6 +549,41 @@ app.get('/pets', function(req, res)
         });
     });
 
+// Read Route for Pets filter
+app.get('/pets-filter/:breedSearch', function(req, res)
+    {
+        const breed = req.params.breedSearch;
+        console.log(breed);
+        console.log(`${breed}%`)
+
+        // Define query // Update this query later [should match one from DML file?]
+        const selectFilteredPetsQuery = `SELECT Pets.pet_id, 
+                                           Pets.species, 
+                                           Pets.name, 
+                                           Pets.breed, 
+                                           Pets.age, 
+                                           Pets.gender, 
+                                           Pets.weight, 
+                                           Pets.coat_color, 
+                                           ps.pet_status_id,
+                                           ps.code as status_code,
+                                           afc.adoption_fee_id, 
+                                           afc.code as fee_code, 
+                                           afc.fee
+                                    FROM Pets
+                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                    WHERE Pets.breed LIKE '${breed}%'
+                                    ORDER BY Pets.pet_id ASC;`
+
+        // Execute every query in an asynchronous manner
+        db.pool.query(selectFilteredPetsQuery, function (err, results, fields){
+
+			res.send(JSON.stringify(results));
+
+        });
+    });
+
 // CREATE 
 app.post('/pet-intake', function(req, res) {
     // Capture the incoming data and parse it back to a JS object

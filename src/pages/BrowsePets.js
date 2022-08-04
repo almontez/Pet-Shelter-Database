@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 //import petsData from '../data/petsData'; // sample data
-import PetFilter from '../components/PetFilter';
 
 function BrowsePetsPage({ setPetToEdit }) {
     
-    // DESCRIBE ME!!!
+    // data containers for pet information
     const [pets, setPets] = useState([]);
-    const [filter, setFilter] = useState([]);
+    const [breedSearch, setBreedSearch] = useState([]);
+
     const history = useHistory();
 
     // Remove Pet instance from Pets Table
@@ -32,16 +32,28 @@ function BrowsePetsPage({ setPetToEdit }) {
             const newPetList = pets.filter(m => m.pet_id !== _id);
             setPets(newPetList);
         } else {
-            // For the record: Log error
+            // Log error
             console.error(`Status Code: ${response.status}. Failed to delete Pet with id = ${_id}`);
         }
     }; 
 
+    // Edit/Update Pet information 
     const onEdit = async petToEdit => {
         setPetToEdit(petToEdit);
         history.push("/edit-pet")
     };
 
+    // Filter Pets by Breed
+    const filterPets = async(event) => {
+        event.preventDefault()
+
+        const response = await fetch(`/pets-filter/${breedSearch}`);
+        const data = await response.json();
+
+        setPets(data);
+    }; 
+
+    // Populate UI table with pet data
     const loadPets = async() => {
         // fetch Pets data [from DB] using READ route in server.js  
         const response = await fetch('/pets');
@@ -60,7 +72,13 @@ function BrowsePetsPage({ setPetToEdit }) {
         <>
             <h2>List of Recorded Pets</h2>
 
-            <PetFilter></PetFilter>
+            <form className="petFilter" id='petFilter' onSubmit={filterPets}> 
+                <input type="text"
+                       value={String(breedSearch)}
+                       onChange = {e => setBreedSearch(e.target.value)} 
+                       placeholder="Search for pet by breed"/>
+                <input type="submit" value="Search" />
+            </form>
             <br></br>
 
             <Link to="/add-intake">Add New Pet</Link>
