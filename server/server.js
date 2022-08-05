@@ -537,8 +537,8 @@ app.get('/pets', function(req, res)
                                            afc.code as fee_code, 
                                            afc.fee
                                     FROM Pets
-                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
-                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                    LEFT JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                    LEFT JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
                                     ORDER BY Pets.pet_id ASC;`
 
         // Execute every query in an asynchronous manner
@@ -582,8 +582,8 @@ app.get('/pets-filter/:attribute/:searchCriteria', function(req, res)
                                                           afc.code as fee_code, 
                                                           afc.fee
                                                     FROM Pets
-                                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
-                                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                                    LEFT JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                                    LEFT JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
                                                     WHERE Pets.${attribute} LIKE '${search}%'
                                                     ORDER BY Pets.pet_id ASC;`
 
@@ -620,8 +620,8 @@ app.get('/pets-filter/:attribute/:searchCriteria', function(req, res)
                                                           afc.code as fee_code, 
                                                           afc.fee
                                                     FROM Pets
-                                                    INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
-                                                    INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                                    LEFT JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                                    LEFT JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
                                                     WHERE Pets.${attribute} LIKE '${search}%'
                                                     ORDER BY Pets.pet_id ASC;`
 
@@ -650,8 +650,8 @@ app.get('/pets-filter/:attribute/:searchCriteria', function(req, res)
                                                     afc.code as fee_code, 
                                                     afc.fee
                                             FROM Pets
-                                            INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
-                                            INNER JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
+                                            LEFT JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+                                            LEFT JOIN AdoptionFeeCodes as afc on Pets.adoption_fee_type = afc.adoption_fee_id
                                             WHERE Pets.${attribute} LIKE '${search}%'
                                             ORDER BY Pets.pet_id ASC;`
 

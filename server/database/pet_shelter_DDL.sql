@@ -19,8 +19,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 
 -- Remove any existing tables
 SET FOREIGN_KEY_CHECKS=0;
-DROP TABLE IF EXISTS Adopters, AdoptionFeeCodes, Adopters_Pets, AdoptionRequestStatusCodes, AdoptionRequests, Intakes, Personnel, PersonnelTypeCodes, PetStatuses, Pets;
-SET FOREIGN_KEY_CHECKS=1;
+DROP TABLE IF EXISTS AdoptionRequests, Adopters_Pets, Adopters, Intakes, Pets, Personnel, AdoptionFeeCodes, AdoptionRequestStatusCodes, PersonnelTypeCodes, PetStatuses;
+-- SET FOREIGN_KEY_CHECKS=1;
 
 
 -- -----------------------------------------------------
@@ -222,15 +222,9 @@ CREATE TABLE IF NOT EXISTS `AdoptionRequests` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
----------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------
 -- INSERT QUERIES FOR SAMPLE DATA
----------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------
 -- -----------------------------------------------------
 -- Start Insert into PetStatuses
 -- -----------------------------------------------------
@@ -846,3 +840,7 @@ VALUES
     ),
     250.00
 );
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
