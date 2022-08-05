@@ -178,7 +178,7 @@ export const AddIntakesPage = () => {
                         required />
                 </div>
                 <div className="add-row">
-                    <label htmlFor="pet_status_input">Pet Status: </label>
+                    <label htmlFor="pet_status_input">Adoption Status: </label>
                     <select id="pet_status_input" type="number" value={adoption_status} onChange={e => setAdoptionStatus(e.target.value)} required>
                         <option value="0">Select Pet Status</option>
                         {

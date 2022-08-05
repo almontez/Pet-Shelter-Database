@@ -138,7 +138,7 @@ export const EditPetsPage = ({ petToEdit }) => {
                     step="0.01"
                     placeholder="Enter pet weight in lbs here"
                     value={weight}
-                    onChange={e => setWeight(parseInt(e.target.value))}
+                    onChange={e => setWeight(parseFloat(e.target.value))}
                     min="0.01"
                     required />
             </div>

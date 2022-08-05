@@ -48,8 +48,8 @@ export const AddPetStatusesPage = () => {
                     <label htmlFor="status_input">Status: </label>
                     <input
                         id="status_input"
-                        type="number"
-                        placeholder="Enter fee here"
+                        type="text"
+                        placeholder="Enter status here"
                         value={status}
                         onChange={e => setStatus(e.target.value)}
                         required />
