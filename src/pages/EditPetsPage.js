@@ -175,7 +175,8 @@ export const EditPetsPage = ({ petToEdit }) => {
                     </select>
             </div>
         </fieldset>
-        <button id='save-button' onClick={editPet}>Save Updates</button>
+        <br></br>
+        <button className='form-submit' id='save-button' onClick={editPet}>Save Updates</button>
     </div>
     );
 }

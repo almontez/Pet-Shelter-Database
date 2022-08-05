@@ -63,8 +63,9 @@ export const AddAdoptionRequestStatusCodePage = () => {
                         onChange={e => setStatus(e.target.value)}
                         required />
                 </div>
-                <input type="submit" value="Add Adoption Request Status Code" />
             </fieldset>
+            <br></br>
+            <input className='form-submit' type="submit" value="Add Adoption Request Status Code" />
         </form>
     );
 }

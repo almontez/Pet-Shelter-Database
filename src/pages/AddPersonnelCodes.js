@@ -54,8 +54,9 @@ export const AddPersonnelCodesPage = () => {
                         onChange={e => setPersonnelType(e.target.value)}
                         required />
                 </div>
-                <input type="submit" value="Add Personnel" />
             </fieldset>
+            <br></br>
+            <input className='form-submit' type="submit" value="Add Personnel" />
         </form>
     );
 }

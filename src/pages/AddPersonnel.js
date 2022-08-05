@@ -155,7 +155,8 @@ export const AddPersonnelPage = () => {
                         required />
                 </div>
                 </fieldset>
-                <input type="submit" value="Add Personnel" />
+                <br></br>
+                <input className='form-submit' type="submit" value="Add Personnel" />
         </form>
     );
 }

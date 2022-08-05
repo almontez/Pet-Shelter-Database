@@ -1,5 +1,8 @@
 .App {
-  margin-left: 10px;
+  margin: 10%;
+  margin-top: 3%;
+  /*centers all text on screen*/
+  text-align: center;
 }
 
 table, th, td {
@@ -7,7 +10,61 @@ table, th, td {
   padding: 10px;
 }
 
-tr th {background-color:whitesmoke;}
+/*this block of code add alternating colors to the tables*/
+tr th {background-color:lightgray;}
 tr:nth-child(even){background-color:floralwhite;}
 tr:nth-child(odd){background-color:azure;}
 tr:hover {background-color:gold;}
+
+header {
+  text-align: center;
+}
+
+nav {
+  text-align: center;
+}
+
+/*centers all tables*/
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form {
+  text-align: left;
+}
+
+/*edit pages are in div tags, not forms*/
+/*used to left align these non-form forms*/
+.edit-page {
+  text-align: left;
+}
+
+.petFilter {
+  text-align: center;
+}
+
+/*caption used to hold link for add forms*/
+/*used to align add link with left edge of tables*/
+caption {
+  text-align: left;
+}
+
+/*needed to center landing page form*/
+/*since other forms a left aligned*/
+.landing-page {
+  text-align: center;
+}
+
+.form-submit {
+  padding: .5%;
+  font-weight: bold;
+}
+
+.form-submit:hover {
+  background-color: gold;
+}
+
+.add-row {
+  line-height: 1.75;
+}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PetStatusesTable from '../components/PetStatusesTable';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import petStatusesData from '../data/petStatusesData'; // SAMPLE DATA
+// import petStatusesData from '../data/petStatusesData'; // SAMPLE DATA
 
 function BrowsePetStatusesPage () {
     
@@ -53,13 +53,11 @@ function BrowsePetStatusesPage () {
         <>
             <h2>List of Recorded Pet Statuses</h2>
 
-            <Link to="/add-pet-status">Add New Pet Status</Link>
-
             <PetStatusesTable
                 pet_statuses={pet_statuses}
                 onDelete={onDelete}>
             </PetStatusesTable>
-
+            <br></br>
             <Link to="/category-tables">Return Category Tables</Link>
             <br></br>
             <Link to="/">Return to Home Page</Link>

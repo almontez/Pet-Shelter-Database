@@ -87,11 +87,11 @@ function BrowseAdoptersPage({ setAdopterToEdit }) {
     return (
         <>
             <h2>List of Recorded Adopters</h2>
-            <Link className="navigation-link" to="/add-adopter">Add New Adopter</Link>
             <AdopterList 
                 adopters={adopters} 
                 onDelete={onDelete}>
             </AdopterList>
+            <br></br>
             <Link className="App-link" to="/">
               Return to Home Page
             </Link>

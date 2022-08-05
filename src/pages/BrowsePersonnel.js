@@ -55,13 +55,12 @@ function BrowsePersonnelPage() {
         <>
             <h2>List of Recorded Personnel</h2>
 
-            <Link to="/add-personnel">Add New Personnel</Link>
-
             <PersonnelTable 
                 personnel={personnel}
                 onDelete={onDelete}>
             </PersonnelTable>
 
+            <br></br>
             <Link to="/">Return to Home Page</Link>
         </>
     );

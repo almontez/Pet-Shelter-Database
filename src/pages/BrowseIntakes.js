@@ -55,14 +55,12 @@ function BrowseIntakesPage() {
     return (
         <>
             <h2>List of Recorded Intakes</h2>
-
-            <Link to="/add-intake">Add New Intake</Link>
-
             <IntakeTable
                 intakes={intakes}
                 onDelete={onDelete}>
             </IntakeTable>
 
+            <br></br>
             <Link to="/">Return to Home Page</Link>
         </>
     );

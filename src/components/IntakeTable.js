@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import IntakeRow from './IntakeRow';
 
 function IntakeTable( { intakes, onDelete }) {
     return (
         <table>
+            <caption><Link to="/add-intake">Add New Intake</Link></caption>
             <thead>
                 <tr>
                     <th>Intake ID</th>

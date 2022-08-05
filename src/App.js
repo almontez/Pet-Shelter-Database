@@ -59,7 +59,8 @@ function App() {
     <div className="App">
       <header>
         <h1>Pet Shelter Database</h1>
-        <p>Description</p>
+        <p>This database facilitates the complex operations and relationships involved in intake and adoption.
+        <br></br>It records Intakes of Pets by Personnel and Adoption Requests of Pets by Adopters overseen by Personnel. </p>
       </header>
       {/*For production, remove exact in each Route and use this: <Router basename="/~lingbe"> */}
       <Router>

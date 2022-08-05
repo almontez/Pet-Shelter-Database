@@ -194,7 +194,8 @@ export const EditAdoptionRequestPage = ({ adoptionRequestToEdit }) => {
                 </select>
             </div>
             </fieldset>
-            <button id="save-button" onClick={editAdoptionRequest}>Save Updates</button>
+            <br></br>
+            <button className='form-submit' id="save-button" onClick={editAdoptionRequest}>Save Updates</button>
         </div>
     );
 }

@@ -71,11 +71,11 @@ function BrowseAdoptionFeeCodesPage({ setAdoptionFeeCodeToEdit }) {
     return (
         <>
             <h2>List of Recorded Adoption Fee Codes</h2>
-            <Link className="navigation-link" to="/add-adoption-fee-code">Add New Adoption Fee Code</Link>
             <AdoptionFeeCodeList 
                 adoption_fee_codes={adoption_fee_codes} 
                 onDelete={onDelete}>
             </AdoptionFeeCodeList>
+            <br></br>
             <Link to="/category-tables">Return Category Tables</Link>
             <br></br>
             <Link className="App-link" to="/">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AdoptionRequestStatusCode from './AdoptionRequestStatusCode';
 
 //Removed from <thead>. Use for entities that need UPDATE
@@ -14,6 +15,7 @@ function AdoptionRequestStatusCodeList({ adoption_request_status_codes, onDelete
     
     return (
         <table id="adoption_request_status_codes">
+            <caption><Link className="navigation-link" to="/add-adoption-request-status-code">Add New Adoption Request Status Code</Link></caption>
             <thead>
                 <tr>
                     <th>AdoptionRequestStatus ID</th>

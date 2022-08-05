@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AdoptionFeeCode from './AdoptionFeeCode';
 
 //Removed from <thead>. Use for entities that need UPDATE
@@ -14,6 +15,7 @@ function AdoptionFeeCodeList({ adoption_fee_codes, onDelete }) { //Removed onEdi
     
     return (
         <table id="adoption_fee_codes">
+            <caption><Link className="navigation-link" to="/add-adoption-fee-code">Add New Adoption Fee Code</Link></caption>
             <thead>
                 <tr>
                     <th>AdoptionFee ID</th>

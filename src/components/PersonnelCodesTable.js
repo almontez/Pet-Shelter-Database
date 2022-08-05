@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PersonnelCodesRow from './PersonnelCodesRow';
 
 function PersonnelCodesTable ({ personnel_codes, onDelete }) {
     return (
         <table>
+            <caption><Link to="/add-personnel-codes">Add New Personnel Code</Link></caption>
             <thead>
                 <tr>
                     <th>Personnel Code ID</th>

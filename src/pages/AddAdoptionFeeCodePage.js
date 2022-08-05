@@ -63,8 +63,9 @@ export const AddAdoptionFeeCodePage = () => {
                         onChange={e => setFee(e.target.value)}
                         required />
                 </div>
-                <input type="submit" value="Add AdoptionFeeCode" />
             </fieldset>
+            <br></br>
+            <input className='form-submit' type="submit" value="Add AdoptionFeeCode" />
         </form>
     );
 }

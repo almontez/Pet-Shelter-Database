@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AdoptionRequest from './AdoptionRequest';
 
 //Removed from <thead>. Use for entities that need UPDATE
@@ -14,6 +15,7 @@ function AdoptionRequestList({ adoption_requests, onDelete, onEdit }) { //Remove
     
     return (
         <table id="adoption_requests">
+            <caption><Link className="navigation-link" to="/add-adoption-request">Add New Adoption Request</Link></caption>
             <thead>
                 <tr>
                     <th>Adopter Pet ID</th>

@@ -210,8 +210,9 @@ export const AddAdoptionRequestPage = () => {
                         <option value="3">Denied</option> */}
                     </select>
                 </div>
-                <input type="submit" value="Add Adoption Request" />
             </fieldset>
+            <br></br>
+            <input id='form-submit' type="submit" value="Add Adoption Request" />
         </form>
     );
 }

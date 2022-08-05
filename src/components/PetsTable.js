@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import PetRow from './PetsRow'; 
 
 function PetsTable({pets, onEdit, onDelete}) {
     return (
         <>
         <table id="pets-table">
+            <caption><Link to="/add-intake">Add New Pet</Link></caption>
             <thead>
                 <tr>
                     <th>Pet ID</th>

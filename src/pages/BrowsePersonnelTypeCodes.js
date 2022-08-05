@@ -53,13 +53,11 @@ function BrowsePersonnelCodesPage () {
         <>
             <h2>List of Recorded Personnel Codes</h2>
 
-            <Link to="/add-personnel-codes">Add New Personnel Code</Link>
-
             <PersonnelCodesTable
                 personnel_codes={personnel_codes}
                 onDelete={onDelete}>
             </PersonnelCodesTable>
-
+            <br></br>
             <Link to="/category-tables">Return Category Tables</Link>
             <br></br>
             <Link to="/">Return to Home Page</Link>

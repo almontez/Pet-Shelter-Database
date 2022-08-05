@@ -83,12 +83,12 @@ function BrowseAdoptionRequestsPage({ setAdoptionRequestToEdit }) {
     return (
         <>
             <h2>List of Recorded Adoption Requests</h2>
-            <Link className="navigation-link" to="/add-adoption-request">Add New Adoption Request</Link>
             <AdoptionRequestList
                 adoption_requests={adoption_requests} 
                 onDelete={onDelete}
                 onEdit={onEdit}>
             </AdoptionRequestList>
+            <br></br>
             <Link className="App-link" to="/">
               Return to Home Page
             </Link>

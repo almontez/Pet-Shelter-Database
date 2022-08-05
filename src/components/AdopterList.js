@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Adopter from './Adopter';
 
 //Removed from <thead>. Use for entities that need UPDATE
@@ -14,6 +15,7 @@ function AdopterList({ adopters, onDelete }) { //Removed onEdit (use for UPDATE)
 
     return (
         <table id="adopters">
+            <caption><Link to="/add-adopter">Add New Adopter</Link></caption>
             <thead>
                 <tr>
                     <th>Adopter ID</th>

@@ -54,8 +54,9 @@ export const AddPetStatusesPage = () => {
                         onChange={e => setStatus(e.target.value)}
                         required />
                 </div>
-                <input type="submit" value="Add Pet Status" />
             </fieldset>
+            <br></br>
+            <input className='form-submit' type="submit" value="Add Pet Status" />
         </form>
     );
 }

@@ -247,7 +247,7 @@ export const AddIntakesPage = () => {
                 </div>
             </fieldset>
             <br></br>
-            <input type="submit" value="Add Pet &amp; Intake Data" />
+            <input className='form-submit' type="submit" value="Add Pet &amp; Intake Data" />
         </form>
     );
 }

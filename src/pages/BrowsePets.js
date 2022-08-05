@@ -129,15 +129,14 @@ function BrowsePetsPage({ setPetToEdit }) {
                 </div>
             </form>
             <br></br>
-
-            <Link to="/add-intake">Add New Pet</Link>
-
+                        
             <PetsTable                 
                 pets={pets}
                 onEdit={onEdit}
                 onDelete={onDelete}>
             </PetsTable>
 
+            <br></br>
             <Link to="/">Return to Home Page</Link>
         </>
     );
