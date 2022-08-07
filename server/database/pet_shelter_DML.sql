@@ -44,8 +44,8 @@ SELECT ps.pet_status_id, ps.status FROM PetStatuses as ps;
 -- Get all pets, their adoption status, and  their adoption fee for the List Pets page
 SELECT pet_id, species, name, breed, age, gender, weight, coat_color, ps.pet_status_id, ps.code as status_code, afc.adoption_fee_id, afc.code as fee_code, afc.fee
 FROM Pets
-INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
-INNER JOIN AdoptionFeeCodes as afc on pets.adoption_fee_type = afc.adoption_fee_id
+LEFT JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+LEFT JOIN AdoptionFeeCodes as afc on pets.adoption_fee_type = afc.adoption_fee_id
 ORDER BY Pets.pet_id ASC;
 -- For Searching/filtering for a pet, we add a WHERE clause before ORDER BY
 -- Allows for the filtering of UI table based on any attribute in Pets
