@@ -1,4 +1,4 @@
--- These are some Database Manipulation queries for a partially implemented Project Website 
+-- These are the Database Manipulation queries for the implemented Project Website 
 -- using the Pet Shelter database.
 -- Your submission should contain ALL the queries required to implement ALL the
 -- functionalities listed in the Project Specs.
@@ -6,12 +6,18 @@
 -- -----------------------------------------------------
 -- PetStatuses
 -- -----------------------------------------------------
--- get all pet_status_id's and statuses to populate the adoption_status dropdown for the:
+-- Select all attributes in PetStatus for browse PetStatuses page 
+SELECT * FROM PetStatuses;
+
+-- Get all pet_status_id's and statuses to populate the adoption_status dropdown for the:
 --  List PetStatuses page
 SELECT ps.pet_status_id, ps.code, ps.status FROM PetStatuses as ps;
 
--- Add a new pet status
+-- Add a new PetStatus instance
 INSERT INTO PetStatuses (code, status) VALUES (:code_input, :status_input);
+
+-- Delete PetStatus instance based on id
+DELETE FROM PetStatuses WHERE pet_status_id = :pet_status_id_from_table
 
 -- -----------------------------------------------------
 -- AdoptionFeeCodes
@@ -19,6 +25,7 @@ INSERT INTO PetStatuses (code, status) VALUES (:code_input, :status_input);
 -- Get all adoption_fee_id's, codes, and fees to populate the adoption_fee dropdown for the:
 --  Pets Add and Edit pages
 --  List AdoptionFeeCodes page
+-- Also used as query to display all attributes in browse AdoptionFeeCodes page 
 SELECT afc.adoption_fee_id, afc.code, afc.fee FROM AdoptionFeeCodes as afc;
 
 -- Add a new adoption fee code
@@ -35,12 +42,20 @@ DELETE FROM AdoptionFeeCodes WHERE adoption_fee_id = :adoption_fee_id_selected_f
 SELECT ps.pet_status_id, ps.status FROM PetStatuses as ps;
 
 -- Get all pets, their adoption status, and  their adoption fee for the List Pets page
-SELECT pet_id, species, name, breed, age, gender, weight, coat_color, ps.status as adoption_status, afc.fee as adoption_fee
-FROM Pets as pets
-INNER JOIN PetStatuses as ps on pets.adoption_status = ps.pet_status_id
-INNER JOIN AdoptionFeeCodes as afc on pets.adoption_fee_type = afc.adoption_fee_id;
--- For Searching/filtering for a pet, we add a WHERE clause:
-WHERE breed = :breed_from_text_input
+SELECT pet_id, species, name, breed, age, gender, weight, coat_color, ps.pet_status_id, ps.code as status_code, afc.adoption_fee_id, afc.code as fee_code, afc.fee
+FROM Pets
+INNER JOIN PetStatuses as ps on Pets.adoption_status = ps.pet_status_id
+INNER JOIN AdoptionFeeCodes as afc on pets.adoption_fee_type = afc.adoption_fee_id
+ORDER BY Pets.pet_id ASC;
+-- For Searching/filtering for a pet, we add a WHERE clause before ORDER BY
+-- Allows for the filtering of UI table based on any attribute in Pets
+WHERE :attribute = :UI_search_critera
+
+-- Select query for search/filter dropdown menu.
+-- Populates dropdown menu with Pets attributes as domains for search criteria
+SELECT Column_name 
+FROM Information_schema.columns
+WHERE Table_Name = 'Pets';
 
 -- Add a new pet
 INSERT INTO Pets (species, name, breed, age, gender, weight, coat_color, adoption_status, adoption_fee_type)
@@ -49,10 +64,10 @@ VALUES (:species_from_dropdown_input, :name_input, :breed_input, :age_input, :ge
 -- Update a pet's data based on submission of the Update Pet form 
 UPDATE Pets
 SET species = :species_from_dropdown_input, name = :name_input, breed = :breed_input, age = :age_input, gender = :gender_from_dropdown_input, weight = :weight_input, coat_color = :coat_color_input, adoption_status = :pet_status_id_from_dropdown_input, adoption_fee_type = :adoption_fee_id_from_dropdown_input
-WHERE id= :pet_ID_from_the_update_form
+WHERE id= :pet_ID_from_the_update_form;
 
 -- Delete a Pet
-DELETE FROM Pets WHERE pet_id = :pet_id_selected_from_browse_pets_page
+DELETE FROM Pets WHERE pet_id = :pet_id_selected_from_browse_pets_page;
 
 -- -----------------------------------------------------
 -- PersonnelTypeCodes
@@ -62,6 +77,16 @@ DELETE FROM Pets WHERE pet_id = :pet_id_selected_from_browse_pets_page
 --  and populate the perstonnel_type_codes dropdown for the Add Personnel page
 SELECT ptc.personnel_type_id, ptc.code, ptc.personnel_type FROM PersonnelTypeCodes as ptc;
 
+-- Select all values in PersonnelTypeCodes for UI display
+SELECT * from PersonnelTypeCodes;
+
+-- Create new PersonnelTypeCode instance 
+INSERT INTO PersonnelTypeCodes (code, personnel_type) 
+VALUES (:code_from_UI, :personnel_type_description_from_UI)
+
+-- Delete PersonnelTypeCode based on ID
+DELETE FROM PersonnelTypeCodes WHERE personnel_id = :id_selected_from_UI;
+
 -- -----------------------------------------------------
 -- Personnel
 -- -----------------------------------------------------
@@ -70,22 +95,35 @@ SELECT p.personnel_id, p.first_name, p.last_name, p.job_title, pts.personnel_typ
 FROM Personnel as p
 INNER JOIN PersonnelTypeCodes as pts ON p.personnel_type = pts.personnel_type_id;
 
+-- Get Personnel Data for disply in UI table on browse personnel page
+SELECT p.personnel_id, p.personnel_type, ptc.code, p.job_title, p.first_name, p.last_name, p.address, p.phone_number, p.email, p.birth_date
+FROM Personnel as p
+INNER JOIN PersonnelTypeCodes as ptc on p.personnel_type = ptc.personnel_type_id
+ORDER BY p.personnel_id ASC;
+
 -- Add a new personnel
 INSERT INTO Personnel (personnel_type, job_title, first_name, last_name, address, phone_number, email, birth_date)
 VALUES (:personnel_type_input_from_dropdown_input, :job_title_input, :first_name_input, :last_name_input, :address_input, :phone_number_input, :email_input, :birth_date_input)
+
+-- Delete Personnel data based on Id
+DELETE FROM Personnel WHERE personnel_id = :id_selected_from_UI;
 
 -- -----------------------------------------------------
 -- Intakes
 -- -----------------------------------------------------
 -- Get all intakes, its pet name, and its processor name
-SELECT i.intake_id, pets.name as pet_name, CONCAT(p.first_name, ' ', p.last_name) as processor, i.intake_date, i.drop_off_type, i.intake_details
-FROM Intakes as i
-join Pets as pets on i.pet_id=pets.pet_id
-join Personnel as p on i.processor=p.personnel_id;
+SELECT intake_id, pet_id, Pets.name, intake_date, CONCAT(p.first_name, ' ', p.last_name) as processor, drop_off_type, intake_details
+FROM Intakes
+INNER JOIN Pets on Intakes.pet_id = Pets.pet_id
+LEFT JOIN Personnel as p on Intakes.processor = p.personnel_id
+ORDER BY Intakes.intake_id ASC;
 
 -- Add a new intake
 INSERT INTO Intakes (pet_id, intake_date, processor, drop_off_type, intake_details)
 VALUES (:pet_id_from_dropdown_input, :intake_date_input, :personnel_id_from_dropdown_input, drop_off_type_input, intake_details_input)
+
+-- Delete Intake based on Id
+DELETE FROM Intake WHERE intake_id = id_selected_from_UI;
 
 -- -----------------------------------------------------
 -- Adopters
