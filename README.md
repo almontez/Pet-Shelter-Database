@@ -18,6 +18,8 @@ The Pet Shelter Database site serves pets, current pet owners, future pet owners
 
 ## Schema 
 
+![pet shelter database schema](https://github.com/almontez/Pet-Shelter-DB/blob/main/ReadMe%20Media/DBSchema.png)
+
 ## Product Spec
 
 ### 1. User Stories
