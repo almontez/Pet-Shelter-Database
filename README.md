@@ -84,4 +84,4 @@ The Pet Shelter Database site serves pets, current pet owners, future pet owners
 
 ### Sample Work
 
-Additional Sample Work can be found [here]()
+Additional sample work can be found [here](https://github.com/almontez/CS_340_SU2022_DBProject/blob/main/Pet%20Shelter%20Database%20Design%20Documentation.pdf)
