@@ -4,7 +4,7 @@
 1. [Description](#Description)
 2. [Schema](#Schema)
 3. [Product Spec](#Product-Spec)
-5. [Sample Images](#Samples)
+5. [Sample Images](#Sample-Work)
 
 ## Description
 The Pet Shelter Database site serves pets, current pet owners, future pet owners, and the city’s animal services by helping facilitate the complex operations and relationships involved in intake and adoption. 
@@ -86,7 +86,19 @@ The Pet Shelter Database site serves pets, current pet owners, future pet owners
 
 ### Sample Work
 
-## Homepage ##
+#### Homepage ####
 ![homepage](https://github.com/almontez/Pet-Shelter-DB/blob/main/ReadMe%20Media/homepage.png)
 
-Additional sample work can be found [here](https://github.com/almontez/CS_340_SU2022_DBProject/blob/main/Pet%20Shelter%20Database%20Design%20Documentation.pdf)
+#### Category Selection Menu ####
+![Category Selection Menu](https://github.com/almontez/Pet-Shelter-DB/blob/main/ReadMe%20Media/categoryTableSelection.png)
+
+#### Pets Table ####
+![Pets Table](https://github.com/almontez/Pet-Shelter-DB/blob/main/ReadMe%20Media/PetsTable.png)
+
+#### Add Pets Form ####
+![Add Pets Form](https://github.com/almontez/Pet-Shelter-DB/blob/main/ReadMe%20Media/PetsAddForm.png)
+
+#### Update Pets Form ### 
+![Update Pets Form](https://github.com/almontez/Pet-Shelter-DB/blob/main/ReadMe%20Media/PetsAddForm.png) 
+
+**Additional sample work can be found [here](https://github.com/almontez/CS_340_SU2022_DBProject/blob/main/Pet%20Shelter%20Database%20Design%20Documentation.pdf)**
